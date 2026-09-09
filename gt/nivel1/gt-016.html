@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<title>Daum Ergo Bike Medical 8 · Guía de laboratorio</title>
+<meta name="description" content="Cómo usar el cicloergómetro isocinético Daum Electronic Ergo Bike Medical 8 del Gimnasio Terapéutico: panel de control, programas, tarjeta de memoria y ajustes.">
+<meta name="theme-color" content="#E4E1D6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121A24" media="(prefers-color-scheme: dark)">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#E4E1D6; --card:#F2F0E9; --ink:#16283F; --ink-2:#455670;
+  --rule:#C6C0B0; --muted:#6F7787; --live:#B03A22;
+  --lcd:#C6DDD6; --lcd-deep:#9FBDB4; --lcd-ink:#10231D;
+  --display:"Barlow Condensed",Impact,"Arial Narrow",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,"SF Mono",Menlo,monospace;
+  --body:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#121A24; --card:#1B242F; --ink:#E6E9EC; --ink-2:#AFB7C0;
+        --rule:#2E3944; --muted:#8A939E; --live:#E8785A;}
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);
+  font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased;
+  -webkit-tap-highlight-color:transparent;overflow-wrap:break-word}
+body.lock{overflow:hidden}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+.wrap{max-width:780px;margin:0 auto;padding:0 16px calc(56px + env(safe-area-inset-bottom))}
+a{color:var(--ink)}
+
+.hero{padding:22px 0 16px}
+.brand{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin:0}
+h1{font-family:var(--display);font-weight:700;text-transform:uppercase;
+   font-size:clamp(46px,13vw,92px);line-height:.85;margin:4px 0 8px}
+.tagline{font-family:var(--display);font-weight:600;text-transform:uppercase;letter-spacing:.05em;
+   font-size:clamp(17px,4.6vw,23px);line-height:1.15;margin:0 0 16px;color:var(--ink-2)}
+.strip{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rule);
+   border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.strip div{background:var(--bg);padding:9px 10px 10px}
+.strip dt{font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:0 0 2px}
+.strip dd{margin:0;font-family:var(--mono);font-size:14px;font-weight:600}
+
+.jump{position:sticky;top:0;z-index:30;margin:0 -16px;
+  background:color-mix(in srgb,var(--bg) 92%,transparent);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--rule)}
+.jump ul{display:flex;overflow-x:auto;list-style:none;margin:0;padding:0 10px;scrollbar-width:none}
+.jump ul::-webkit-scrollbar{display:none}
+.jump a{display:block;white-space:nowrap;padding:13px 11px;text-decoration:none;
+  font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.jump a:active{color:var(--ink)}
+
+section{margin-top:34px;scroll-margin-top:56px}
+.sec-head{display:flex;align-items:baseline;gap:10px;border-bottom:1.5px solid var(--ink);padding-bottom:6px;margin-bottom:14px}
+.sec-num{font-family:var(--mono);font-size:11px;color:var(--live);letter-spacing:.08em}
+h2{font-family:var(--display);font-weight:700;text-transform:uppercase;
+   font-size:clamp(25px,7vw,34px);line-height:1;margin:0}
+.lede{color:var(--ink-2);margin:0 0 16px;font-size:15.5px}
+
+.panel-box{background:var(--card);border:1px solid var(--rule);border-radius:4px;padding:8px}
+#panelHost svg.panel{width:100%;height:auto;display:block;touch-action:manipulation}
+.panel-bar{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:8px}
+.panel-bar p{margin:0;font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.zoom-btn{font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;
+  background:var(--ink);color:var(--bg);border:1px solid var(--ink);border-radius:999px;
+  padding:11px 18px;min-height:44px;cursor:pointer}
+.zoom-btn:active{opacity:.75}
+
+.ctl{cursor:pointer}
+.ctl .hit{fill:transparent}
+.ring{fill:none;stroke:#B03A22;stroke-width:3;opacity:0}
+.ctl.on .ring{opacity:1}
+.ctl.on .cap{fill:#FFE08A;stroke:#B03A22}
+.ctl:focus-visible{outline:none}
+.ctl:focus-visible .ring{opacity:1;stroke-dasharray:6 4}
+
+.fs{position:fixed;inset:0;z-index:100;background:#0C1219;
+  display:flex;align-items:center;justify-content:center;overscroll-behavior:contain;overflow:hidden}
+.fs[hidden]{display:none}
+.fs-rot{position:relative;line-height:0;width:100vw;flex:0 0 auto}
+@media (orientation:portrait){ .fs-rot{transform:rotate(90deg)} }
+.fs-rot svg.panel{display:block;width:100%;height:auto}
+.fs-close,.fs-tip{position:absolute;z-index:4;font-family:var(--mono);
+  font-size:12px;letter-spacing:.08em;text-transform:uppercase;line-height:1}
+.fs-close{top:2%;right:1.6%;background:#16283F;color:#EBE8DE;border:0;
+  border-radius:999px;padding:11px 16px;min-height:42px;cursor:pointer}
+.fs-close:active{opacity:.75}
+.fs-tip{left:1.6%;bottom:3%;color:#8FA0B4;pointer-events:none}
+
+.pop{position:absolute;z-index:3;background:var(--lcd);color:var(--lcd-ink);
+  border:1px solid #6E8880;border-radius:4px;padding:.75em .85em;line-height:1.4;
+  box-shadow:0 8px 26px rgba(0,0,0,.45);text-align:left}
+.pop[hidden]{display:none}
+.pop h4{margin:0 0 .3em;font-family:var(--display);font-weight:700;text-transform:uppercase;
+  font-size:1.3em;line-height:1.05;letter-spacing:.02em}
+.pop p{margin:0;font-size:1em}
+.pop .num{font-family:var(--mono);font-size:.75em;opacity:.65;letter-spacing:.1em;display:block;margin-bottom:.15em}
+.pop::after{content:"";position:absolute;width:.62em;height:.62em;background:var(--lcd);
+  border:1px solid #6E8880;transform:rotate(45deg)}
+.pop.pr::after{left:-.35em;top:calc(var(--cy,50%) - .31em);border-right:0;border-top:0}
+.pop.pl::after{right:-.35em;top:calc(var(--cy,50%) - .31em);border-left:0;border-bottom:0}
+.pop.pb::after{top:-.35em;left:calc(50% - .31em);border-right:0;border-bottom:0}
+.pop.pt::after{bottom:-.35em;left:calc(50% - .31em);border-left:0;border-top:0}
+
+.ctl-list{margin-top:18px}
+.grp{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--live);margin:26px 0 0;padding:0 0 7px;border-bottom:1.5px solid var(--ink);font-weight:600}
+.grp:first-child{margin-top:0}
+.row{border-bottom:1px solid var(--rule)}
+.row>summary{display:flex;align-items:center;gap:12px;list-style:none;cursor:pointer;padding:15px 4px;min-height:56px}
+.row>summary::-webkit-details-marker{display:none}
+.row>summary:active{background:var(--card)}
+.badge{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--muted);min-width:26px}
+.nm{font-family:var(--display);font-weight:600;text-transform:uppercase;letter-spacing:.03em;
+  font-size:20px;line-height:1.05;flex:1}
+.chev{font-family:var(--mono);color:var(--muted);font-size:18px;line-height:1}
+.row[open] .chev,.row[open] .nm{color:var(--live)}
+
+.lcd{background:var(--lcd);color:var(--lcd-ink);border-radius:3px;padding:15px 15px 16px;margin:0 0 15px;
+  box-shadow:inset 0 0 0 3px rgba(0,0,0,.06);
+  background-image:repeating-linear-gradient(0deg,rgba(0,0,0,.04) 0 1px,transparent 1px 3px)}
+.lcd p{margin:0;font-size:15.5px;line-height:1.55}
+.lcd .tip{font-family:var(--mono);font-size:13.5px;line-height:1.5;
+  border-top:1px solid rgba(16,35,29,.3);padding-top:10px;margin-top:11px}
+.lcd .tip b{display:block;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
+  font-size:10.5px;opacity:.72;margin-bottom:3px}
+
+ol.steps{list-style:none;counter-reset:s;margin:0;padding:0;border-top:1px solid var(--rule)}
+ol.steps li{counter-increment:s;padding:14px 0 15px 46px;border-bottom:1px solid var(--rule);position:relative}
+ol.steps li::before{content:counter(s,decimal-leading-zero);position:absolute;left:0;top:16px;
+  font-family:var(--mono);font-size:12px;font-weight:600;color:var(--live)}
+ol.steps b{font-weight:600}
+ol.steps span{display:block;color:var(--ink-2);font-size:15px;margin-top:3px}
+
+.bd{padding:0 0 20px}
+.bd p{margin:0 0 12px;font-size:15.5px;color:var(--ink-2)}
+.bd p b,.bd li b{color:var(--ink);font-weight:600}
+.bd ul{margin:0 0 14px;padding-left:19px}
+.bd li{margin-bottom:8px;font-size:15.5px;color:var(--ink-2)}
+
+.tbl{border-top:1px solid var(--ink);margin:0 0 16px}
+.tbl .r{display:grid;grid-template-columns:1fr;gap:1px 14px;padding:11px 0;border-bottom:1px solid var(--rule)}
+.tbl .k{font-family:var(--mono);font-size:13.5px;font-weight:600}
+.tbl .v{font-size:15px;color:var(--ink-2)}
+@media (min-width:560px){.tbl .r{grid-template-columns:minmax(150px,34%) 1fr}}
+
+.warn{border-left:3px solid var(--live);background:var(--card);padding:12px 14px;margin:0 0 15px}
+.warn b{font-family:var(--mono);font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--live);display:block;margin-bottom:3px}
+.warn p{margin:0 0 8px;font-size:15px}
+.warn p:last-child{margin-bottom:0}
+
+.top{display:block;margin:26px 0 0;text-align:center;font-family:var(--mono);font-size:12px;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-decoration:none;padding:14px}
+footer{margin-top:34px;border-top:1.5px solid var(--ink);padding-top:14px;
+  font-family:var(--mono);font-size:12px;color:var(--muted);line-height:1.75}
+
+@media print{
+  body{background:#fff;color:#000;font-size:11pt}
+  .jump,.panel-bar,.top,.fs{display:none}
+  .lcd{background:#fff;color:#000;box-shadow:none;border:1px solid #999;background-image:none}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero" id="top">
+  <p class="brand">Daum Electronic · Gimnasio Terapéutico · GT-016</p>
+  <h1>Daum<br>Ergo Bike<br>Medical 8</h1>
+  <p class="tagline">Cicloergómetro isocinético para diagnóstico, ergometría y rehabilitación</p>
+  <dl class="strip">
+    <div><dt>Certificación</dt><dd>CE 0297, producto médico</dd></div>
+    <div><dt>Tipo de carga</dt><dd>Independiente de la cadencia</dd></div>
+    <div><dt>Tarjeta de sesión</dt><dd>ergo_memo-card2</dd></div>
+    <div><dt>Pulso</dt><dd>Inalámbrico, receptor Polar</dd></div>
+  </dl>
+</header>
+
+<div class="warn" style="margin-top:18px">
+  <b>Verificado con foto física</b>
+  <p>El catálogo institucional registraba este equipo de forma genérica como <b>"Cicloergómetro Isocinético"</b>, sin marca ni modelo. La foto del panel confirma que se trata de un <b>Daum Electronic Ergo Bike Medical 8</b>, un ergómetro médico certificado (CE 0297) diseñado para aplicar una carga física constante sin importar qué tan rápido pedalee el paciente — de ahí el nombre "isocinético" del catálogo, que coincide con el diseño real del fabricante.</p>
+</div>
+
+<nav class="jump" aria-label="Secciones">
+  <ul>
+    <li><a href="#partes">Las partes</a></li>
+    <li><a href="#tarjeta">Tarjeta y encendido</a></li>
+    <li><a href="#ajustes">Ajustes</a></li>
+    <li><a href="#usar">Usarlo</a></li>
+    <li><a href="#programas">Programas</a></li>
+    <li><a href="#pila">La pila</a></li>
+    <li><a href="#cuidado">Cuidado</a></li>
+    <li><a href="#limites">Límites</a></li>
+  </ul>
+</nav>
+
+<section id="partes">
+  <div class="sec-head"><span class="sec-num">01</span><h2>Las partes</h2></div>
+  <p class="lede">Toca cualquier elemento del esquema.</p>
+
+  <div class="panel-box">
+    <div id="panelHost">
+    <svg class="panel" id="svgPanel" viewBox="0 0 800 620" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Esquema del panel de control del Daum Ergo Bike Medical 8">
+      <defs><style>
+        .t{font-family:Helvetica,Arial,sans-serif;fill:#16283F}
+        .tc{font-family:Helvetica,Arial,sans-serif;fill:#16283F;text-anchor:middle;pointer-events:none}
+        .lb{font-family:Helvetica,Arial,sans-serif;fill:#6F7787;font-size:11px;text-anchor:middle;pointer-events:none}
+        .dim{font-family:"IBM Plex Mono",monospace;fill:#B03A22;font-size:10.5px;text-anchor:middle;pointer-events:none}
+        .cap:not([fill]){fill:#D6D2C7} .cap:not([stroke]){stroke:#A9A597} .cap{stroke-width:1}
+      </style></defs>
+
+      <rect x="0" y="0" width="800" height="620" fill="#F2F0E9"/>
+      <text class="t" x="52" y="32" font-size="15" font-weight="700">Panel de control, vista frontal</text>
+      <text class="t" x="52" y="51" font-size="11" fill="#6F7787">Esquema, no est&#225; a escala</text>
+
+      <!-- carcasa del panel -->
+      <path d="M170,90 Q400,60 630,90 L650,470 Q400,510 150,470 Z" fill="#2B3238" stroke="#181D21" stroke-width="4"/>
+      <text class="tc" x="400" y="128" font-size="20" fill="#EBE8DE" font-weight="700">daum electronic</text>
+
+      <!-- pantalla -->
+      <g class="ctl" data-id="pantalla" role="button" tabindex="0" aria-label="Pantalla a color">
+        <rect class="ring" x="278" y="150" width="244" height="230" rx="10"/>
+        <rect class="cap" x="284" y="156" width="232" height="218" rx="6" fill="#C6DDD6" stroke="#6E8880"/>
+        <text class="tc" x="400" y="250" font-size="26" fill="#10231D" font-family="IBM Plex Mono, monospace" font-weight="600">75 W</text>
+        <text class="tc" x="400" y="278" font-size="13" fill="#3A5A50" font-family="IBM Plex Mono, monospace">128 bpm</text>
+        <rect class="hit" x="278" y="150" width="244" height="230"/>
+      </g>
+
+      <!-- volumen arriba (izquierda) -->
+      <g class="ctl" data-id="vol-up" role="button" tabindex="0" aria-label="Volumen, subir">
+        <rect class="ring" x="192" y="150" width="52" height="52" rx="26"/>
+        <circle class="cap" cx="218" cy="176" r="22" fill="#3D9BD1" stroke="#256E9C"/>
+        <text class="dim" x="150" y="150">volumen +</text>
+        <rect class="hit" x="192" y="150" width="52" height="52"/>
+      </g>
+
+      <!-- mp3 -->
+      <g class="ctl" data-id="mp3" role="button" tabindex="0" aria-label="Reproductor MP3">
+        <rect class="ring" x="196" y="220" width="44" height="44" rx="22"/>
+        <circle class="cap" cx="218" cy="242" r="18" fill="#C8CCD0" stroke="#8E9296"/>
+        <text class="lb" x="150" y="248" fill="#C8CCD0">MP3</text>
+        <rect class="hit" x="196" y="220" width="44" height="44"/>
+      </g>
+
+      <!-- volumen abajo -->
+      <g class="ctl" data-id="vol-down" role="button" tabindex="0" aria-label="Volumen, bajar">
+        <rect class="ring" x="196" y="286" width="44" height="44" rx="22"/>
+        <circle class="cap" cx="218" cy="308" r="18" fill="#C8CCD0" stroke="#8E9296"/>
+        <text class="dim" x="150" y="322">volumen −</text>
+        <rect class="hit" x="196" y="286" width="44" height="44"/>
+      </g>
+
+      <!-- funcion / relax (derecha arriba) -->
+      <g class="ctl" data-id="funcion-mas" role="button" tabindex="0" aria-label="Tecla de función +, atajo Relax">
+        <rect class="ring" x="556" y="150" width="52" height="52" rx="26"/>
+        <circle class="cap" cx="582" cy="176" r="22" fill="#3D9BD1" stroke="#256E9C"/>
+        <text class="dim" x="660" y="150">funci&#243;n + (relax)</text>
+        <rect class="hit" x="556" y="150" width="52" height="52"/>
+      </g>
+
+      <!-- funcion - -->
+      <g class="ctl" data-id="funcion-menos" role="button" tabindex="0" aria-label="Tecla de función −">
+        <rect class="ring" x="560" y="286" width="44" height="44" rx="22"/>
+        <circle class="cap" cx="582" cy="308" r="18" fill="#C8CCD0" stroke="#8E9296"/>
+        <text class="dim" x="650" y="322">funci&#243;n −</text>
+        <rect class="hit" x="560" y="286" width="44" height="44"/>
+      </g>
+
+      <!-- control button (dial central) -->
+      <g class="ctl" data-id="dial" role="button" tabindex="0" aria-label="Botón de control central (rueda)">
+        <rect class="ring" x="336" y="392" width="128" height="128" rx="64"/>
+        <circle class="cap" cx="400" cy="456" r="58" fill="#DCD8CE" stroke="#A9A597"/>
+        <circle cx="400" cy="456" r="30" fill="#3D3A34"/>
+        <path d="M355,420 Q380,395 400,392" fill="none" stroke="#181D21" stroke-width="3" marker-end="url(#arrow)"/>
+        <path d="M445,420 Q420,395 400,392" fill="none" stroke="#181D21" stroke-width="3" marker-end="url(#arrow)"/>
+        <text class="lb" x="400" y="536">girar y presionar</text>
+        <rect class="hit" x="336" y="392" width="128" height="128"/>
+      </g>
+      <defs>
+        <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="#181D21"/>
+        </marker>
+      </defs>
+
+      <!-- menu -->
+      <g class="ctl" data-id="menu" role="button" tabindex="0" aria-label="Botón MENU">
+        <rect class="ring" x="196" y="424" width="76" height="60" rx="10"/>
+        <rect class="cap" x="202" y="430" width="64" height="48" rx="8" fill="#3D9BD1" stroke="#256E9C"/>
+        <text class="tc" x="234" y="460" font-size="13" fill="#0E2A3D" font-weight="700">menu</text>
+        <rect class="hit" x="196" y="424" width="76" height="60"/>
+      </g>
+
+      <!-- info -->
+      <g class="ctl" data-id="info" role="button" tabindex="0" aria-label="Botón INFO">
+        <rect class="ring" x="278" y="424" width="76" height="60" rx="10"/>
+        <rect class="cap" x="284" y="430" width="64" height="48" rx="8" fill="#C8CCD0" stroke="#8E9296"/>
+        <text class="tc" x="316" y="460" font-size="13" fill="#0E1A24" font-weight="700">info</text>
+        <rect class="hit" x="278" y="424" width="76" height="60"/>
+      </g>
+
+      <!-- nivel/resistencia - -->
+      <g class="ctl" data-id="nivel-menos" role="button" tabindex="0" aria-label="Bajar nivel de resistencia">
+        <rect class="ring" x="450" y="424" width="76" height="60" rx="10"/>
+        <rect class="cap" x="456" y="430" width="64" height="48" rx="8" fill="#C8CCD0" stroke="#8E9296"/>
+        <text class="tc" x="488" y="460" font-size="20" fill="#0E1A24" font-weight="700">&minus;</text>
+        <rect class="hit" x="450" y="424" width="76" height="60"/>
+      </g>
+
+      <!-- nivel/resistencia + -->
+      <g class="ctl" data-id="nivel-mas" role="button" tabindex="0" aria-label="Subir nivel de resistencia">
+        <rect class="ring" x="532" y="424" width="76" height="60" rx="10"/>
+        <rect class="cap" x="538" y="430" width="64" height="48" rx="8" fill="#3D9BD1" stroke="#256E9C"/>
+        <text class="tc" x="570" y="460" font-size="20" fill="#0E2A3D" font-weight="700">+</text>
+        <rect class="hit" x="532" y="424" width="76" height="60"/>
+      </g>
+      <text class="lb" x="565" y="400">nivel de resistencia (pesa)</text>
+
+      <!-- ranura de tarjeta -->
+      <g class="ctl" data-id="tarjeta" role="button" tabindex="0" aria-label="Ranura para la tarjeta ergo_memo-card2">
+        <rect class="ring" x="330" y="322" width="140" height="30" rx="6"/>
+        <rect class="cap" x="336" y="328" width="128" height="18" rx="4" fill="#181D21" stroke="#000"/>
+        <text class="lb" x="400" y="368">ranura ergo_memo-card2</text>
+        <rect class="hit" x="330" y="322" width="140" height="30"/>
+      </g>
+
+      <!-- manubrio -->
+      <g class="ctl" data-id="manubrio" role="button" tabindex="0" aria-label="Manubrio ajustable">
+        <rect class="ring" x="130" y="500" width="540" height="46" rx="12"/>
+        <path class="cap" d="M150,523 Q400,495 650,523" fill="none" stroke="#5A5F64" stroke-width="14" stroke-linecap="round"/>
+        <text class="lb" x="400" y="562">manubrio, ajustable 360&#176;</text>
+        <rect class="hit" x="130" y="500" width="540" height="46"/>
+      </g>
+
+      <!-- sillin -->
+      <g class="ctl" data-id="sillin" role="button" tabindex="0" aria-label="Sillín ajustable">
+        <rect class="ring" x="700" y="560" width="80" height="40" rx="10"/>
+        <ellipse class="cap" cx="740" cy="580" rx="34" ry="16" fill="#5A5F64" stroke="#3C4145"/>
+        <text class="lb" x="740" y="612">sill&#237;n</text>
+        <rect class="hit" x="700" y="560" width="80" height="40"/>
+      </g>
+    </svg>
+    </div>
+    <div class="panel-bar">
+      <p>Toca un elemento</p>
+      <button class="zoom-btn" id="zoom" type="button">Ver en grande ⤢</button>
+    </div>
+  </div>
+
+  <div class="ctl-list">
+    <h3 class="grp">El panel de control</h3>
+
+    <details class="row" id="c-pantalla" data-short="Pantalla a color donde se ve el programa, la potencia, el pulso y el tiempo de la sesión."><summary><span class="badge">01</span><span class="nm">Pantalla</span><span class="chev">+</span></summary><div class="lcd">
+      <p>Pantalla a color en la parte central del panel. Muestra el programa activo, la potencia en vatios, el pulso cardiaco (si hay banda conectada) y el tiempo transcurrido de la sesión.</p></div></details>
+
+    <details class="row" id="c-menu" data-short="Abre el menú principal, donde se eligen programas de entrenamiento y ajustes."><summary><span class="badge">02</span><span class="nm">MENU</span><span class="chev">+</span></summary><div class="lcd">
+      <p>Llama al menú principal del equipo, desde donde se eligen los programas de entrenamiento, los datos personales y otros ajustes.</p></div></details>
+
+    <details class="row" id="c-info" data-short="Muestra información detallada sobre lo que se ve en pantalla en ese momento."><summary><span class="badge">03</span><span class="nm">INFO</span><span class="chev">+</span></summary><div class="lcd">
+      <p>Muestra información adicional sobre la pantalla o el menú que se esté viendo en ese momento — útil para entender qué hace cada opción antes de seleccionarla.</p></div></details>
+
+    <details class="row" id="c-dial" data-short="Rueda central. Girarla mueve el cursor por el menú; presionarla selecciona la opción marcada."><summary><span class="badge">04</span><span class="nm">Botón de control (rueda)</span><span class="chev">+</span></summary><div class="lcd">
+      <p>Es la rueda del centro del panel. Al girarla te mueves entre las opciones de cualquier menú; al presionarla, seleccionas y abres la opción marcada.</p>
+      <div class="tip"><b>En la práctica</b>Es el control principal para navegar todo el equipo: girar para elegir, presionar para confirmar.</div></div></details>
+
+    <details class="row" id="c-tarjeta" data-short="Ranura para la tarjeta ergo_memo-card2, donde se guardan los datos personales y de cada sesión de un paciente."><summary><span class="badge">05</span><span class="nm">Ranura de tarjeta</span><span class="chev">+</span></summary><div class="lcd">
+      <p>Aquí se inserta la <b>ergo_memo-card2</b>, una tarjeta personal donde se guardan los datos del usuario y los resultados de cada sesión de entrenamiento.</p>
+      <div class="tip"><b>En la práctica</b>La tarjeta debe insertarse antes de encender el equipo. No se pueden guardar los datos de dos personas distintas en la misma tarjeta.</div></div></details>
+
+    <details class="row" id="c-vol-up" data-short="Sube el volumen del equipo (avisos sonoros y reproductor MP3)."><summary><span class="badge">06</span><span class="nm">Volumen +</span><span class="chev">+</span></summary><div class="lcd"><p>Sube el volumen de los sonidos del equipo y del reproductor MP3 integrado.</p></div></details>
+
+    <details class="row" id="c-vol-down" data-short="Baja el volumen del equipo."><summary><span class="badge">07</span><span class="nm">Volumen −</span><span class="chev">+</span></summary><div class="lcd"><p>Baja el volumen de los sonidos del equipo y del reproductor MP3 integrado.</p></div></details>
+
+    <details class="row" id="c-mp3" data-short="Controla el reproductor de MP3 integrado en el panel."><summary><span class="badge">08</span><span class="nm">MP3</span><span class="chev">+</span></summary><div class="lcd"><p>Controla el reproductor de MP3 integrado en el panel, independiente de los programas de entrenamiento.</p></div></details>
+
+    <details class="row" id="c-funcion-mas" data-short="Tecla de función rápida; una de sus opciones etiquetadas es «Relax»." data-parent="funciones"><summary><span class="badge">09</span><span class="nm">Función +</span><span class="chev">+</span></summary><div class="lcd">
+      <p>Tecla de acceso rápido a funciones del panel; una de las marcadas junto a este botón dice "Relax".</p>
+      <div class="tip"><b>Verificar en el manual completo</b>El manual disponible en línea no detalla a fondo cada tecla de función; confirma su uso exacto con el manual impreso si viene con el equipo, o con el encargado del laboratorio.</div></div></details>
+
+    <details class="row" id="c-funcion-menos" data-short="Tecla de función rápida, pareja de la anterior."><summary><span class="badge">10</span><span class="nm">Función −</span><span class="chev">+</span></summary><div class="lcd"><p>Tecla de acceso rápido, pareja de la de función +. Ver la misma nota de verificación.</p></div></details>
+
+    <details class="row" id="c-nivel-menos" data-short="Baja el nivel de resistencia o dificultad, identificado con un ícono de pesa."><summary><span class="badge">11</span><span class="nm">Nivel −</span><span class="chev">+</span></summary><div class="lcd"><p>Junto a este par de botones hay un ícono de pesas/mancuerna, indicando que ajustan el nivel de resistencia o dificultad del pedaleo. Este botón lo disminuye.</p></div></details>
+
+    <details class="row" id="c-nivel-mas" data-short="Sube el nivel de resistencia o dificultad."><summary><span class="badge">12</span><span class="nm">Nivel +</span><span class="chev">+</span></summary><div class="lcd"><p>Sube el nivel de resistencia o dificultad del pedaleo.</p></div></details>
+
+    <details class="row" id="c-manubrio" data-short="Se ajusta en ángulo, girando hasta 360°, para adaptarse a la posición del paciente."><summary><span class="badge">13</span><span class="nm">Manubrio</span><span class="chev">+</span></summary><div class="lcd">
+      <p>El manubrio es continuamente ajustable en un giro de 360°, con un tornillo de sujeción (abrazadera) que lo fija en la posición elegida.</p>
+      <div class="tip"><b>Advertencia del fabricante</b>La palanca de sujeción debe apuntar hacia atrás después de apretarla. Si no queda bien fija, hay riesgo de lesión al usar el manubrio.</div></div></details>
+
+    <details class="row" id="c-sillin" data-short="Se ajusta en altura y horizontalmente, para adaptarse a la estatura del paciente."><summary><span class="badge">14</span><span class="nm">Sillín</span><span class="chev">+</span></summary><div class="lcd"><p>El sillín se ajusta tanto en altura (columna del sillín) como en posición horizontal, para adaptarse a la estatura y proporciones del paciente.</p></div></details>
+  </div>
+  <a class="top" href="#top">↑ Inicio</a>
+</section>
+
+<section id="tarjeta">
+  <div class="sec-head"><span class="sec-num">02</span><h2>Tarjeta y encendido</h2></div>
+  <ol class="steps">
+    <li><b>Inserta la ergo_memo-card2 del paciente.</b><span>Antes de encender el equipo, en la ranura debajo de la pantalla.</span></li>
+    <li><b>Enciende el equipo.</b><span>Con el interruptor de encendido/apagado, ubicado en la base del equipo (no en el panel).</span></li>
+    <li><b>Espera a que cargue la tarjeta.</b><span>El equipo lee los datos personales guardados en la tarjeta.</span></li>
+  </ol>
+  <div class="warn"><b>Una tarjeta, un usuario</b><p>No es posible guardar los datos de dos personas distintas en la misma tarjeta. Cada paciente debe tener la suya.</p></div>
+  <a class="top" href="#top">↑ Inicio</a>
+</section>
+
+<section id="ajustes">
+  <div class="sec-head"><span class="sec-num">03</span><h2>Ajustes antes de la sesión</h2></div>
+  <ol class="steps">
+    <li><b>Ajusta la altura del sillín.</b><span>Según la estatura del paciente, usando la columna del sillín.</span></li>
+    <li><b>Ajusta la posición horizontal del sillín.</b><span>Para la distancia correcta entre el sillín y los pedales.</span></li>
+    <li><b>Ajusta el ángulo del manubrio si es necesario.</b><span>Afloja la palanca, gira el manubrio a la posición deseada (hasta 360°), y aprieta de nuevo verificando que la palanca quede apuntando hacia atrás.</span></li>
+    <li><b>Coloca el sensor de pulso, si se va a usar.</b><span>El equipo recibe la señal por radio desde un transmisor Polar codificado, sin necesidad de cable.</span></li>
+  </ol>
+  <a class="top" href="#top">↑ Inicio</a>
+</section>
+
+<section id="usar">
+  <div class="sec-head"><span class="sec-num">04</span><h2>Usarlo en una sesión</h2></div>
+  <ol class="steps">
+    <li><b>Con la tarjeta insertada, entra al menú.</b><span>Presiona MENU para ver las opciones de entrenamiento.</span></li>
+    <li><b>Elige entre iniciar sin programa o seleccionar uno.</b><span>Gira la rueda de control para navegar, presiona para confirmar.</span></li>
+    <li><b>Si es la primera vez, confirma los datos personales.</b><span>El equipo puede pedir edad, peso o estatura para calcular mejor las cargas.</span></li>
+    <li><b>Empieza a pedalear.</b><span>La pantalla muestra potencia, pulso y tiempo en tiempo real.</span></li>
+    <li><b>Usa INFO si tienes dudas</b> <span>sobre alguna pantalla o menú durante la sesión.</span></li>
+    <li><b>Al terminar, revisa los datos guardados</b> <span>en el menú de historial antes de retirar la tarjeta.</span></li>
+  </ol>
+  <a class="top" href="#top">↑ Inicio</a>
+</section>
+
+<section id="programas">
+  <div class="sec-head"><span class="sec-num">05</span><h2>Tipos de programas</h2></div>
+  <div class="bd">
+    <p><b>Programas de frecuencia cardiaca (pulso).</b> El equipo ajusta automáticamente la resistencia (fuerza de frenado) para mantener el pulso del paciente en el rango que se haya definido. Requieren el sensor de pulso conectado.</p>
+    <p><b>Programas de fuerza (dependientes de la cadencia).</b> El equipo aplica una resistencia constante y preestablecida al pedaleo; el esfuerzo real que hace el paciente depende de qué tan rápido pedalee. El nivel se ajusta en vatios.</p>
+    <p>Este es el modo "isocinético" que describe el catálogo: el equipo puede mantener una carga física definida sin importar la velocidad de pedaleo del paciente, lo que lo hace apropiado para pruebas de ergometría y protocolos de rehabilitación.</p>
+  </div>
+  <a class="top" href="#top">↑ Inicio</a>
+</section>
+
+<section id="pila">
+  <div class="sec-head"><span class="sec-num">06</span><h2>La pila</h2></div>
+  <div class="bd">
+    <p>El panel de control usa una <b>pila de botón</b> interna para mantener la configuración cuando el equipo está apagado. El manual del fabricante indica que el cambio de esta pila requiere abrir el panel, y advierte mantener las pilas fuera del alcance de los niños y no tragarlas.</p>
+    <div class="warn"><b>Cambio de pila por personal capacitado</b><p>Al ser un equipo médico certificado, el reemplazo de la pila y cualquier intervención interna debe hacerla personal autorizado, no cualquier usuario del laboratorio.</p></div>
+  </div>
+  <a class="top" href="#top">↑ Inicio</a>
+</section>
+
+<section id="cuidado">
+  <div class="sec-head"><span class="sec-num">07</span><h2>Cuidado</h2></div>
+  <div class="bd">
+    <ul>
+      <li>Limpia el sillín, el manubrio y el panel con un paño húmedo después de cada uso, especialmente si hubo sudor.</li>
+      <li>No pellizques ningún cable al mover o dar mantenimiento al equipo.</li>
+      <li>Cualquier computadora, monitor o impresora que se conecte al equipo debe instalarse a más de 1.5 metros del lugar del paciente, para evitar corrientes de fuga.</li>
+      <li>Como es un producto médico, requiere revisiones técnicas periódicas según la normativa de equipos médicos vigente en la institución — consulta con el encargado del laboratorio cada cuándo corresponde.</li>
+    </ul>
+  </div>
+  <a class="top" href="#top">↑ Inicio</a>
+</section>
+
+<section id="limites">
+  <div class="sec-head"><span class="sec-num">08</span><h2>Límites</h2></div>
+  <div class="bd"><div class="tbl">
+    <div class="r"><div class="k">Clasificación</div><div class="v">Producto médico, certificación CE 0297</div></div>
+    <div class="r"><div class="k">Normativa</div><div class="v">Directiva europea de productos médicos 93/42/CEE; norma EN 957-5 para ergómetros</div></div>
+    <div class="r"><div class="k">Tipo de carga</div><div class="v">Independiente de la velocidad de pedaleo (isocinético)</div></div>
+    <div class="r"><div class="k">Manubrio</div><div class="v">Ajustable en 360°</div></div>
+    <div class="r"><div class="k">Pulso</div><div class="v">Inalámbrico, receptor Polar codificado</div></div>
+    <div class="r"><div class="k">Tarjeta de usuario</div><div class="v">ergo_memo-card2, un usuario por tarjeta</div></div>
+    <div class="r"><div class="k">Distancia mínima a otros dispositivos</div><div class="v">1.5 m entre el paciente y cualquier PC, monitor o impresora conectados</div></div>
+  </div>
+  <p style="font-style:italic;">Datos verificados contra el manual oficial de operación de Daum Electronic para el ergo_bike medical8. Algunas teclas de función rápida (marcadas "Relax" y su pareja) no se detallan a fondo en el resumen disponible del manual; confirmar su uso exacto con el manual completo impreso si está disponible.</p>
+  </div>
+</section>
+
+<footer>
+  <p>Guía del cicloergómetro Daum Electronic Ergo Bike Medical 8, resumida del manual de operación oficial del fabricante.<br>
+  El catálogo institucional registraba este equipo de forma genérica como "Cicloergómetro Isocinético", sin marca; esta guía confirma que es un Daum Ergo Bike Medical 8.<br>
+  El manual oficial y el encargado del laboratorio mandan sobre esta guía.<br>
+  GT-016 · Versión 1.0 · Septiembre de 2026.</p>
+</footer>
+
+</div>
+
+<div class="fs" id="fs" hidden>
+  <div class="fs-rot" id="fsRot">
+    <button class="fs-close" id="fsClose" type="button">Cerrar ✕</button>
+    <span class="fs-tip" id="fsTip">Toca cualquier elemento</span>
+    <div class="pop" id="pop" hidden></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var svg = document.getElementById('svgPanel');
+  var host= document.getElementById('panelHost');
+  var fs  = document.getElementById('fs');
+  var rot = document.getElementById('fsRot');
+  var pop = document.getElementById('pop');
+  var tip = document.getElementById('fsTip');
+  var rows = Array.prototype.slice.call(document.querySelectorAll('.row'));
+  var ctls = Array.prototype.slice.call(document.querySelectorAll('.ctl'));
+  var VB_FULL = {minx:0, miny:0, w:800, h:620};
+  var VB_CROP = {minx:110, miny:60, w:700, h:500};
+  var VB_MINX = VB_FULL.minx, VB_MINY = VB_FULL.miny, VB_W = VB_FULL.w, VB_H = VB_FULL.h;
+  var RATIO = VB_W / VB_H, activeG = null;
+
+  function setCrop(on){
+    var vb = on ? VB_CROP : VB_FULL;
+    VB_MINX = vb.minx; VB_MINY = vb.miny; VB_W = vb.w; VB_H = vb.h;
+    RATIO = VB_W / VB_H;
+    svg.setAttribute('viewBox', vb.minx+' '+vb.miny+' '+vb.w+' '+vb.h);
+  }
+  function viewportSize(){
+    var vv = window.visualViewport;
+    return {w:(vv&&vv.width)||window.innerWidth, h:(vv&&vv.height)||window.innerHeight};
+  }
+  function sizeFS(){
+    if(fs.hidden) return;
+    var v = viewportSize();
+    fs.style.width = v.w+'px'; fs.style.height = v.h+'px';
+    var w = (v.h >= v.w) ? Math.min(v.h, v.w*RATIO) : Math.min(v.w, v.h*RATIO);
+    rot.style.width = w+'px'; rot.style.height = 'auto';
+  }
+
+  var DATA = {};
+  rows.forEach(function(r){
+    var id = r.id.replace(/^c-/,'');
+    DATA[id] = { badge:r.querySelector('.badge').textContent,
+                 title:r.querySelector('.nm').textContent,
+                 short:r.getAttribute('data-short') || r.querySelector('.lcd p').textContent };
+  });
+  function highlight(id){ ctls.forEach(function(g){ g.classList.toggle('on', g.dataset.id===id); }); }
+
+  rows.forEach(function(r){
+    r.addEventListener('toggle', function(){
+      if(r.open) rows.forEach(function(o){ if(o!==r) o.open=false; });
+      var open=null; rows.forEach(function(o){ if(o.open) open=o.id.replace(/^c-/,''); });
+      if(fs.hidden) highlight(open);
+    });
+  });
+
+  function hidePop(){ pop.hidden=true; activeG=null; highlight(null); }
+  function placePop(g){
+    var b = g.getBBox();
+    var sc = svg.getBoundingClientRect().width / VB_W;
+    if(!sc) return;
+    var W = rot.clientWidth, H = rot.clientHeight;
+    var bx=(b.x-VB_MINX)*sc, by=(b.y-VB_MINY)*sc, bw=b.width*sc, bh=b.height*sc;
+    pop.style.fontSize = Math.max(9, Math.min(15, W*0.0185))+'px';
+    pop.style.maxWidth = Math.min(W*0.34, 300)+'px';
+    pop.style.left='0px'; pop.style.top='0px';
+    var pw=pop.offsetWidth, ph=pop.offsetHeight;
+    var gap=Math.max(8, W*0.012), left, top, cls;
+    if(bx+bw+gap+pw <= W-6){ left=bx+bw+gap; cls='pr'; }
+    else if(bx-gap-pw >= 6){ left=bx-gap-pw; cls='pl'; }
+    else { left=Math.min(Math.max(bx+bw/2-pw/2,6), Math.max(6,W-pw-6));
+           cls=(by+bh+gap+ph <= H-6)?'pb':'pt'; }
+    if(cls==='pr'||cls==='pl') top=by+bh/2-ph/2;
+    else if(cls==='pb') top=by+bh+gap; else top=by-gap-ph;
+    top=Math.min(Math.max(top,6), Math.max(6,H-ph-6));
+    pop.className='pop '+cls; pop.style.left=left+'px'; pop.style.top=top+'px';
+    pop.style.setProperty('--cy', Math.min(Math.max(by+bh/2-top,10), Math.max(10,ph-10))+'px');
+  }
+  function showPop(g){
+    var d = DATA[g.dataset.id]; if(!d) return;
+    if(activeG===g){ hidePop(); return; }
+    activeG=g;
+    pop.innerHTML='<h4><span class="num">'+d.badge+'</span>'+d.title+'</h4><p>'+d.short+'</p>';
+    pop.hidden=false; highlight(g.dataset.id); placePop(g);
+    tip.style.visibility='hidden';
+  }
+  ctls.forEach(function(g){
+    function go(e){
+      if(e) e.stopPropagation();
+      if(!fs.hidden){ showPop(g); return; }
+      var r=document.getElementById('c-'+g.dataset.id); if(!r) return;
+      r.open=true; r.scrollIntoView({block:'center', behavior:'smooth'});
+    }
+    g.addEventListener('click', go);
+    g.addEventListener('keydown', function(e){
+      if(e.key==='Enter'||e.key===' '){ e.preventDefault(); go(e); }
+    });
+  });
+
+  var zoom=document.getElementById('zoom');
+  function openFS(){
+    rot.insertBefore(svg, rot.firstChild);
+    fs.hidden=false; document.body.classList.add('lock');
+    tip.style.visibility='visible'; highlight(null);
+    setCrop(true); sizeFS();
+    try{
+      var p=document.documentElement.requestFullscreen && document.documentElement.requestFullscreen();
+      if(p&&p.then) p.then(function(){
+        if(screen.orientation&&screen.orientation.lock){
+          var q=screen.orientation.lock('landscape'); if(q&&q.catch) q.catch(function(){});
+        }
+      }).catch(function(){});
+    }catch(e){}
+  }
+  function closeFS(){
+    hidePop(); host.appendChild(svg); fs.hidden=true;
+    fs.style.width=''; fs.style.height=''; rot.style.width=''; rot.style.height='';
+    setCrop(false); document.body.classList.remove('lock');
+    try{
+      if(screen.orientation&&screen.orientation.unlock) screen.orientation.unlock();
+      if(document.fullscreenElement&&document.exitFullscreen) document.exitFullscreen();
+    }catch(e){}
+  }
+  zoom.addEventListener('click', openFS);
+  document.getElementById('fsClose').addEventListener('click', function(e){ e.stopPropagation(); closeFS(); });
+  fs.addEventListener('click', function(){ if(!pop.hidden) hidePop(); });
+  pop.addEventListener('click', function(e){ e.stopPropagation(); });
+  document.addEventListener('keydown', function(e){
+    if(e.key!=='Escape'||fs.hidden) return;
+    if(!pop.hidden) hidePop(); else closeFS();
+  });
+  function reflow(){ sizeFS(); if(!fs.hidden&&activeG) placePop(activeG); }
+  window.addEventListener('resize', reflow);
+  window.addEventListener('orientationchange', function(){ setTimeout(reflow,250); });
+  if(window.visualViewport) window.visualViewport.addEventListener('resize', reflow);
+  window.addEventListener('beforeprint', function(){
+    if(!fs.hidden) closeFS();
+    document.querySelectorAll('details').forEach(function(d){ d.open=true; });
+  });
+})();
+</script>
+</body>
+</html>

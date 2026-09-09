@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFD-013 Cronómetro Seiko S23601P</title>
+<style>
+:root {
+    --bg: #f8f6f0;
+    --text: #1e1e1e;
+    --surface: #ffffff;
+    --border: #d0ccc0;
+    --accent: #b22234;
+    --accent-light: #e8d0d0;
+    --warn-bg: #fff3cd;
+    --warn-border: #ffe69c;
+    --warn-text: #856404;
+    --font-sans: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+    --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
+}
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg: #1a1a1a; --text: #e8e4db; --surface: #2a2a2a; --border: #4a4a4a;
+        --accent: #d45a5a; --accent-light: #4a2a2a; --warn-bg: #3d3200;
+        --warn-border: #665200; --warn-text: #ffe69c;
+    }
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+    background: var(--bg); color: var(--text); font-family: var(--font-sans);
+    font-weight: 400; line-height: 1.5; padding: 2rem 1rem;
+    display: flex; justify-content: center;
+}
+.card {
+    max-width: 820px; width: 100%; background: var(--surface);
+    border: 1px solid var(--border); border-radius: 12px;
+    padding: 2rem 2.2rem; box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+}
+.header { border-bottom: 3px solid var(--accent); padding-bottom: 1rem; margin-bottom: 1.5rem; }
+.header h1 { font-size: 2.4rem; font-weight: 700; letter-spacing: 0.5px; line-height: 1.1; text-transform: uppercase; }
+.header .codigo {
+    font-family: var(--font-mono); font-size: 1rem; color: var(--accent);
+    background: var(--accent-light); display: inline-block; padding: 0.2rem 0.8rem;
+    border-radius: 20px; margin-top: 0.3rem; font-weight: 600;
+}
+.badges { display: flex; flex-wrap: wrap; gap: 0.8rem 1.5rem; margin: 0.8rem 0 0.2rem; font-size: 1rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.3px; }
+.badges span { background: var(--bg); padding: 0.15rem 0.8rem; border-radius: 16px; border: 1px solid var(--border); }
+.badges strong { font-weight: 700; margin-right: 0.3rem; }
+.warn {
+    background: var(--warn-bg); border-left: 6px solid var(--warn-border); color: var(--warn-text);
+    padding: 1rem 1.2rem; margin: 1.2rem 0; border-radius: 0 8px 8px 0;
+    font-family: var(--font-mono); font-size: 0.95rem;
+}
+.warn b { font-weight: 700; display: block; margin-bottom: 0.2rem; }
+.warn p { margin: 0 0 0.5rem; }
+.warn p:last-child { margin-bottom: 0; }
+.confirm {
+    margin: 0.8rem 0; font-family: var(--font-mono); background: var(--bg);
+    padding: 0.6rem 1rem; border-radius: 8px; border-left: 4px solid var(--accent); font-size: 0.92rem;
+}
+.confirm strong { display: block; margin-bottom: 0.2rem; }
+.security-box {
+    background: var(--accent-light); border: 2px solid var(--accent); border-radius: 10px;
+    padding: 1rem 1.4rem; margin: 1.2rem 0; font-weight: 500;
+}
+.security-box strong { color: var(--accent); font-weight: 700; text-transform: uppercase; display: block; margin-bottom: 0.2rem; }
+.security-box ul { margin: 0.4rem 0 0 1.2rem; font-weight: 400; }
+.section { margin-top: 1.6rem; }
+.section h2 {
+    font-size: 1.4rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
+    border-bottom: 1px solid var(--border); padding-bottom: 0.2rem; margin-bottom: 0.6rem;
+}
+.section p, .section li { font-size: 1.08rem; font-weight: 400; }
+.section ul { list-style: square; padding-left: 1.4rem; margin: 0.3rem 0; }
+.section li { margin-bottom: 0.15rem; }
+.section .mono { font-family: var(--font-mono); font-size: 0.95rem; background: var(--bg); padding: 0.1rem 0.4rem; border-radius: 4px; }
+hr { border: none; border-top: 1px solid var(--border); margin: 1.8rem 0 0.5rem; }
+.footer-note { font-family: var(--font-mono); font-size: 0.8rem; color: var(--border); text-align: right; margin-top: 1.5rem; border-top: 1px solid var(--border); padding-top: 0.6rem; }
+@media (max-width: 500px) {
+    .card { padding: 1.2rem; }
+    .header h1 { font-size: 1.8rem; }
+    .badges { font-size: 0.85rem; gap: 0.4rem; }
+    .section p, .section li { font-size: 1rem; }
+}
+</style>
+</head>
+<body>
+<div class="card">
+
+<div class="header">
+    <h1>Cronómetro Seiko S23601P</h1>
+    <div class="codigo">CFD-013</div>
+    <div class="badges">
+        <span><strong>Marca:</strong> Seiko</span>
+        <span><strong>Modelo:</strong> S23601P</span>
+        <span><strong>Calibre:</strong> S056</span>
+        <span><strong>Resistencia:</strong> 5 BAR (50 m)</span>
+    </div>
+</div>
+
+<div class="section">
+    <h2>Para qué sirve</h2>
+    <p>Cronómetro digital profesional con memoria de 100 vueltas, diseñado para cronometrar eventos deportivos con alta precisión. Permite medir tiempos de hasta 100 horas con resolución de 1/100 de segundo.</p>
+</div>
+
+<div class="section">
+    <h2>Uso correcto</h2>
+    <ul>
+        <li><strong>Encendido:</strong> Presionar cualquier botón para activar la pantalla.</li>
+        <li><strong>Inicio/Parada:</strong> Usar el botón <span class="mono">START/STOP</span> para iniciar y detener el cronometraje.</li>
+        <li><strong>Medición de vueltas:</strong> Durante el cronometraje, presionar <span class="mono">SPLIT/LAP</span> para registrar tiempos de vuelta. La pantalla mostrará el tiempo de vuelta actual y el tiempo total transcurrido.</li>
+        <li><strong>Memoria:</strong> El dispositivo almacena hasta 100 tiempos de vuelta o parciales, que se pueden recuperar incluso después de detener el cronometraje.</li>
+        <li><strong>Reinicio:</strong> Presionar <span class="mono">RESET</span> para borrar el tiempo actual y volver a cero.</li>
+    </ul>
+</div>
+
+<div class="section">
+    <h2>Riesgos y seguridad</h2>
+    <div class="security-box">
+        <strong>Advertencia importante (batería de botón)</strong>
+        <ul>
+            <li><strong>Peligro de ingestión:</strong> Este producto contiene una batería de botón. Mantener fuera del alcance de los niños. La ingestión de una batería de botón puede causar lesiones graves en poco tiempo. Buscar atención médica de inmediato si se sospecha que ha sido ingerida.</li>
+            <li><strong>Uso en agua:</strong> Resistente al agua hasta 5 BAR (50 m), adecuado para deportes acuáticos y actividades al aire libre.</li>
+        </ul>
+    </div>
+</div>
+
+<div class="section">
+    <h2>Limpieza y cuidado</h2>
+    <ul>
+        <li><strong>Limpieza:</strong> Limpiar con un paño suave y seco. Evitar el uso de disolventes o productos químicos agresivos.</li>
+        <li><strong>Batería:</strong> El cronómetro cuenta con un indicador de vida de la batería. Cuando la batería esté baja, reemplazarla por una nueva del tipo adecuado.</li>
+        <li><strong>Almacenamiento:</strong> Guardar en un lugar seco y a temperatura ambiente. No exponer a temperaturas extremas.</li>
+    </ul>
+</div>
+
+<div class="section">
+    <h2>Límites o especificaciones (fabricante)</h2>
+    <ul>
+        <li><strong>Capacidad de medición:</strong> Hasta 100 horas con resolución de 1/100 de segundo.</li>
+        <li><strong>Memoria:</strong> Almacena hasta 100 tiempos de vuelta o parciales.</li>
+        <li><strong>Resistencia al agua:</strong> 5 BAR (50 metros).</li>
+        <li><strong>Pantalla:</strong> Dos líneas, muestra tiempo de vuelta, tiempo parcial y tiempo total.</li>
+        <li><strong>Calendario:</strong> Calendario automático completo.</li>
+        <li><strong>Calibre:</strong> S056, movimiento de cuarzo.</li>
+    </ul>
+    <p style="margin-top: 0.4rem; font-style: italic;">*Especificaciones consistentes con la ficha técnica de distribuidores autorizados de Seiko para el calibre S056.</p>
+</div>
+
+<hr>
+<div class="footer-note">Ficha de uso &mdash; CFD-013 v1.1 &middot; Lab de Cultura Física y Deporte</div>
+
+</div>
+</body>
+</html>

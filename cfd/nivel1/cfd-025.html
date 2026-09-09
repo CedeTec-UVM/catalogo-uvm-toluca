@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<title>Polar Vantage M2 · Guía de laboratorio</title>
+<meta name="description" content="Cómo usar el reloj multideporte Polar Vantage M2 del Lab de Cultura Física y Deporte: botones, emparejamiento, sesión de entrenamiento y batería.">
+<meta name="theme-color" content="#E4E1D6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121A24" media="(prefers-color-scheme: dark)">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#E4E1D6; --card:#F2F0E9; --ink:#16283F; --ink-2:#455670;
+  --rule:#C6C0B0; --muted:#6F7787; --live:#B03A22;
+  --lcd:#C6DDD6; --lcd-deep:#9FBDB4; --lcd-ink:#10231D;
+  --display:"Barlow Condensed",Impact,"Arial Narrow",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,"SF Mono",Menlo,monospace;
+  --body:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#121A24; --card:#1B242F; --ink:#E6E9EC; --ink-2:#AFB7C0;
+        --rule:#2E3944; --muted:#8A939E; --live:#E8785A;}
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);
+  font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased;
+  -webkit-tap-highlight-color:transparent;overflow-wrap:break-word}
+body.lock{overflow:hidden}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+.wrap{max-width:780px;margin:0 auto;padding:0 16px calc(56px + env(safe-area-inset-bottom))}
+a{color:var(--ink)}
+
+.hero{padding:22px 0 16px}
+.brand{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin:0}
+h1{font-family:var(--display);font-weight:700;text-transform:uppercase;
+   font-size:clamp(52px,15vw,100px);line-height:.85;margin:4px 0 8px}
+.tagline{font-family:var(--display);font-weight:600;text-transform:uppercase;letter-spacing:.05em;
+   font-size:clamp(17px,4.6vw,23px);line-height:1.15;margin:0 0 16px;color:var(--ink-2)}
+.strip{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rule);
+   border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.strip div{background:var(--bg);padding:9px 10px 10px}
+.strip dt{font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:0 0 2px}
+.strip dd{margin:0;font-family:var(--mono);font-size:14px;font-weight:600}
+
+.jump{position:sticky;top:0;z-index:30;margin:0 -16px;
+  background:color-mix(in srgb,var(--bg) 92%,transparent);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--rule)}
+.jump ul{display:flex;overflow-x:auto;list-style:none;margin:0;padding:0 10px;scrollbar-width:none}
+.jump ul::-webkit-scrollbar{display:none}
+.jump a{display:block;white-space:nowrap;padding:13px 11px;text-decoration:none;
+  font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.jump a:active{color:var(--ink)}
+
+section{margin-top:34px;scroll-margin-top:56px}
+.sec-head{display:flex;align-items:baseline;gap:10px;border-bottom:1.5px solid var(--ink);padding-bottom:6px;margin-bottom:14px}
+.sec-num{font-family:var(--mono);font-size:11px;color:var(--live);letter-spacing:.08em}
+h2{font-family:var(--display);font-weight:700;text-transform:uppercase;
+   font-size:clamp(25px,7vw,34px);line-height:1;margin:0}
+.lede{color:var(--ink-2);margin:0 0 16px;font-size:15.5px}
+
+.panel-box{background:var(--card);border:1px solid var(--rule);border-radius:4px;padding:8px}
+#panelHost svg.panel{width:100%;height:auto;display:block;touch-action:manipulation}
+.panel-bar{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:8px}
+.panel-bar p{margin:0;font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.zoom-btn{font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;
+  background:var(--ink);color:var(--bg);border:1px solid var(--ink);border-radius:999px;
+  padding:11px 18px;min-height:44px;cursor:pointer}
+.zoom-btn:active{opacity:.75}
+
+.ctl{cursor:pointer}
+.ctl .hit{fill:transparent}
+.ring{fill:none;stroke:#B03A22;stroke-width:3;opacity:0}
+.ctl.on .ring{opacity:1}
+.ctl.on .cap{fill:#FFE08A;stroke:#B03A22}
+.ctl:focus-visible{outline:none}
+.ctl:focus-visible .ring{opacity:1;stroke-dasharray:6 4}
+
+.fs{position:fixed;inset:0;z-index:100;background:#0C1219;
+  display:flex;align-items:center;justify-content:center;overscroll-behavior:contain;overflow:hidden}
+.fs[hidden]{display:none}
+.fs-rot{position:relative;line-height:0;width:100vw;flex:0 0 auto}
+@media (orientation:portrait){ .fs-rot{transform:rotate(90deg)} }
+.fs-rot svg.panel{display:block;width:100%;height:auto}
+.fs-close,.fs-tip{position:absolute;z-index:4;font-family:var(--mono);
+  font-size:12px;letter-spacing:.08em;text-transform:uppercase;line-height:1}
+.fs-close{top:2%;right:1.6%;background:#16283F;color:#EBE8DE;border:0;
+  border-radius:999px;padding:11px 16px;min-height:42px;cursor:pointer}
+.fs-close:active{opacity:.75}
+.fs-tip{left:1.6%;bottom:3%;color:#8FA0B4;pointer-events:none}
+
+.pop{position:absolute;z-index:3;background:var(--lcd);color:var(--lcd-ink);
+  border:1px solid #6E8880;border-radius:4px;padding:.75em .85em;line-height:1.4;
+  box-shadow:0 8px 26px rgba(0,0,0,.45);text-align:left}
+.pop[hidden]{display:none}
+.pop h4{margin:0 0 .3em;font-family:var(--display);font-weight:700;text-transform:uppercase;
+  font-size:1.3em;line-height:1.05;letter-spacing:.02em}
+.pop p{margin:0;font-size:1em}
+.pop .num{font-family:var(--mono);font-size:.75em;opacity:.65;letter-spacing:.1em;display:block;margin-bottom:.15em}
+.pop::after{content:"";position:absolute;width:.62em;height:.62em;background:var(--lcd);
+  border:1px solid #6E8880;transform:rotate(45deg)}
+.pop.pr::after{left:-.35em;top:calc(var(--cy,50%) - .31em);border-right:0;border-top:0}
+.pop.pl::after{right:-.35em;top:calc(var(--cy,50%) - .31em);border-left:0;border-bottom:0}
+.pop.pb::after{top:-.35em;left:calc(50% - .31em);border-right:0;border-bottom:0}
+.pop.pt::after{bottom:-.35em;left:calc(50% - .31em);border-left:0;border-top:0}
+
+.ctl-list{margin-top:18px}
+.grp{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--live);margin:26px 0 0;padding:0 0 7px;border-bottom:1.5px solid var(--ink);font-weight:600}
+.grp:first-child{margin-top:0}
+.row{border-bottom:1px solid var(--rule)}
+.row>summary{display:flex;align-items:center;gap:12px;list-style:none;cursor:pointer;padding:15px 4px;min-height:56px}
+.row>summary::-webkit-details-marker{display:none}
+.row>summary:active{background:var(--card)}
+.badge{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--muted);min-width:26px}
+.nm{font-family:var(--display);font-weight:600;text-transform:uppercase;letter-spacing:.03em;
+  font-size:20px;line-height:1.05;flex:1}
+.chev{font-family:var(--mono);color:var(--muted);font-size:18px;line-height:1}
+.row[open] .chev,.row[open] .nm{color:var(--live)}
+
+.lcd{background:var(--lcd);color:var(--lcd-ink);border-radius:3px;padding:15px 15px 16px;margin:0 0 15px;
+  box-shadow:inset 0 0 0 3px rgba(0,0,0,.06);
+  background-image:repeating-linear-gradient(0deg,rgba(0,0,0,.04) 0 1px,transparent 1px 3px)}
+.lcd p{margin:0;font-size:15.5px;line-height:1.55}
+.lcd .tip{font-family:var(--mono);font-size:13.5px;line-height:1.5;
+  border-top:1px solid rgba(16,35,29,.3);padding-top:10px;margin-top:11px}
+.lcd .tip b{display:block;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
+  font-size:10.5px;opacity:.72;margin-bottom:3px}
+
+ol.steps{list-style:none;counter-reset:s;margin:0;padding:0;border-top:1px solid var(--rule)}
+ol.steps li{counter-increment:s;padding:14px 0 15px 46px;border-bottom:1px solid var(--rule);position:relative}
+ol.steps li::before{content:counter(s,decimal-leading-zero);position:absolute;left:0;top:16px;
+  font-family:var(--mono);font-size:12px;font-weight:600;color:var(--live)}
+ol.steps b{font-weight:600}
+ol.steps span{display:block;color:var(--ink-2);font-size:15px;margin-top:3px}
+
+.bd{padding:0 0 20px}
+.bd p{margin:0 0 12px;font-size:15.5px;color:var(--ink-2)}
+.bd p b,.bd li b{color:var(--ink);font-weight:600}
+.bd ul{margin:0 0 14px;padding-left:19px}
+.bd li{margin-bottom:8px;font-size:15.5px;color:var(--ink-2)}
+
+.tbl{border-top:1px solid var(--ink);margin:0 0 16px}
+.tbl .r{display:grid;grid-template-columns:1fr;gap:1px 14px;padding:11px 0;border-bottom:1px solid var(--rule)}
+.tbl .k{font-family:var(--mono);font-size:13.5px;font-weight:600}
+.tbl .v{font-size:15px;color:var(--ink-2)}
+@media (min-width:560px){.tbl .r{grid-template-columns:minmax(150px,34%) 1fr}}
+.m{font-family:var(--mono);font-size:.9em;background:color-mix(in srgb,var(--ink) 9%,transparent);padding:1px 5px;border-radius:2px}
+
+.warn{border-left:3px solid var(--live);background:var(--card);padding:12px 14px;margin:0 0 15px}
+.warn b{font-family:var(--mono);font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--live);display:block;margin-bottom:3px}
+.warn p{margin:0 0 8px;font-size:15px}
+.warn p:last-child{margin-bottom:0}
+
+.top{display:block;margin:26px 0 0;text-align:center;font-family:var(--mono);font-size:12px;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-decoration:none;padding:14px}
+footer{margin-top:34px;border-top:1.5px solid var(--ink);padding-top:14px;
+  font-family:var(--mono);font-size:12px;color:var(--muted);line-height:1.75}
+
+@media print{
+  body{background:#fff;color:#000;font-size:11pt}
+  .jump,.panel-bar,.top,.fs{display:none}
+  .lcd{background:#fff;color:#000;box-shadow:none;border:1px solid #999;background-image:none}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero" id="top">
+  <p class="brand">Polar Electro · Lab de Cultura Física · CFD-025</p>
+  <h1>Polar<br>Vantage M2</h1>
+  <p class="tagline">Reloj multideporte con GPS y frecuencia cardiaca de muñeca</p>
+  <dl class="strip">
+    <div><dt>Batería</dt><dd>40 h entreno · 7 días reloj</dd></div>
+    <div><dt>Resistencia agua</dt><dd>WR30</dd></div>
+    <div><dt>Pantalla</dt><dd>1.2" · 240×240</dd></div>
+    <div><dt>Botones</dt><dd>5</dd></div>
+  </dl>
+</header>
+
+<div class="warn" style="margin-top:18px">
+  <b>Verificar antes de publicar</b>
+  <p>El catálogo de la universidad registra este equipo como <b>Polar Vantage M</b>, pero la caja y el reloj físico corresponden al <b>Polar Vantage M2</b>, un modelo posterior con más autonomía de batería. Esta guía está escrita para el M2, que es lo que hay físicamente. Los botones y el uso básico son casi idénticos entre ambos modelos, pero la batería y algunas funciones cambian.</p>
+</div>
+
+<nav class="jump" aria-label="Secciones">
+  <ul>
+    <li><a href="#partes">Las partes</a></li>
+    <li><a href="#config">Configuración</a></li>
+    <li><a href="#usar">Usarlo</a></li>
+    <li><a href="#funciones">Funciones</a></li>
+    <li><a href="#pila">La batería</a></li>
+    <li><a href="#cuidado">Cuidado</a></li>
+    <li><a href="#limites">Límites</a></li>
+  </ul>
+</nav>
+
+<section id="partes">
+  <div class="sec-head"><span class="sec-num">01</span><h2>Las partes</h2></div>
+  <p class="lede">Toca cualquier elemento del esquema.</p>
+
+  <div class="panel-box">
+    <div id="panelHost">
+    <svg class="panel" id="svgPanel" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Esquema del reloj Polar Vantage M2, vista frontal">
+      <defs><style>
+        .t{font-family:Helvetica,Arial,sans-serif;fill:#16283F}
+        .tc{font-family:Helvetica,Arial,sans-serif;fill:#16283F;text-anchor:middle;pointer-events:none}
+        .lb{font-family:Helvetica,Arial,sans-serif;fill:#6F7787;font-size:11px;text-anchor:middle;pointer-events:none}
+        .dim{font-family:"IBM Plex Mono",monospace;fill:#B03A22;font-size:10.5px;text-anchor:middle;pointer-events:none}
+        .cap:not([fill]){fill:#D6D2C7} .cap:not([stroke]){stroke:#A9A597} .cap{stroke-width:1}
+      </style></defs>
+
+      <rect x="0" y="0" width="800" height="400" fill="#F2F0E9"/>
+      <text class="t" x="52" y="32" font-size="15" font-weight="700">Reloj Vantage M2, vista frontal</text>
+      <text class="t" x="52" y="51" font-size="11" fill="#6F7787">Esquema, no est&#225; a escala</text>
+
+      <!-- correa superior -->
+      <rect x="356" y="60" width="88" height="60" rx="14" fill="#5A5F64" stroke="#3C4145"/>
+      <!-- correa inferior -->
+      <rect x="356" y="316" width="88" height="60" rx="14" fill="#5A5F64" stroke="#3C4145"/>
+
+      <!-- caja del reloj -->
+      <circle cx="400" cy="220" r="118" fill="#3A3F45" stroke="#22262A" stroke-width="4"/>
+      <circle cx="400" cy="220" r="98" fill="#16283F"/>
+
+      <!-- pantalla -->
+      <g class="ctl" data-id="pantalla" role="button" tabindex="0" aria-label="Pantalla del reloj">
+        <rect class="ring" x="316" y="136" width="168" height="168" rx="14"/>
+        <rect class="cap" x="320" y="140" width="160" height="160" rx="12" fill="#C6DDD6" stroke="#6E8880"/>
+        <text class="tc" x="400" y="200" font-size="30" fill="#10231D" font-family="IBM Plex Mono, monospace" font-weight="600">142</text>
+        <text class="tc" x="400" y="222" font-size="11" fill="#3A5A50" font-family="IBM Plex Mono, monospace">BPM</text>
+        <text class="tc" x="400" y="258" font-size="14" fill="#10231D" font-family="IBM Plex Mono, monospace">5.2 km</text>
+        <rect class="hit" x="316" y="136" width="168" height="168"/>
+      </g>
+
+      <!-- LIGHT: arriba derecha -->
+      <g class="ctl" data-id="light" role="button" tabindex="0" aria-label="Botón LIGHT">
+        <rect class="ring" x="494" y="148" width="46" height="46" rx="8"/>
+        <rect class="cap" x="500" y="154" width="34" height="34" rx="6" fill="#8E9296" stroke="#6C7074"/>
+        <text class="dim" x="580" y="172">LIGHT</text>
+        <line x1="534" y1="168" x2="562" y2="168" stroke="#B03A22" stroke-width="1"/>
+        <rect class="hit" x="494" y="148" width="46" height="46"/>
+      </g>
+
+      <!-- BACK: en medio derecha -->
+      <g class="ctl" data-id="back" role="button" tabindex="0" aria-label="Botón BACK">
+        <rect class="ring" x="500" y="197" width="46" height="46" rx="8"/>
+        <rect class="cap" x="506" y="203" width="34" height="34" rx="6" fill="#8E9296" stroke="#6C7074"/>
+        <text class="dim" x="600" y="220">BACK</text>
+        <line x1="540" y1="220" x2="572" y2="220" stroke="#B03A22" stroke-width="1"/>
+        <rect class="hit" x="500" y="197" width="46" height="46"/>
+      </g>
+
+      <!-- OK: abajo derecha -->
+      <g class="ctl" data-id="ok" role="button" tabindex="0" aria-label="Botón OK">
+        <rect class="ring" x="494" y="246" width="46" height="46" rx="8"/>
+        <rect class="cap" x="500" y="252" width="34" height="34" rx="6" fill="#8E9296" stroke="#6C7074"/>
+        <text class="dim" x="574" y="284">OK</text>
+        <line x1="534" y1="269" x2="558" y2="280" stroke="#B03A22" stroke-width="1"/>
+        <rect class="hit" x="494" y="246" width="46" height="46"/>
+      </g>
+
+      <!-- UP: arriba izquierda -->
+      <g class="ctl" data-id="up" role="button" tabindex="0" aria-label="Botón UP">
+        <rect class="ring" x="260" y="172" width="46" height="46" rx="8"/>
+        <rect class="cap" x="266" y="178" width="34" height="34" rx="6" fill="#8E9296" stroke="#6C7074"/>
+        <text class="dim" x="196" y="192">UP</text>
+        <line x1="266" y1="192" x2="230" y2="192" stroke="#B03A22" stroke-width="1"/>
+        <rect class="hit" x="260" y="172" width="46" height="46"/>
+      </g>
+
+      <!-- DOWN: abajo izquierda -->
+      <g class="ctl" data-id="down" role="button" tabindex="0" aria-label="Botón DOWN">
+        <rect class="ring" x="260" y="222" width="46" height="46" rx="8"/>
+        <rect class="cap" x="266" y="228" width="34" height="34" rx="6" fill="#8E9296" stroke="#6C7074"/>
+        <text class="dim" x="192" y="252">DOWN</text>
+        <line x1="266" y1="248" x2="230" y2="252" stroke="#B03A22" stroke-width="1"/>
+        <rect class="hit" x="260" y="222" width="46" height="46"/>
+      </g>
+
+      <!-- puerto de carga (parte trasera, indicado en la caja) -->
+      <g class="ctl" data-id="carga" role="button" tabindex="0" aria-label="Contactos de carga en la parte trasera">
+        <rect class="ring" x="366" y="326" width="68" height="26" rx="6"/>
+        <rect class="cap" x="372" y="331" width="56" height="16" rx="4" fill="#5A5F64" stroke="#3C4145"/>
+        <circle cx="386" cy="339" r="3" fill="#C8CCD0"/>
+        <circle cx="400" cy="339" r="3" fill="#C8CCD0"/>
+        <circle cx="414" cy="339" r="3" fill="#C8CCD0"/>
+        <text class="lb" x="400" y="368">contactos de carga (parte trasera)</text>
+        <rect class="hit" x="366" y="326" width="68" height="26"/>
+      </g>
+    </svg>
+    </div>
+    <div class="panel-bar">
+      <p>Toca un elemento</p>
+      <button class="zoom-btn" id="zoom" type="button">Ver en grande ⤢</button>
+    </div>
+  </div>
+
+  <div class="ctl-list">
+    <h3 class="grp">Los botones</h3>
+
+    <details class="row" id="c-light" data-short="Ilumina la pantalla. En la hora, muestra el nivel de batería. Mantenlo presionado para bloquear los botones."><summary><span class="badge">01</span><span class="nm">LIGHT</span><span class="chev">+</span></summary><div class="lcd">
+      <p>Ilumina la pantalla. Estando en la vista de hora, presionarlo muestra el símbolo de batería. <b>Mantenerlo presionado bloquea los botones</b>, útil para que no se activen por accidente durante el ejercicio.</p>
+      <div class="tip"><b>En la práctica</b>También sirve para revisar rápido el nivel de batería sin entrar a ningún menú.</div></div></details>
+
+    <details class="row" id="c-back" data-short="Entra al menú y regresa al nivel anterior. Mantenido, regresa a la hora o inicia el emparejamiento con la app Flow."><summary><span class="badge">02</span><span class="nm">BACK</span><span class="chev">+</span></summary><div class="lcd">
+      <p>Entra al menú, regresa al nivel anterior, cancela una selección o deja sin cambios un ajuste.</p>
+      <div class="tip"><b>En la práctica</b>Mantenido desde la vista de hora, inicia el emparejamiento y la sincronización con la app Polar Flow. Mantenido desde el menú, regresa directo a la hora.</div></div></details>
+
+    <details class="row" id="c-ok" data-short="Confirma la selección en pantalla. Mantenido, entra al modo previo al entrenamiento (pre-training)."><summary><span class="badge">03</span><span class="nm">OK</span><span class="chev">+</span></summary><div class="lcd">
+      <p>Confirma lo que se muestra en pantalla. Presionarlo también muestra más detalle sobre la información de la carátula.</p>
+      <div class="tip"><b>En la práctica</b>Mantenido desde la vista de hora, entra al modo previo al entrenamiento (pre-training), donde el reloj busca la señal de GPS y de frecuencia cardiaca antes de empezar.</div></div></details>
+
+    <details class="row" id="c-up" data-short="Cambia la carátula en la vista de hora. En listas y menús, se mueve hacia arriba o aumenta un valor."><summary><span class="badge">04</span><span class="nm">UP</span><span class="chev">+</span></summary><div class="lcd">
+      <p>En la vista de hora, cambia entre las carátulas disponibles. Dentro de listas o menús, se mueve hacia arriba o aumenta el valor seleccionado.</p></div></details>
+
+    <details class="row" id="c-down" data-short="Funciona igual que UP pero en sentido contrario: hacia abajo o disminuyendo el valor."><summary><span class="badge">05</span><span class="nm">DOWN</span><span class="chev">+</span></summary><div class="lcd">
+      <p>Funciona en espejo con UP: mueve hacia abajo en listas y menús, o disminuye el valor que se está ajustando.</p></div></details>
+
+    <details class="row" id="c-pantalla" data-short="Pantalla a color siempre encendida, de 1.2 pulgadas y 240×240 píxeles. Muestra frecuencia cardiaca, distancia y más según el deporte."><summary><span class="badge">06</span><span class="nm">Pantalla</span><span class="chev">+</span></summary><div class="lcd">
+      <p>Pantalla a color de 1.2 pulgadas, resolución 240×240, siempre encendida. Durante el entrenamiento muestra hasta varios datos a la vez, según cómo esté configurado el perfil deportivo.</p></div></details>
+
+    <details class="row" id="c-carga" data-short="Tres contactos metálicos en la parte trasera de la caja, para el cable de carga propietario de Polar." data-parent="reverso"><summary><span class="badge">07</span><span class="nm">Contactos de carga</span><span class="chev">+</span></summary><div class="lcd">
+      <p>Están en la parte trasera de la caja del reloj, en contacto con la piel durante el uso. Solo funcionan con el <b>cable de carga propietario de Polar</b> que viene con el equipo; no es un cable USB genérico.</p>
+      <div class="tip"><b>En la práctica</b>Es el mismo lugar donde el reloj mide la frecuencia cardiaca desde la muñeca, así que hay que mantenerlo limpio.</div></div></details>
+  </div>
+  <a class="top" href="#top">↑ Inicio</a>
+</section>
+
+<section id="config">
+  <div class="sec-head"><span class="sec-num">02</span><h2>Configuración inicial</h2></div>
+  <p class="lede">Se hace una sola vez por usuario, antes del primer entrenamiento.</p>
+  <ol class="steps">
+    <li><b>Descarga la app Polar Flow.</b><span>En el celular que se vaya a usar para configurar el reloj.</span></li>
+    <li><b>Enciende el reloj.</b><span>Presiona cualquier botón. Si es la primera vez, pedirá elegir idioma.</span></li>
+    <li><b>Abre la app y sigue el emparejamiento.</b><span>La app reconoce el reloj por Bluetooth y pide confirmar un código en la pantalla del reloj.</span></li>
+    <li><b>Inicia sesión o crea una cuenta Polar.</b><span>Los datos y ajustes se guardan ahí y se sincronizan al reloj.</span></li>
+    <li><b>Completa los datos personales.</b><span>Peso, estatura, fecha de nacimiento y sexo: se usan para calcular calorías y frecuencias objetivo.</span></li>
+  </ol>
+  <div class="warn"><b>Un reloj, un usuario por sesión</b><p>Como es equipo de laboratorio compartido entre varios alumnos, los datos personales (peso, edad) quedan guardados hasta que alguien los cambie. Revisa que coincidan con quien lo va a usar antes de empezar a entrenar, o las calorías y zonas de frecuencia van a salir mal calculadas.</p></div>
+  <a class="top" href="#top">↑ Inicio</a>
+</section>
+
+<section id="usar">
+  <div class="sec-head"><span class="sec-num">03</span><h2>Usarlo en una sesión</h2></div>
+  <ol class="steps">
+    <li><b>Entra al modo previo al entrenamiento.</b><span>Mantén presionado OK desde la vista de hora y elige el deporte.</span></li>
+    <li><b>Espera a que encuentre la frecuencia cardiaca.</b><span>El reloj la mide desde la muñeca; aparece en pantalla cuando la detecta.</span></li>
+    <li><b>Si el deporte usa GPS, espera la señal.</b><span>El círculo alrededor del ícono de GPS se pone verde cuando está listo. Sal a espacio abierto, lejos de edificios altos y árboles.</span></li>
+    <li><b>Inicia el entrenamiento.</b><span>Presiona OK de nuevo para empezar a registrar.</span></li>
+    <li><b>Consulta el menú rápido si lo necesitas.</b><span>El botón LIGHT abre opciones útiles durante la sesión, según el deporte elegido.</span></li>
+    <li><b>Detén y guarda al terminar.</b><span>Mantén presionado BACK para parar, y confirma para guardar la sesión.</span></li>
+  </ol>
+  <a class="top" href="#top">↑ Inicio</a>
+</section>
+
+<section id="funciones">
+  <div class="sec-head"><span class="sec-num">04</span><h2>Funciones útiles</h2></div>
+  <div class="bd">
+    <p><b>Más de 130 perfiles deportivos.</b> Cada uno se puede personalizar por separado (qué datos mostrar, si usa GPS, etc.), desde la app Polar Flow o desde el propio reloj.</p>
+    <p><b>Sincronización automática.</b> Si el celular está cerca y la app Flow abierta, las sesiones se suben solas por Bluetooth. También se puede forzar manualmente manteniendo presionado BACK desde la vista de hora.</p>
+    <p><b>Ahorro de energía.</b> Para sesiones muy largas, se puede apagar la frecuencia cardiaca de muñeca o usar el protector de pantalla, extendiendo la duración de la batería hasta 100 horas en modo entrenamiento.</p>
+  </div>
+  <a class="top" href="#top">↑ Inicio</a>
+</section>
+
+<section id="pila">
+  <div class="sec-head"><span class="sec-num">05</span><h2>La batería</h2></div>
+  <div class="bd">
+    <div class="tbl">
+      <div class="r"><div class="k">Tipo</div><div class="v">Li-Pol recargable de 230 mAh, no reemplazable por el usuario</div></div>
+      <div class="r"><div class="k">Duración</div><div class="v">Hasta 40 h en modo entrenamiento (GPS y frecuencia de muñeca) o 7 días en modo reloj</div></div>
+      <div class="r"><div class="k">Con ahorro de energía</div><div class="v">Hasta 100 h en modo entrenamiento</div></div>
+      <div class="r"><div class="k">Carga</div><div class="v">Solo con el cable de carga propietario de Polar, por los contactos traseros</div></div>
+    </div>
+    <p>No usar cargadores ni cables genéricos: el conector es propietario y no es compatible con USB-C ni micro-USB estándar.</p>
+  </div>
+  <a class="top" href="#top">↑ Inicio</a>
+</section>
+
+<section id="cuidado">
+  <div class="sec-head"><span class="sec-num">06</span><h2>Cuidado</h2></div>
+  <div class="bd">
+    <ul>
+      <li>Limpia la correa y los contactos traseros con un paño húmedo después de cada uso, sobre todo si hubo sudor.</li>
+      <li>No uses jabón agresivo ni alcohol directamente sobre la pantalla o los contactos.</li>
+      <li>Es resistente al agua (WR30, apto para nadar), pero <b>no presiones los botones bajo el agua</b>: puede afectar el sello.</li>
+      <li>Guarda el reloj en lugar seco cuando no esté en uso, con algo de carga en la batería.</li>
+    </ul>
+  </div>
+  <a class="top" href="#top">↑ Inicio</a>
+</section>
+
+<section id="limites">
+  <div class="sec-head"><span class="sec-num">07</span><h2>Límites</h2></div>
+  <div class="bd"><div class="tbl">
+    <div class="r"><div class="k">Medidas</div><div class="v">46 × 46 × 12.5 mm</div></div>
+    <div class="r"><div class="k">Peso</div><div class="v">45.5 g con correa</div></div>
+    <div class="r"><div class="k">Pantalla</div><div class="v">1.2", 240×240 px, a color, siempre encendida</div></div>
+    <div class="r"><div class="k">Resistencia al agua</div><div class="v">WR30 (apto para nadar, no para buceo)</div></div>
+    <div class="r"><div class="k">GPS</div><div class="v">GPS + GLONASS integrados</div></div>
+    <div class="r"><div class="k">Conectividad</div><div class="v">Bluetooth Low Energy, cable USB propietario</div></div>
+    <div class="r"><div class="k">Temperatura de uso</div><div class="v">−10 a 50 °C</div></div>
+  </div>
+  <p>Los datos de esta tabla corresponden al Polar Vantage <b>M2</b>, el modelo que hay físicamente, no al "Vantage M" que aparece en el catálogo institucional.</p>
+  </div>
+</section>
+
+<footer>
+  <p>Guía del reloj Polar Vantage M2, resumida del manual del usuario oficial de Polar.<br>
+  El catálogo institucional registra este equipo como Polar Vantage M; el aparato físico es un Vantage M2.<br>
+  El manual oficial y el encargado del laboratorio mandan sobre esta guía.<br>
+  CFD-025 · Versión 1.0 · Septiembre de 2026.</p>
+</footer>
+
+</div>
+
+<div class="fs" id="fs" hidden>
+  <div class="fs-rot" id="fsRot">
+    <button class="fs-close" id="fsClose" type="button">Cerrar ✕</button>
+    <span class="fs-tip" id="fsTip">Toca cualquier elemento</span>
+    <div class="pop" id="pop" hidden></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var svg = document.getElementById('svgPanel');
+  var host= document.getElementById('panelHost');
+  var fs  = document.getElementById('fs');
+  var rot = document.getElementById('fsRot');
+  var pop = document.getElementById('pop');
+  var tip = document.getElementById('fsTip');
+  var rows = Array.prototype.slice.call(document.querySelectorAll('.row'));
+  var ctls = Array.prototype.slice.call(document.querySelectorAll('.ctl'));
+  var VB_FULL = {minx:0, miny:0, w:800, h:400};
+  var VB_CROP = {minx:150, miny:40, w:520, h:340};
+  var VB_MINX = VB_FULL.minx, VB_MINY = VB_FULL.miny, VB_W = VB_FULL.w, VB_H = VB_FULL.h;
+  var RATIO = VB_W / VB_H, activeG = null;
+
+  function setCrop(on){
+    var vb = on ? VB_CROP : VB_FULL;
+    VB_MINX = vb.minx; VB_MINY = vb.miny; VB_W = vb.w; VB_H = vb.h;
+    RATIO = VB_W / VB_H;
+    svg.setAttribute('viewBox', vb.minx+' '+vb.miny+' '+vb.w+' '+vb.h);
+  }
+  function viewportSize(){
+    var vv = window.visualViewport;
+    return {w:(vv&&vv.width)||window.innerWidth, h:(vv&&vv.height)||window.innerHeight};
+  }
+  function sizeFS(){
+    if(fs.hidden) return;
+    var v = viewportSize();
+    fs.style.width = v.w+'px'; fs.style.height = v.h+'px';
+    var w = (v.h >= v.w) ? Math.min(v.h, v.w*RATIO) : Math.min(v.w, v.h*RATIO);
+    rot.style.width = w+'px'; rot.style.height = 'auto';
+  }
+
+  var DATA = {};
+  rows.forEach(function(r){
+    var id = r.id.replace(/^c-/,'');
+    DATA[id] = { badge:r.querySelector('.badge').textContent,
+                 title:r.querySelector('.nm').textContent,
+                 short:r.getAttribute('data-short') || r.querySelector('.lcd p').textContent };
+  });
+  function highlight(id){ ctls.forEach(function(g){ g.classList.toggle('on', g.dataset.id===id); }); }
+
+  rows.forEach(function(r){
+    r.addEventListener('toggle', function(){
+      if(r.open) rows.forEach(function(o){ if(o!==r) o.open=false; });
+      var open=null; rows.forEach(function(o){ if(o.open) open=o.id.replace(/^c-/,''); });
+      if(fs.hidden) highlight(open);
+    });
+  });
+
+  function hidePop(){ pop.hidden=true; activeG=null; highlight(null); }
+  function placePop(g){
+    var b = g.getBBox();
+    var sc = svg.getBoundingClientRect().width / VB_W;
+    if(!sc) return;
+    var W = rot.clientWidth, H = rot.clientHeight;
+    var bx=(b.x-VB_MINX)*sc, by=(b.y-VB_MINY)*sc, bw=b.width*sc, bh=b.height*sc;
+    pop.style.fontSize = Math.max(9, Math.min(15, W*0.0185))+'px';
+    pop.style.maxWidth = Math.min(W*0.34, 300)+'px';
+    pop.style.left='0px'; pop.style.top='0px';
+    var pw=pop.offsetWidth, ph=pop.offsetHeight;
+    var gap=Math.max(8, W*0.012), left, top, cls;
+    if(bx+bw+gap+pw <= W-6){ left=bx+bw+gap; cls='pr'; }
+    else if(bx-gap-pw >= 6){ left=bx-gap-pw; cls='pl'; }
+    else { left=Math.min(Math.max(bx+bw/2-pw/2,6), Math.max(6,W-pw-6));
+           cls=(by+bh+gap+ph <= H-6)?'pb':'pt'; }
+    if(cls==='pr'||cls==='pl') top=by+bh/2-ph/2;
+    else if(cls==='pb') top=by+bh+gap; else top=by-gap-ph;
+    top=Math.min(Math.max(top,6), Math.max(6,H-ph-6));
+    pop.className='pop '+cls; pop.style.left=left+'px'; pop.style.top=top+'px';
+    pop.style.setProperty('--cy', Math.min(Math.max(by+bh/2-top,10), Math.max(10,ph-10))+'px');
+  }
+  function showPop(g){
+    var d = DATA[g.dataset.id]; if(!d) return;
+    if(activeG===g){ hidePop(); return; }
+    activeG=g;
+    pop.innerHTML='<h4><span class="num">'+d.badge+'</span>'+d.title+'</h4><p>'+d.short+'</p>';
+    pop.hidden=false; highlight(g.dataset.id); placePop(g);
+    tip.style.visibility='hidden';
+  }
+  ctls.forEach(function(g){
+    function go(e){
+      if(e) e.stopPropagation();
+      if(!fs.hidden){ showPop(g); return; }
+      var r=document.getElementById('c-'+g.dataset.id); if(!r) return;
+      r.open=true; r.scrollIntoView({block:'center', behavior:'smooth'});
+    }
+    g.addEventListener('click', go);
+    g.addEventListener('keydown', function(e){
+      if(e.key==='Enter'||e.key===' '){ e.preventDefault(); go(e); }
+    });
+  });
+
+  var zoom=document.getElementById('zoom');
+  function openFS(){
+    rot.insertBefore(svg, rot.firstChild);
+    fs.hidden=false; document.body.classList.add('lock');
+    tip.style.visibility='visible'; highlight(null);
+    setCrop(true); sizeFS();
+    try{
+      var p=document.documentElement.requestFullscreen && document.documentElement.requestFullscreen();
+      if(p&&p.then) p.then(function(){
+        if(screen.orientation&&screen.orientation.lock){
+          var q=screen.orientation.lock('landscape'); if(q&&q.catch) q.catch(function(){});
+        }
+      }).catch(function(){});
+    }catch(e){}
+  }
+  function closeFS(){
+    hidePop(); host.appendChild(svg); fs.hidden=true;
+    fs.style.width=''; fs.style.height=''; rot.style.width=''; rot.style.height='';
+    setCrop(false); document.body.classList.remove('lock');
+    try{
+      if(screen.orientation&&screen.orientation.unlock) screen.orientation.unlock();
+      if(document.fullscreenElement&&document.exitFullscreen) document.exitFullscreen();
+    }catch(e){}
+  }
+  zoom.addEventListener('click', openFS);
+  document.getElementById('fsClose').addEventListener('click', function(e){ e.stopPropagation(); closeFS(); });
+  fs.addEventListener('click', function(){ if(!pop.hidden) hidePop(); });
+  pop.addEventListener('click', function(e){ e.stopPropagation(); });
+  document.addEventListener('keydown', function(e){
+    if(e.key!=='Escape'||fs.hidden) return;
+    if(!pop.hidden) hidePop(); else closeFS();
+  });
+  function reflow(){ sizeFS(); if(!fs.hidden&&activeG) placePop(activeG); }
+  window.addEventListener('resize', reflow);
+  window.addEventListener('orientationchange', function(){ setTimeout(reflow,250); });
+  if(window.visualViewport) window.visualViewport.addEventListener('resize', reflow);
+  window.addEventListener('beforeprint', function(){
+    if(!fs.hidden) closeFS();
+    document.querySelectorAll('details').forEach(function(d){ d.open=true; });
+  });
+})();
+</script>
+</body>
+</html>

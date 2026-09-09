@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fichas de Básculas - Gimnasio Terapéutico</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f4f4f4; --text-color: #1a1a1a; --card-bg: #ffffff; --border-color: #d0d0d0;
+            --warn-bg: #fff3cd; --warn-border: #ffeeba; --warn-text: #856404;
+            --heading-color: #2c3e50; --code-bg: #e9ecef; --meta-color: #495057;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-color: #1e1e1e; --text-color: #e0e0e0; --card-bg: #2d2d2d; --border-color: #444444;
+                --warn-bg: #3d3a1f; --warn-border: #665c2e; --warn-text: #d4c47a;
+                --heading-color: #b0c4de; --code-bg: #3a3a3a; --meta-color: #b0b0b0;
+                --shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+            }
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background-color: var(--bg-color); color: var(--text-color); font-family: 'Barlow Condensed', sans-serif;
+            padding: 2rem 1rem; display: flex; flex-direction: column; align-items: center; }
+        .container { max-width: 900px; width: 100%; }
+        .ficha { background-color: var(--card-bg); border-radius: 16px; padding: 1.8rem 2rem; margin-bottom: 2.5rem;
+            box-shadow: var(--shadow); border: 1px solid var(--border-color); }
+        .ficha h1 { font-size: 2.2rem; font-weight: 700; letter-spacing: 0.5px; color: var(--heading-color); margin-bottom: 0.15rem; line-height: 1.2; }
+        .ficha .subhead { font-family: 'IBM Plex Mono', monospace; font-size: 0.9rem; color: var(--meta-color);
+            border-bottom: 2px solid var(--border-color); padding-bottom: 0.8rem; margin-bottom: 1.2rem;
+            display: flex; flex-wrap: wrap; gap: 1rem 1.8rem; }
+        .ficha .subhead span { background-color: var(--code-bg); padding: 0.1rem 0.6rem; border-radius: 4px; font-weight: 600; }
+        .ficha h2 { font-size: 1.5rem; font-weight: 600; margin-top: 1.4rem; margin-bottom: 0.5rem; color: var(--heading-color);
+            border-left: 4px solid #4a90e2; padding-left: 0.7rem; }
+        .ficha p, .ficha li { font-size: 1.1rem; line-height: 1.5; margin-bottom: 0.6rem; }
+        .ficha ul { list-style: none; padding-left: 0.5rem; }
+        .ficha ul li::before { content: "• "; color: #4a90e2; font-weight: 700; }
+        .ficha .meta-dato { font-family: 'IBM Plex Mono', monospace; background-color: var(--code-bg); padding: 0.1rem 0.5rem; border-radius: 4px; font-size: 0.9rem; display: inline-block; }
+        .warn { background-color: var(--warn-bg); border-left: 6px solid #ffc107; border-radius: 8px; padding: 1rem 1.5rem;
+            margin-bottom: 1.8rem; color: var(--warn-text); font-size: 1rem; }
+        .warn b { font-size: 1.1rem; display: block; margin-bottom: 0.3rem; }
+        .warn p { margin: 0; font-size: 0.95rem; }
+        .nota { font-style: italic; color: var(--meta-color); font-size: 0.95rem; margin-top: 0.2rem; }
+        .spec-grid { display: grid; grid-template-columns: auto 1fr; gap: 0.2rem 1rem; margin-top: 0.5rem; font-size: 1.05rem; }
+        .spec-grid .label { font-weight: 600; color: var(--heading-color); }
+        .spec-grid .value { font-family: 'IBM Plex Mono', monospace; }
+        hr { border: 0; border-top: 2px dashed var(--border-color); margin: 1.8rem 0 0.5rem 0; }
+        @media (max-width: 600px) {
+            body { padding: 1rem 0.5rem; } .ficha { padding: 1.2rem; } .ficha h1 { font-size: 1.8rem; }
+            .ficha .subhead { flex-direction: column; gap: 0.3rem; }
+            .spec-grid { grid-template-columns: 1fr; gap: 0rem; } .spec-grid .label { margin-top: 0.3rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <div class="ficha" id="gt-009-d">
+        <div class="warn"><b>Código provisional — pendiente de catálogo</b>
+            <p>El catálogo institucional solo registra un renglón "GT-009 Báscula" para las cinco básculas encontradas en este espacio. Esta ficha usa un código provisional hasta que se decida si el catálogo debe corregirse. No usar este código para trámites administrativos sin confirmar primero con el encargado del catálogo.</p></div>
+        <h1>Báscula de composición corporal</h1>
+        <div class="subhead"><span>Marca: Tanita</span><span>Modelo: TBF-604</span><span>Código provisional: GT-009-D</span></div>
+        <h2>Para qué sirve</h2>
+        <p>Monitor de peso y grasa corporal que utiliza la técnica de Análisis de Impedancia Bioeléctrica (BIA) para estimar el porcentaje de grasa corporal. Está diseñado para uso doméstico y clínico, permitiendo almacenar datos personales de hasta dos usuarios (con posibilidad de reprogramar para más).</p>
+        <h2>Uso correcto</h2>
+        <p><strong>Cómo encender:</strong> La báscula no tiene un botón de encendido; se activa automáticamente al pisar la plataforma con los pies descalzos, asegurándose de que los talones y los dedos estén alineados con los electrodos.</p>
+        <p><strong>Botones (SET y flecha verde):</strong></p>
+        <ul>
+            <li><strong>SET (azul):</strong> Se utiliza para programar los datos personales (sexo, edad, estatura) en los números de memoria (1 o 2). Presionando este botón se confirman los ajustes y se navega por los parámetros.</li>
+            <li><strong>Flecha verde (▲):</strong> Permite modificar los valores (edad, altura) hacia arriba y seleccionar el número de usuario (1 o 2) durante la programación.</li>
+        </ul>
+        <p><strong>Cómo leer el resultado:</strong> La medición es automática. Una vez que la báscula registra el peso, aparece una cuenta regresiva en pantalla ("5, 4, 3, 2, 1") mientras se calcula el porcentaje de grasa corporal. El resultado final se muestra junto con el peso.</p>
+        <p><strong>Funciones:</strong> Almacena el perfil de hasta 2 personas (con posibilidad de reprogramar para más) y tiene función de apagado automático.</p>
+        <h2>Riesgos y seguridad</h2>
+        <ul>
+            <li><strong>Contraindicación:</strong> No debe ser utilizada por personas con marcapasos u otros dispositivos médicos electrónicos implantados.</li>
+            <li><strong>Advertencia de uso:</strong> No pisar las esquinas de la plataforma para evitar vuelcos o daños.</li>
+            <li><strong>Superficie:</strong> Colocar siempre sobre una superficie firme y plana. No usar sobre alfombras de más de 2 cm de grosor (0.8 inch) sin los soportes específicos para alfombra.</li>
+            <li>Medir siempre descalzo y con las plantas de los pies limpias y secas para garantizar una correcta conducción de la señal.</li>
+        </ul>
+        <h2>Limpieza y cuidado</h2>
+        <ul>
+            <li>No sumergir en agua. Limpiar con un paño húmedo y detergente suave.</li>
+            <li>Limpiar los electrodos con alcohol para mantener un buen contacto.</li>
+            <li>Cambiar las cuatro pilas AA al mismo tiempo cuando aparezca el mensaje "Lo" en la pantalla.</li>
+            <li>Guardar en posición horizontal y evitar golpes o vibraciones fuertes.</li>
+        </ul>
+        <h2>Límites o especificaciones</h2>
+        <div class="spec-grid">
+            <span class="label">Capacidad máxima:</span><span class="value">136 kg / 300 lb / 21 st 6 lb</span>
+            <span class="label">Precisión (divisiones):</span><span class="value">0.2 kg (0-136 kg) / 0.5 lb (0-300 lb)</span>
+            <span class="label">Precisión (% grasa):</span><span class="value">1.0%</span>
+            <span class="label">Alimentación:</span><span class="value">4 pilas AA (incluidas)</span>
+            <span class="label">Corriente de medición:</span><span class="value">50 kHz, 500 µA</span>
+        </div>
+        <p class="nota">* Especificaciones técnicas verificadas contra el manual de usuario oficial de Tanita.</p>
+    </div>
+
+    <div class="ficha" id="gt-009-e">
+        <div class="warn"><b>Código provisional — pendiente de catálogo</b>
+            <p>El catálogo institucional solo registra un renglón "GT-009 Báscula" para las cinco básculas encontradas en este espacio. Esta ficha usa un código provisional hasta que se decida si el catálogo debe corregirse. No usar este código para trámites administrativos sin confirmar primero con el encargado del catálogo.</p></div>
+        <h1>Báscula de piso 2 en 1</h1>
+        <div class="subhead"><span>Marca: seca</span><span>Modelo: 874 (2 in 1)</span><span>Código provisional: GT-009-E</span></div>
+        <h2>Para qué sirve</h2>
+        <p>Báscula de piso plana, de uso médico y móvil, con doble display para que el paciente y el profesional puedan leer el resultado simultáneamente. Su función "2 in 1" permite pesar a un bebé o niño pequeño sostenido en brazos de un adulto, calculando el peso del niño por diferencia.</p>
+        <h2>Uso correcto</h2>
+        <p><strong>Cómo encender:</strong> Presionar la tecla <span class="meta-dato">start</span>. La báscula muestra "0.00" cuando está lista. Se apaga automáticamente tras un periodo de inactividad.</p>
+        <p><strong>Botón "2 in 1":</strong> Activa la función para pesar niños. El adulto se sube solo, se presiona <span class="meta-dato">2 in 1</span> para guardar su peso (tara), y luego se sube con el niño en brazos. La báscula muestra el peso del niño. Mantener presionado el botón unos segundos para desactivar la función.</p>
+        <p><strong>Cambiar unidades (kg/lb):</strong> Mantener presionada la tecla <span class="meta-dato">2 in 1</span> durante aproximadamente 3 segundos.</p>
+        <p><strong>Función Auto-HOLD:</strong> Se activa automáticamente en pesos superiores a 1.5 kg o 3.3 lb; la pantalla parpadea hasta que el peso se estabiliza y luego se congela para facilitar la lectura.</p>
+        <h2>Riesgos y seguridad</h2>
+        <ul>
+            <li><strong>Daño en pantalla:</strong> No pisar ni apoyar objetos pesados sobre el display, ya que es delicado.</li>
+            <li><strong>Precisión en función 2 in 1:</strong> Para una medición correcta, el niño debe ser pesado siempre con el mismo adulto y el peso del adulto no debe variar (por ejemplo, sin quitarse prendas de abrigo entre mediciones).</li>
+            <li>Colocar sobre una superficie firme y plana para garantizar la estabilidad y exactitud.</li>
+        </ul>
+        <h2>Limpieza y cuidado</h2>
+        <ul>
+            <li>Apagar la báscula antes de cualquier limpieza. Desconectar la fuente de alimentación si está conectada.</li>
+            <li>No permitir que entre líquido en el interior del dispositivo.</li>
+            <li>Utilizar un paño suave ligeramente humedecido con un detergente suave para limpiar la superficie.</li>
+        </ul>
+        <h2>Límites o especificaciones</h2>
+        <div class="spec-grid">
+            <span class="label">Capacidad máxima:</span><span class="value">200 kg / 440 lb</span>
+            <span class="label">Precisión (divisiones):</span><span class="value">50 g (hasta 150 kg) / 100 g (de 150 a 200 kg)</span>
+            <span class="label">Alimentación:</span><span class="value">Baterías (pilas)</span>
+            <span class="label">Funciones:</span><span class="value">2 in 1 (madre/hijo), Auto-HOLD, kg/lb switch-over, apagado automático</span>
+        </div>
+        <p class="nota">* Especificaciones técnicas confirmadas con la ficha oficial de seca para el modelo 874.</p>
+    </div>
+
+    <div class="ficha" id="gt-009-a">
+        <div class="warn"><b>Código provisional — pendiente de catálogo</b>
+            <p>El catálogo institucional solo registra un renglón "GT-009 Báscula" para las cinco básculas encontradas en este espacio. Esta ficha usa un código provisional hasta que se decida si el catálogo debe corregirse. No usar este código para trámites administrativos sin confirmar primero con el encargado del catálogo.</p></div>
+        <h1>Monitor de composición corporal segmental</h1>
+        <div class="subhead"><span>Marca: Omron</span><span>Modelo: No confirmado</span><span>Código provisional: GT-009-A</span></div>
+        <h2>Para qué sirve</h2>
+        <p>Báscula con mango retráctil y electrodos en plataforma y mango para medir la composición corporal segmental (por zonas del cuerpo) mediante bioimpedancia. Está diseñada para ofrecer mediciones detalladas de grasa, músculo y otros indicadores, con capacidad de almacenar historiales de usuarios.</p>
+        <h2>Uso correcto</h2>
+        <p><strong>Cómo encender:</strong> La báscula se activa al pisar la plataforma (o al presionar algún botón, según el modelo). Para medir composición corporal, es necesario sujetar el mango vertical con ambas manos, asegurando que los electrodos de las manos y los pies tengan buen contacto con la piel descalza.</p>
+        <p><strong>Botones visibles y sus funciones (según la interfaz):</strong></p>
+        <ul>
+            <li><strong>BMI:</strong> Muestra el Índice de Masa Corporal calculado a partir del peso y la estatura.</li>
+            <li><strong>MEMORY:</strong> Accede a los historiales de mediciones guardados de usuarios registrados.</li>
+            <li><strong>BODY FAT / MUSCLE:</strong> Alterna la visualización entre porcentaje de grasa corporal y masa muscular (o masa esquelética).</li>
+            <li><strong>SET:</strong> Botón de configuración para programar datos personales de usuarios (edad, sexo, altura).</li>
+            <li><strong>GUEST:</strong> Permite realizar una medición sin guardar los datos en un perfil de usuario (modo invitado).</li>
+            <li><strong>"My History":</strong> Acceso directo al historial personal del usuario activo.</li>
+        </ul>
+        <p><strong>Cómo leer el resultado:</strong> Tras la medición, la pantalla LCD muestra el peso y, al presionar los botones correspondientes, los diferentes parámetros de composición corporal.</p>
+        <h2>Riesgos y seguridad</h2>
+        <ul>
+            <li><strong>Contraindicación general:</strong> No usar con marcapasos u otros dispositivos médicos electrónicos implantables (aplicable a todos los monitores de BIA).</li>
+            <li>Medir siempre descalzo y con las manos desnudas (sin guantes) sujetando firmemente los electrodos del mango.</li>
+            <li>Asegurarse de que la báscula esté estable sobre una superficie firme y nivelada antes de subirse.</li>
+        </ul>
+        <h2>Limpieza y cuidado</h2>
+        <ul>
+            <li>Limpiar la plataforma y el mango con un paño suave y húmedo. No sumergir en agua.</li>
+            <li>Limpiar los electrodos con alcohol para asegurar una buena conductividad.</li>
+            <li>Guardar en lugar seco y sin polvo, evitando impactos que puedan dañar los sensores.</li>
+        </ul>
+        <h2>Límites o especificaciones</h2>
+        <div class="spec-grid">
+            <span class="label">Capacidad máxima:</span><span class="value">No confirmada</span>
+            <span class="label">Precisión:</span><span class="value">No confirmada</span>
+            <span class="label">Alimentación:</span><span class="value">No confirmada (probablemente pilas)</span>
+            <span class="label">Funciones:</span><span class="value">Composición corporal segmental, memoria para múltiples usuarios, modo invitado.</span>
+        </div>
+        <p class="nota">⚠️ No se ha podido confirmar el modelo exacto de Omron; las funciones de los botones se describen según la nomenclatura estándar de la marca. Verificar el modelo específico para obtener especificaciones técnicas exactas.</p>
+    </div>
+
+    <div class="ficha" id="gt-009-b">
+        <div class="warn"><b>Código provisional — pendiente de catálogo</b>
+            <p>El catálogo institucional solo registra un renglón "GT-009 Báscula" para las cinco básculas encontradas en este espacio. Esta ficha usa un código provisional hasta que se decida si el catálogo debe corregirse. No usar este código para trámites administrativos sin confirmar primero con el encargado del catálogo.</p></div>
+        <h1>Monitor de composición corporal FitScan</h1>
+        <div class="subhead"><span>Marca: Tanita</span><span>Modelo: BC-601F</span><span>Código provisional: GT-009-B</span></div>
+        <h2>Para qué sirve</h2>
+        <p>Báscula de perfil delgado que mide peso y una amplia gama de parámetros de composición corporal: porcentaje de grasa corporal, agua corporal total, masa muscular, ingesta calórica diaria (DCI), edad metabólica, masa ósea, grasa visceral e IMC. Incluye memoria para 4 personas.</p>
+        <h2>Uso correcto</h2>
+        <p><strong>Cómo encender:</strong> La báscula se enciende al pisar la plataforma (con los pies descalzos) o al presionar el botón <span class="meta-dato">SET</span> para programar o seleccionar un usuario.</p>
+        <p><strong>Botones y funciones (según la disposición típica del modelo BC-601F, verificar en el manual incluido):</strong></p>
+        <ul>
+            <li><strong>SET:</strong> Inicia la programación de un perfil de usuario (seleccionar número de persona, sexo, edad y altura) y confirma los ajustes.</li>
+            <li><strong>GUEST:</strong> Permite una medición rápida sin guardar datos en la memoria de usuario.</li>
+            <li><strong>CLEAR:</strong> Borra los datos guardados de un perfil de usuario.</li>
+            <li><strong>CAL/FAT:</strong> Cambia el modo de visualización entre calorías diarias recomendadas (DCI) y porcentaje de grasa corporal (o muscular).</li>
+            <li><strong>SEGMENT:</strong> (Si está presente) Muestra la composición corporal por segmentos corporales.</li>
+            <li><strong>Flechas (▲/▼):</strong> Navegan entre los parámetros medidos (agua, masa ósea, etc.) y ajustan valores durante la configuración.</li>
+        </ul>
+        <p><strong>Cómo leer el resultado:</strong> Después de la medición del peso, la pantalla muestra el porcentaje de grasa corporal y, al presionar las flechas, se pueden consultar el resto de los indicadores guardados.</p>
+        <h2>Riesgos y seguridad</h2>
+        <ul>
+            <li><strong>Contraindicación:</strong> No usar con marcapasos u otros dispositivos médicos electrónicos implantables.</li>
+            <li>Medir siempre con los pies descalzos y las plantas limpias para asegurar la correcta transmisión de la señal.</li>
+            <li>La grasa visceral es un indicador estimado; consultar con un profesional para una evaluación clínica.</li>
+        </ul>
+        <h2>Limpieza y cuidado</h2>
+        <ul>
+            <li>Limpiar con un paño húmedo y un detergente suave. Secar bien.</li>
+            <li>Limpiar los electrodos con alcohol para garantizar la precisión.</li>
+            <li>Cambiar las cuatro pilas AA cuando aparezca la indicación de batería baja.</li>
+        </ul>
+        <h2>Límites o especificaciones</h2>
+        <div class="spec-grid">
+            <span class="label">Capacidad máxima:</span><span class="value">150 kg / 330 lb (confirmado por la caja original)</span>
+            <span class="label">Precisión:</span><span class="value">Confirmar en el manual incluido</span>
+            <span class="label">Alimentación:</span><span class="value">4 pilas AA (incluidas)</span>
+            <span class="label">Memoria:</span><span class="value">4 personas</span>
+        </div>
+        <p class="nota">* Los nombres de botones no confirmados directamente por foto (CLEAR, CAL/FAT, SEGMENT) se describen según la configuración típica de modelos FitScan de Tanita. Verificar en el manual incluido para confirmar la asignación exacta.</p>
+    </div>
+
+    <div class="ficha" id="gt-009-c">
+        <div class="warn"><b>Código provisional — pendiente de catálogo</b>
+            <p>El catálogo institucional solo registra un renglón "GT-009 Báscula" para las cinco básculas encontradas en este espacio. Esta ficha usa un código provisional hasta que se decida si el catálogo debe corregirse. No usar este código para trámites administrativos sin confirmar primero con el encargado del catálogo.</p></div>
+        <h1>Báscula de bioimpedancia</h1>
+        <div class="subhead"><span>Marca: EKS</span><span>Modelo: No confirmado</span><span>Código provisional: GT-009-C</span></div>
+        <h2>Para qué sirve</h2>
+        <p>Báscula de bioimpedancia que mide peso y estima la composición corporal (porcentaje de grasa, músculo, etc.) a través de cuatro electrodos ovalados en la plataforma, sobre los cuales se colocan los pies descalzos.</p>
+        <h2>Uso correcto</h2>
+        <p><strong>Cómo encender:</strong> Se activa al pisar la plataforma con los pies descalzos y correctamente alineados sobre los electrodos. La pantalla LCD muestra el peso primero y luego, tras unos segundos, los parámetros de composición corporal.</p>
+        <p><strong>Botones visibles (SET, ▲, ▼):</strong></p>
+        <ul>
+            <li><strong>SET:</strong> Se utiliza para programar los datos personales del usuario (sexo, edad, altura) y navegar por los modos de medición.</li>
+            <li><strong>Flecha arriba (▲) y flecha abajo (▼):</strong> Sirven para modificar los valores (edad, altura) durante la programación y para navegar entre los diferentes parámetros medidos (grasa, agua, músculo, etc.).</li>
+        </ul>
+        <p><strong>Cómo leer el resultado:</strong> Tras la medición, la pantalla muestra secuencialmente o mediante navegación con flechas, el peso, el IMC, el porcentaje de grasa, agua, masa muscular y otros indicadores que el modelo incluya.</p>
+        <h2>Riesgos y seguridad</h2>
+        <ul>
+            <li><strong>Contraindicación estándar:</strong> No utilizar en personas con marcapasos o dispositivos electrónicos implantables.</li>
+            <li>Medir siempre descalzo y con las plantas de los pies limpias y secas para asegurar el contacto con los electrodos.</li>
+            <li>No subirse si la plataforma está mojada o resbaladiza.</li>
+        </ul>
+        <h2>Limpieza y cuidado</h2>
+        <ul>
+            <li>Limpiar la superficie con un paño suave y húmedo. No utilizar disolventes ni productos abrasivos.</li>
+            <li>Limpiar los electrodos dorados con un paño seco para mantener el contacto.</li>
+            <li>Evitar golpes y caídas que puedan dañar los sensores internos.</li>
+        </ul>
+        <h2>Límites o especificaciones</h2>
+        <div class="spec-grid">
+            <span class="label">Capacidad máxima:</span><span class="value">Aprox. 150 kg (indicación parcial visible en pantalla)</span>
+            <span class="label">División (d):</span><span class="value">100 g (indicación parcial visible)</span>
+            <span class="label">Modelo exacto:</span><span class="value">No confirmado</span>
+            <span class="label">Alimentación:</span><span class="value">No confirmada (pilas)</span>
+        </div>
+        <p class="nota">⚠️ No se ha encontrado ficha pública oficial para la marca EKS con este diseño. Las especificaciones técnicas completas (precisión exacta en composición corporal, funciones detalladas, etc.) no pueden confirmarse sin el modelo exacto o el manual original.</p>
+    </div>
+
+</div>
+</body>
+</html>

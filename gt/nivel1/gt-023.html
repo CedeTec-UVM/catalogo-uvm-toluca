@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<title>Chattanooga Intelect Advanced Combo · Guía de laboratorio</title>
+<meta name="description" content="Cómo usar el equipo combo de electroterapia y ultrasonido Chattanooga Intelect Advanced del Gimnasio Terapéutico.">
+<meta name="theme-color" content="#E4E1D6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121A24" media="(prefers-color-scheme: dark)">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#E4E1D6; --card:#F2F0E9; --ink:#16283F; --ink-2:#455670;
+  --rule:#C6C0B0; --muted:#6F7787; --live:#B03A22;
+  --lcd:#C6DDD6; --lcd-deep:#9FBDB4; --lcd-ink:#10231D;
+  --display:"Barlow Condensed",Impact,"Arial Narrow",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,"SF Mono",Menlo,monospace;
+  --body:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#121A24; --card:#1B242F; --ink:#E6E9EC; --ink-2:#AFB7C0;
+        --rule:#2E3944; --muted:#8A939E; --live:#E8785A;}
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);
+  font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased;
+  -webkit-tap-highlight-color:transparent;overflow-wrap:break-word}
+body.lock{overflow:hidden}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+.wrap{max-width:780px;margin:0 auto;padding:0 16px calc(56px + env(safe-area-inset-bottom))}
+a{color:var(--ink)}
+
+.hero{padding:22px 0 16px}
+.brand{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin:0}
+h1{font-family:var(--display);font-weight:700;text-transform:uppercase;
+   font-size:clamp(38px,10.5vw,74px);line-height:.9;margin:4px 0 8px}
+.tagline{font-family:var(--display);font-weight:600;text-transform:uppercase;letter-spacing:.05em;
+   font-size:clamp(17px,4.6vw,23px);line-height:1.15;margin:0 0 16px;color:var(--ink-2)}
+.strip{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rule);
+   border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.strip div{background:var(--bg);padding:9px 10px 10px}
+.strip dt{font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:0 0 2px}
+.strip dd{margin:0;font-family:var(--mono);font-size:14px;font-weight:600}
+
+.jump{position:sticky;top:0;z-index:30;margin:0 -16px;
+  background:color-mix(in srgb,var(--bg) 92%,transparent);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--rule)}
+.jump ul{display:flex;overflow-x:auto;list-style:none;margin:0;padding:0 10px;scrollbar-width:none}
+.jump ul::-webkit-scrollbar{display:none}
+.jump a{display:block;white-space:nowrap;padding:13px 11px;text-decoration:none;
+  font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.jump a:active{color:var(--ink)}
+
+section{margin-top:34px;scroll-margin-top:56px}
+.sec-head{display:flex;align-items:baseline;gap:10px;border-bottom:1.5px solid var(--ink);padding-bottom:6px;margin-bottom:14px}
+.sec-num{font-family:var(--mono);font-size:11px;color:var(--live);letter-spacing:.08em}
+h2{font-family:var(--display);font-weight:700;text-transform:uppercase;
+   font-size:clamp(25px,7vw,34px);line-height:1;margin:0}
+.lede{color:var(--ink-2);margin:0 0 16px;font-size:15.5px}
+
+.panel-box{background:var(--card);border:1px solid var(--rule);border-radius:4px;padding:8px}
+#panelHost svg.panel{width:100%;height:auto;display:block;touch-action:manipulation}
+.panel-bar{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:8px}
+.panel-bar p{margin:0;font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.zoom-btn{font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;
+  background:var(--ink);color:var(--bg);border:1px solid var(--ink);border-radius:999px;
+  padding:11px 18px;min-height:44px;cursor:pointer}
+.zoom-btn:active{opacity:.75}
+
+.ctl{cursor:pointer}
+.ctl .hit{fill:transparent}
+.ring{fill:none;stroke:#B03A22;stroke-width:3;opacity:0}
+.ctl.on .ring{opacity:1}
+.ctl.on .cap{fill:#FFE08A;stroke:#B03A22}
+.ctl:focus-visible{outline:none}
+.ctl:focus-visible .ring{opacity:1;stroke-dasharray:6 4}
+
+.fs{position:fixed;inset:0;z-index:100;background:#0C1219;
+  display:flex;align-items:center;justify-content:center;overscroll-behavior:contain;overflow:hidden}
+.fs[hidden]{display:none}
+.fs-rot{position:relative;line-height:0;width:100vw;flex:0 0 auto}
+@media (orientation:portrait){ .fs-rot{transform:rotate(90deg)} }
+.fs-rot svg.panel{display:block;width:100%;height:auto}
+.fs-close,.fs-tip{position:absolute;z-index:4;font-family:var(--mono);
+  font-size:12px;letter-spacing:.08em;text-transform:uppercase;line-height:1}
+.fs-close{top:2%;right:1.6%;background:#16283F;color:#EBE8DE;border:0;
+  border-radius:999px;padding:11px 16px;min-height:42px;cursor:pointer}
+.fs-close:active{opacity:.75}
+.fs-tip{left:1.6%;bottom:3%;color:#8FA0B4;pointer-events:none}
+
+.pop{position:absolute;z-index:3;background:var(--lcd);color:var(--lcd-ink);
+  border:1px solid #6E8880;border-radius:4px;padding:.75em .85em;line-height:1.4;
+  box-shadow:0 8px 26px rgba(0,0,0,.45);text-align:left}
+.pop[hidden]{display:none}
+.pop h4{margin:0 0 .3em;font-family:var(--display);font-weight:700;text-transform:uppercase;
+  font-size:1.3em;line-height:1.05;letter-spacing:.02em}
+.pop p{margin:0;font-size:1em}
+.pop .num{font-family:var(--mono);font-size:.75em;opacity:.65;letter-spacing:.1em;display:block;margin-bottom:.15em}
+.pop::after{content:"";position:absolute;width:.62em;height:.62em;background:var(--lcd);
+  border:1px solid #6E8880;transform:rotate(45deg)}
+.pop.pr::after{left:-.35em;top:calc(var(--cy,50%) - .31em);border-right:0;border-top:0}
+.pop.pl::after{right:-.35em;top:calc(var(--cy,50%) - .31em);border-left:0;border-bottom:0}
+.pop.pb::after{top:-.35em;left:calc(50% - .31em);border-right:0;border-bottom:0}
+.pop.pt::after{bottom:-.35em;left:calc(50% - .31em);border-left:0;border-top:0}
+
+.ctl-list{margin-top:18px}
+.grp{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--live);margin:26px 0 0;padding:0 0 7px;border-bottom:1.5px solid var(--ink);font-weight:600}
+.grp:first-child{margin-top:0}
+.row{border-bottom:1px solid var(--rule)}
+.row>summary{display:flex;align-items:center;gap:12px;list-style:none;cursor:pointer;padding:15px 4px;min-height:56px}
+.row>summary::-webkit-details-marker{display:none}
+.row>summary:active{background:var(--card)}
+.badge{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--muted);min-width:26px}
+.nm{font-family:var(--display);font-weight:600;text-transform:uppercase;letter-spacing:.03em;
+  font-size:20px;line-height:1.05;flex:1}
+.chev{font-family:var(--mono);color:var(--muted);font-size:18px;line-height:1}
+.row[open] .chev,.row[open] .nm{color:var(--live)}
+
+.lcd{background:var(--lcd);color:var(--lcd-ink);border-radius:3px;padding:15px 15px 16px;margin:0 0 15px;
+  box-shadow:inset 0 0 0 3px rgba(0,0,0,.06);
+  background-image:repeating-linear-gradient(0deg,rgba(0,0,0,.04) 0 1px,transparent 1px 3px)}
+.lcd p{margin:0;font-size:15.5px;line-height:1.55}
+.lcd .tip{font-family:var(--mono);font-size:13.5px;line-height:1.5;
+  border-top:1px solid rgba(16,35,29,.3);padding-top:10px;margin-top:11px}
+.lcd .tip b{display:block;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
+  font-size:10.5px;opacity:.72;margin-bottom:3px}
+
+ol.steps{list-style:none;counter-reset:s;margin:0;padding:0;border-top:1px solid var(--rule)}
+ol.steps li{counter-increment:s;padding:14px 0 15px 46px;border-bottom:1px solid var(--rule);position:relative}
+ol.steps li::before{content:counter(s,decimal-leading-zero);position:absolute;left:0;top:16px;
+  font-family:var(--mono);font-size:12px;font-weight:600;color:var(--live)}
+ol.steps b{font-weight:600}
+ol.steps span{display:block;color:var(--ink-2);font-size:15px;margin-top:3px}
+
+.bd{padding:0 0 20px}
+.bd p{margin:0 0 12px;font-size:15.5px;color:var(--ink-2)}
+.bd p b,.bd li b{color:var(--ink);font-weight:600}
+.bd ul{margin:0 0 14px;padding-left:19px}
+.bd li{margin-bottom:8px;font-size:15.5px;color:var(--ink-2)}
+
+.tbl{border-top:1px solid var(--ink);margin:0 0 16px}
+.tbl .r{display:grid;grid-template-columns:1fr;gap:1px 14px;padding:11px 0;border-bottom:1px solid var(--rule)}
+.tbl .k{font-family:var(--mono);font-size:13.5px;font-weight:600}
+.tbl .v{font-size:15px;color:var(--ink-2)}
+@media (min-width:560px){.tbl .r{grid-template-columns:minmax(150px,34%) 1fr}}
+
+.warn{border-left:3px solid var(--live);background:var(--card);padding:12px 14px;margin:0 0 15px}
+.warn b{font-family:var(--mono);font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--live);display:block;margin-bottom:3px}
+.warn p{margin:0 0 8px;font-size:15px}
+.warn p:last-child{margin-bottom:0}
+
+.top{display:block;margin:26px 0 0;text-align:center;font-family:var(--mono);font-size:12px;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-decoration:none;padding:14px}
+footer{margin-top:34px;border-top:1.5px solid var(--ink);padding-top:14px;
+  font-family:var(--mono);font-size:12px;color:var(--muted);line-height:1.75}
+
+@media print{
+  body{background:#fff;color:#000;font-size:11pt}
+  .jump,.panel-bar,.top,.fs{display:none}
+  .lcd{background:#fff;color:#000;box-shadow:none;border:1px solid #999;background-image:none}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero" id="top">
+  <p class="brand">Chattanooga · Gimnasio Terapéutico · GT-023</p>
+  <h1>Intelect<br>Advanced Combo</h1>
+  <p class="tagline">Sistema combinado de electroterapia y ultrasonido para fisioterapia</p>
+  <dl class="strip">
+    <div><dt>Modelo</dt><dd>Chattanooga 2773 MS</dd></div>
+    <div><dt>Serie</dt><dd>TS174</dd></div>
+    <div><dt>Aplicador ultrasonido</dt><dd>Cabezal marcado "5"</dd></div>
+    <div><dt>Último servicio</dt><dd>Preventivo 03/02/2026</dd></div>
+  </dl>
+</header>
+
+<div class="warn" style="margin-top:18px">
+  <b>Corrección de identificación</b>
+  <p>Este equipo es el que corresponde a <b>GT-023 "Combo Intelect Mobile"</b> del catálogo. Se confirma con la etiqueta de servicio técnico ya fotografiada antes (modelo <b>Chattanooga 2773 MS</b>, serie TS174) y con el cabezal de ultrasonido marcado "5" que se usa junto con esta consola. Un equipo más pequeño, de perillas TIME/INTENSITY, que se había asignado por error a este mismo código, en realidad corresponde a <b>GT-036 (Electroestimulador de diferentes corrientes)</b> — ver esa guía por separado.</p>
+</div>
+
+<nav class="jump" aria-label="Secciones">
+  <ul>
+    <li><a href="#partes">Las partes</a></li>
+    <li><a href="#encendido">Encendido</a></li>
+    <li><a href="#preparacion">Preparación</a></li>
+    <li><a href="#usar">Usarlo en sesión</a></li>
+    <li><a href="#seguridad">Contraindicaciones</a></li>
+    <li><a href="#cuidado">Cuidado</a></li>
+    <li><a href="#limites">Límites</a></li>
+  </ul>
+</nav>
+
+<section id="partes">
+  <div class="sec-head"><span class="sec-num">01</span><h2>Las partes</h2></div>
+  <p class="lede">Toca cualquier elemento del esquema.</p>
+
+  <div class="panel-box">
+    <div id="panelHost">
+    <svg class="panel" id="svgPanel" viewBox="0 0 800 640" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Esquema del panel del Chattanooga Intelect Advanced">
+      <defs><style>
+        .t{font-family:Helvetica,Arial,sans-serif;fill:#16283F}
+        .tc{font-family:Helvetica,Arial,sans-serif;fill:#16283F;text-anchor:middle;pointer-events:none}
+        .lb{font-family:Helvetica,Arial,sans-serif;fill:#6F7787;font-size:11px;text-anchor:middle;pointer-events:none}
+        .dim{font-family:"IBM Plex Mono",monospace;fill:#B03A22;font-size:10.5px;text-anchor:middle;pointer-events:none}
+        .cap:not([fill]){fill:#D6D2C7} .cap:not([stroke]){stroke:#A9A597} .cap{stroke-width:1}
+      </style></defs>
+
+      <rect x="0" y="0" width="800" height="640" fill="#F2F0E9"/>
+      <text class="t" x="52" y="32" font-size="15" font-weight="700">Panel frontal, vista de frente</text>
+      <text class="t" x="52" y="51" font-size="11" fill="#6F7787">Esquema, no est&#225; a escala</text>
+
+      <!-- carcasa -->
+      <path d="M150,80 Q400,50 650,80 L670,540 Q400,590 130,540 Z" fill="#DCDDDE" stroke="#8E9296" stroke-width="4"/>
+      <text class="tc" x="400" y="110" font-size="16" fill="#16283F" font-weight="700">chattanooga</text>
+
+      <!-- pantalla -->
+      <g class="ctl" data-id="pantalla" role="button" tabindex="0" aria-label="Pantalla LCD grande">
+        <rect class="ring" x="248" y="130" width="304" height="330" rx="12"/>
+        <rect class="cap" x="254" y="136" width="292" height="318" rx="8" fill="#3A3F45" stroke="#22262A"/>
+        <text class="tc" x="400" y="290" font-size="16" fill="#C6DDD6" font-family="IBM Plex Mono, monospace">IFC &middot; CH1</text>
+        <text class="tc" x="400" y="315" font-size="12" fill="#8FBDB0" font-family="IBM Plex Mono, monospace">00:12:00</text>
+        <rect class="hit" x="248" y="130" width="304" height="330"/>
+      </g>
+
+      <!-- selectores laterales izquierda (5) -->
+      <g class="ctl" data-id="selectores-izq" role="button" tabindex="0" aria-label="Selectores laterales izquierdos, 5 en total">
+        <rect class="ring" x="146" y="130" width="90" height="330" rx="10"/>
+        <ellipse class="cap" cx="190" cy="172" rx="34" ry="12" fill="#8E9296" stroke="#6C7074"/>
+        <ellipse class="cap" cx="190" cy="228" rx="34" ry="12" fill="#8E9296" stroke="#6C7074"/>
+        <ellipse class="cap" cx="190" cy="284" rx="34" ry="12" fill="#8E9296" stroke="#6C7074"/>
+        <ellipse class="cap" cx="190" cy="340" rx="34" ry="12" fill="#8E9296" stroke="#6C7074"/>
+        <ellipse class="cap" cx="190" cy="396" rx="34" ry="12" fill="#8E9296" stroke="#6C7074"/>
+        <text class="lb" x="190" y="488">selectores izquierdos</text>
+        <rect class="hit" x="146" y="130" width="90" height="330"/>
+      </g>
+
+      <!-- selectores laterales derecha (5) -->
+      <g class="ctl" data-id="selectores-der" role="button" tabindex="0" aria-label="Selectores laterales derechos, 5 en total">
+        <rect class="ring" x="564" y="130" width="90" height="330" rx="10"/>
+        <ellipse class="cap" cx="610" cy="172" rx="34" ry="12" fill="#8E9296" stroke="#6C7074"/>
+        <ellipse class="cap" cx="610" cy="228" rx="34" ry="12" fill="#8E9296" stroke="#6C7074"/>
+        <ellipse class="cap" cx="610" cy="284" rx="34" ry="12" fill="#8E9296" stroke="#6C7074"/>
+        <ellipse class="cap" cx="610" cy="340" rx="34" ry="12" fill="#8E9296" stroke="#6C7074"/>
+        <ellipse class="cap" cx="610" cy="396" rx="34" ry="12" fill="#8E9296" stroke="#6C7074"/>
+        <text class="lb" x="610" y="488">selectores derechos</text>
+        <rect class="hit" x="564" y="130" width="90" height="330"/>
+      </g>
+
+      <!-- home -->
+      <g class="ctl" data-id="home" role="button" tabindex="0" aria-label="Botón HOME">
+        <rect class="ring" x="296" y="470" width="86" height="46" rx="20"/>
+        <ellipse class="cap" cx="339" cy="493" rx="38" ry="18" fill="#2C5F8A" stroke="#173C5C"/>
+        <text class="tc" x="339" y="499" font-size="10" fill="#fff" font-weight="700">HOME</text>
+        <rect class="hit" x="296" y="470" width="86" height="46"/>
+      </g>
+
+      <!-- back -->
+      <g class="ctl" data-id="back" role="button" tabindex="0" aria-label="Botón BACK, flecha de regreso">
+        <rect class="ring" x="420" y="470" width="86" height="46" rx="20"/>
+        <ellipse class="cap" cx="463" cy="493" rx="38" ry="18" fill="#2C5F8A" stroke="#173C5C"/>
+        <text class="tc" x="463" y="500" font-size="14" fill="#fff" font-weight="700">&#8676;</text>
+        <rect class="hit" x="420" y="470" width="86" height="46"/>
+      </g>
+
+      <!-- carpeta / biblioteca de recursos -->
+      <g class="ctl" data-id="biblioteca" role="button" tabindex="0" aria-label="Botón de biblioteca de recursos clínicos y protocolos">
+        <rect class="ring" x="358" y="520" width="86" height="46" rx="20"/>
+        <ellipse class="cap" cx="401" cy="543" rx="38" ry="18" fill="#2C5F8A" stroke="#173C5C"/>
+        <text class="tc" x="401" y="549" font-size="14" fill="#fff">&#128194;</text>
+        <text class="lb" x="401" y="592">biblioteca / protocolos</text>
+        <rect class="hit" x="358" y="520" width="86" height="46"/>
+      </g>
+
+      <!-- STOP -->
+      <g class="ctl" data-id="stop" role="button" tabindex="0" aria-label="Botón STOP">
+        <rect class="ring" x="160" y="570" width="90" height="46" rx="22"/>
+        <ellipse class="cap" cx="205" cy="593" rx="40" ry="18" fill="#EBE8DE" stroke="#A9A597"/>
+        <text class="tc" x="205" y="599" font-size="11" fill="#16283F" font-weight="700">STOP</text>
+        <rect class="hit" x="160" y="570" width="90" height="46"/>
+      </g>
+
+      <!-- PAUSE -->
+      <g class="ctl" data-id="pause" role="button" tabindex="0" aria-label="Botón PAUSE">
+        <rect class="ring" x="160" y="626" width="90" height="10" rx="5"/>
+        <text class="lb" x="205" y="646" fill="#6F7787">(pause, debajo)</text>
+        <rect class="hit" x="160" y="626" width="90" height="10"/>
+      </g>
+
+      <!-- rueda de intensidad grande -->
+      <g class="ctl" data-id="dial" role="button" tabindex="0" aria-label="Rueda grande de intensidad">
+        <rect class="ring" x="470" y="556" width="150" height="150" rx="75"/>
+        <circle class="cap" cx="545" cy="631" r="66" fill="#3D9BD1" stroke="#256E9C"/>
+        <circle cx="545" cy="631" r="42" fill="#DCD8CE" stroke="#A9A597"/>
+        <text class="lb" x="545" y="720">rueda de intensidad</text>
+        <rect class="hit" x="470" y="556" width="150" height="150"/>
+      </g>
+
+      <!-- START -->
+      <g class="ctl" data-id="start" role="button" tabindex="0" aria-label="Botón START">
+        <rect class="ring" x="160" y="672" width="90" height="10" rx="5"/>
+        <text class="lb" x="205" y="700" fill="#6F7787">(start, debajo)</text>
+        <rect class="hit" x="160" y="672" width="90" height="10"/>
+      </g>
+    </svg>
+    </div>
+    <div class="panel-bar">
+      <p>Toca un elemento</p>
+      <button class="zoom-btn" id="zoom" type="button">Ver en grande ⤢</button>
+    </div>
+  </div>
+
+  <div class="ctl-list">
+    <h3 class="grp">Las partes</h3>
+
+    <details class="row" id="c-pantalla" data-short="Pantalla grande donde se configuran y monitorean los parámetros de electroterapia y ultrasonido."><summary><span class="badge">01</span><span class="nm">Pantalla</span><span class="chev">+</span></summary><div class="lcd">
+      <p>Pantalla LCD grande donde se ve la modalidad activa, los parámetros configurados (forma de onda, tiempo, intensidad) y, junto a los bordes, opciones que corresponden a los selectores laterales.</p></div></details>
+
+    <details class="row" id="c-selectores-izq" data-short="Cinco botones alargados junto al borde izquierdo de la pantalla, para elegir la opción de menú que aparece a su lado."><summary><span class="badge">02</span><span class="nm">Selectores izquierdos</span><span class="chev">+</span></summary><div class="lcd">
+      <p>Cinco botones alargados en el borde izquierdo de la pantalla. Cada uno selecciona la opción de menú que aparece justo a su altura en la pantalla — funcionan como "teclas suaves" contextuales.</p></div></details>
+
+    <details class="row" id="c-selectores-der" data-short="Cinco botones alargados junto al borde derecho de la pantalla, con la misma función que los izquierdos."><summary><span class="badge">03</span><span class="nm">Selectores derechos</span><span class="chev">+</span></summary><div class="lcd">
+      <p>Cinco botones más, en el borde derecho, con la misma función contextual que los del lado izquierdo.</p></div></details>
+
+    <details class="row" id="c-home" data-short="Regresa a la pantalla de inicio del equipo."><summary><span class="badge">04</span><span class="nm">HOME</span><span class="chev">+</span></summary><div class="lcd"><p>Regresa a la pantalla principal del equipo desde cualquier menú.</p></div></details>
+
+    <details class="row" id="c-back" data-short="Regresa a la pantalla anterior, sin perder los cambios hechos en pantallas previas."><summary><span class="badge">05</span><span class="nm">BACK</span><span class="chev">+</span></summary><div class="lcd"><p>Regresa a la pantalla anterior dentro de un mismo menú o configuración.</p></div></details>
+
+    <details class="row" id="c-biblioteca" data-short="Abre la biblioteca de protocolos y recursos clínicos predefinidos del equipo."><summary><span class="badge">06</span><span class="nm">Biblioteca / protocolos</span><span class="chev">+</span></summary><div class="lcd"><p>Da acceso a la biblioteca de recursos clínicos: protocolos predefinidos, guías de colocación de electrodos y otra información de apoyo para configurar el tratamiento.</p></div></details>
+
+    <details class="row" id="c-dial" data-short="Rueda grande para ajustar la intensidad de la corriente o la potencia del ultrasonido."><summary><span class="badge">07</span><span class="nm">Rueda de intensidad</span><span class="chev">+</span></summary><div class="lcd">
+      <p>Girándola se ajusta la intensidad de salida — en sentido horario aumenta, en sentido antihorario disminuye.</p>
+      <div class="tip"><b>Buena práctica</b>Configura todo lo demás (modalidad, tiempo, canal) antes de tocar esta rueda, y sube la intensidad al final, gradualmente, preguntando al paciente cómo se siente.</div></div></details>
+
+    <details class="row" id="c-start" data-short="Inicia el tratamiento con los parámetros configurados."><summary><span class="badge">08</span><span class="nm">START</span><span class="chev">+</span></summary><div class="lcd"><p>Inicia el tratamiento con los parámetros ya configurados en pantalla.</p></div></details>
+
+    <details class="row" id="c-pause" data-short="Pausa el tratamiento sin perder el tiempo restante de la sesión."><summary><span class="badge">09</span><span class="nm">PAUSE</span><span class="chev">+</span></summary><div class="lcd"><p>Pausa la sesión actual, manteniendo el tiempo restante para poder reanudar después.</p></div></details>
+
+    <details class="row" id="c-stop" data-short="Detiene por completo el tratamiento del canal seleccionado."><summary><span class="badge">10</span><span class="nm">STOP</span><span class="chev">+</span></summary><div class="lcd"><p>Detiene por completo el tratamiento en el canal seleccionado.</p></div></details>
+  </div>
+  <a class="top" href="#top">↑ Inicio</a>
+</section>
+
+<section id="encendido">
+  <div class="sec-head"><span class="sec-num">02</span><h2>Encendido</h2></div>
+  <ol class="steps">
+    <li><b>Verifica que no haya electrodos puestos en el paciente.</b><span>Antes de encender o apagar, por seguridad.</span></li>
+    <li><b>Enciende el equipo.</b><span>Con el interruptor de encendido/apagado.</span></li>
+    <li><b>Elige la modalidad desde la pantalla de inicio.</b><span>Electroterapia, ultrasonido, o modo combinado, usando los selectores laterales o la biblioteca de protocolos.</span></li>
+  </ol>
+  <a class="top" href="#top">↑ Inicio</a>
+</section>
+
+<section id="preparacion">
+  <div class="sec-head"><span class="sec-num">03</span><h2>Preparación del paciente</h2></div>
+  <div class="bd">
+    <p><b>Para electroterapia:</b> limpia y seca la piel, coloca los electrodos con buen contacto, y conecta los cables a los canales correspondientes.</p>
+    <p><b>Para ultrasonido:</b> aplica gel de contacto abundante en la zona a tratar antes de apoyar el cabezal (el marcado "5" en este equipo). Nunca se usa el cabezal en seco.</p>
+    <p><b>Para modo combinado:</b> se prepara igual que el ultrasonido con gel, ya que el cabezal también actúa como uno de los electrodos de la corriente.</p>
+  </div>
+  <a class="top" href="#top">↑ Inicio</a>
+</section>
+
+<section id="usar">
+  <div class="sec-head"><span class="sec-num">04</span><h2>Usarlo en una sesión</h2></div>
+  <ol class="steps">
+    <li><b>Selecciona la modalidad y configura tiempo y forma de onda.</b><span>Usando los selectores laterales y la pantalla.</span></li>
+    <li><b>Sube la intensidad al final, girando la rueda gradualmente.</b><span>Nunca empieces por la intensidad.</span></li>
+    <li><b>Presiona START.</b><span>Para iniciar el tratamiento.</span></li>
+    <li><b>Usa PAUSE si necesitas interrumpir.</b><span>El tiempo restante se conserva.</span></li>
+    <li><b>Presiona STOP al terminar.</b><span>Retira los electrodos o limpia el cabezal antes de continuar con el siguiente paciente.</span></li>
+  </ol>
+  <a class="top" href="#top">↑ Inicio</a>
+</section>
+
+<section id="seguridad">
+  <div class="sec-head"><span class="sec-num">05</span><h2>Contraindicaciones generales</h2></div>
+  <div class="bd">
+    <div class="warn"><b>Consultar siempre el protocolo clínico</b><p>El criterio final sobre qué modalidad y parámetros usar lo da el profesional de salud a cargo, no esta guía.</p></div>
+    <ul>
+      <li>No usar electroestimulación en pacientes con marcapasos cardiaco.</li>
+      <li>No usar sobre el abdomen o la zona lumbar durante el embarazo.</li>
+      <li>No usar sobre tejido con cáncer conocido o sospechado, ni sobre infecciones activas.</li>
+      <li>No usar ultrasonido sobre implantes metálicos, marcapasos, o el globo ocular.</li>
+    </ul>
+  </div>
+  <a class="top" href="#top">↑ Inicio</a>
+</section>
+
+<section id="cuidado">
+  <div class="sec-head"><span class="sec-num">06</span><h2>Cuidado</h2></div>
+  <div class="bd">
+    <ul>
+      <li>Limpia el cabezal de ultrasonido después de cada paciente, quitando todo el gel.</li>
+      <li>Revisa los cables de electrodos periódicamente; no deben tener el aislante dañado.</li>
+      <li>Este es un equipo médico con mantenimiento preventivo programado — su última revisión registrada fue el 03/02/2026, con próxima revisión en 02/2027. Respeta ese calendario.</li>
+    </ul>
+  </div>
+  <a class="top" href="#top">↑ Inicio</a>
+</section>
+
+<section id="limites">
+  <div class="sec-head"><span class="sec-num">07</span><h2>Límites</h2></div>
+  <div class="bd"><div class="tbl">
+    <div class="r"><div class="k">Modelo</div><div class="v">Chattanooga 2773 MS</div></div>
+    <div class="r"><div class="k">Serie</div><div class="v">TS174</div></div>
+    <div class="r"><div class="k">Modalidades</div><div class="v">Electroterapia multi-forma de onda + ultrasonido</div></div>
+    <div class="r"><div class="k">Último servicio</div><div class="v">Preventivo, 03/02/2026</div></div>
+    <div class="r"><div class="k">Próximo servicio</div><div class="v">02/2027</div></div>
+  </div>
+  <p style="font-style:italic;">Los nombres de los controles se verificaron contra los manuales oficiales de Chattanooga para la familia "Intelect Advanced Therapy System".</p>
+  </div>
+</section>
+
+<footer>
+  <p>Guía del sistema Chattanooga Intelect Advanced Combo, resumida de los manuales oficiales de Chattanooga para la serie Intelect Advanced.<br>
+  Corrección: este equipo fue identificado inicialmente por error como parte de otra guía; queda confirmado que corresponde a GT-023, con el modelo y serie de su etiqueta de servicio ya documentada.<br>
+  El manual oficial y el encargado del laboratorio mandan sobre esta guía.<br>
+  GT-023 · Versión 2.0 (corregida) · Septiembre de 2026.</p>
+</footer>
+
+</div>
+
+<div class="fs" id="fs" hidden>
+  <div class="fs-rot" id="fsRot">
+    <button class="fs-close" id="fsClose" type="button">Cerrar ✕</button>
+    <span class="fs-tip" id="fsTip">Toca cualquier elemento</span>
+    <div class="pop" id="pop" hidden></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var svg = document.getElementById('svgPanel');
+  var host= document.getElementById('panelHost');
+  var fs  = document.getElementById('fs');
+  var rot = document.getElementById('fsRot');
+  var pop = document.getElementById('pop');
+  var tip = document.getElementById('fsTip');
+  var rows = Array.prototype.slice.call(document.querySelectorAll('.row'));
+  var ctls = Array.prototype.slice.call(document.querySelectorAll('.ctl'));
+  var VB_FULL = {minx:0, miny:0, w:800, h:640};
+  var VB_CROP = {minx:100, miny:60, w:680, h:500};
+  var VB_MINX = VB_FULL.minx, VB_MINY = VB_FULL.miny, VB_W = VB_FULL.w, VB_H = VB_FULL.h;
+  var RATIO = VB_W / VB_H, activeG = null;
+
+  function setCrop(on){
+    var vb = on ? VB_CROP : VB_FULL;
+    VB_MINX = vb.minx; VB_MINY = vb.miny; VB_W = vb.w; VB_H = vb.h;
+    RATIO = VB_W / VB_H;
+    svg.setAttribute('viewBox', vb.minx+' '+vb.miny+' '+vb.w+' '+vb.h);
+  }
+  function viewportSize(){
+    var vv = window.visualViewport;
+    return {w:(vv&&vv.width)||window.innerWidth, h:(vv&&vv.height)||window.innerHeight};
+  }
+  function sizeFS(){
+    if(fs.hidden) return;
+    var v = viewportSize();
+    fs.style.width = v.w+'px'; fs.style.height = v.h+'px';
+    var w = (v.h >= v.w) ? Math.min(v.h, v.w*RATIO) : Math.min(v.w, v.h*RATIO);
+    rot.style.width = w+'px'; rot.style.height = 'auto';
+  }
+
+  var DATA = {};
+  rows.forEach(function(r){
+    var id = r.id.replace(/^c-/,'');
+    DATA[id] = { badge:r.querySelector('.badge').textContent,
+                 title:r.querySelector('.nm').textContent,
+                 short:r.getAttribute('data-short') || r.querySelector('.lcd p').textContent };
+  });
+  function highlight(id){ ctls.forEach(function(g){ g.classList.toggle('on', g.dataset.id===id); }); }
+
+  rows.forEach(function(r){
+    r.addEventListener('toggle', function(){
+      if(r.open) rows.forEach(function(o){ if(o!==r) o.open=false; });
+      var open=null; rows.forEach(function(o){ if(o.open) open=o.id.replace(/^c-/,''); });
+      if(fs.hidden) highlight(open);
+    });
+  });
+
+  function hidePop(){ pop.hidden=true; activeG=null; highlight(null); }
+  function placePop(g){
+    var b = g.getBBox();
+    var sc = svg.getBoundingClientRect().width / VB_W;
+    if(!sc) return;
+    var W = rot.clientWidth, H = rot.clientHeight;
+    var bx=(b.x-VB_MINX)*sc, by=(b.y-VB_MINY)*sc, bw=b.width*sc, bh=b.height*sc;
+    pop.style.fontSize = Math.max(9, Math.min(15, W*0.0185))+'px';
+    pop.style.maxWidth = Math.min(W*0.34, 300)+'px';
+    pop.style.left='0px'; pop.style.top='0px';
+    var pw=pop.offsetWidth, ph=pop.offsetHeight;
+    var gap=Math.max(8, W*0.012), left, top, cls;
+    if(bx+bw+gap+pw <= W-6){ left=bx+bw+gap; cls='pr'; }
+    else if(bx-gap-pw >= 6){ left=bx-gap-pw; cls='pl'; }
+    else { left=Math.min(Math.max(bx+bw/2-pw/2,6), Math.max(6,W-pw-6));
+           cls=(by+bh+gap+ph <= H-6)?'pb':'pt'; }
+    if(cls==='pr'||cls==='pl') top=by+bh/2-ph/2;
+    else if(cls==='pb') top=by+bh+gap; else top=by-gap-ph;
+    top=Math.min(Math.max(top,6), Math.max(6,H-ph-6));
+    pop.className='pop '+cls; pop.style.left=left+'px'; pop.style.top=top+'px';
+    pop.style.setProperty('--cy', Math.min(Math.max(by+bh/2-top,10), Math.max(10,ph-10))+'px');
+  }
+  function showPop(g){
+    var d = DATA[g.dataset.id]; if(!d) return;
+    if(activeG===g){ hidePop(); return; }
+    activeG=g;
+    pop.innerHTML='<h4><span class="num">'+d.badge+'</span>'+d.title+'</h4><p>'+d.short+'</p>';
+    pop.hidden=false; highlight(g.dataset.id); placePop(g);
+    tip.style.visibility='hidden';
+  }
+  ctls.forEach(function(g){
+    function go(e){
+      if(e) e.stopPropagation();
+      if(!fs.hidden){ showPop(g); return; }
+      var r=document.getElementById('c-'+g.dataset.id); if(!r) return;
+      r.open=true; r.scrollIntoView({block:'center', behavior:'smooth'});
+    }
+    g.addEventListener('click', go);
+    g.addEventListener('keydown', function(e){
+      if(e.key==='Enter'||e.key===' '){ e.preventDefault(); go(e); }
+    });
+  });
+
+  var zoom=document.getElementById('zoom');
+  function openFS(){
+    rot.insertBefore(svg, rot.firstChild);
+    fs.hidden=false; document.body.classList.add('lock');
+    tip.style.visibility='visible'; highlight(null);
+    setCrop(true); sizeFS();
+    try{
+      var p=document.documentElement.requestFullscreen && document.documentElement.requestFullscreen();
+      if(p&&p.then) p.then(function(){
+        if(screen.orientation&&screen.orientation.lock){
+          var q=screen.orientation.lock('landscape'); if(q&&q.catch) q.catch(function(){});
+        }
+      }).catch(function(){});
+    }catch(e){}
+  }
+  function closeFS(){
+    hidePop(); host.appendChild(svg); fs.hidden=true;
+    fs.style.width=''; fs.style.height=''; rot.style.width=''; rot.style.height='';
+    setCrop(false); document.body.classList.remove('lock');
+    try{
+      if(screen.orientation&&screen.orientation.unlock) screen.orientation.unlock();
+      if(document.fullscreenElement&&document.exitFullscreen) document.exitFullscreen();
+    }catch(e){}
+  }
+  zoom.addEventListener('click', openFS);
+  document.getElementById('fsClose').addEventListener('click', function(e){ e.stopPropagation(); closeFS(); });
+  fs.addEventListener('click', function(){ if(!pop.hidden) hidePop(); });
+  pop.addEventListener('click', function(e){ e.stopPropagation(); });
+  document.addEventListener('keydown', function(e){
+    if(e.key!=='Escape'||fs.hidden) return;
+    if(!pop.hidden) hidePop(); else closeFS();
+  });
+  function reflow(){ sizeFS(); if(!fs.hidden&&activeG) placePop(activeG); }
+  window.addEventListener('resize', reflow);
+  window.addEventListener('orientationchange', function(){ setTimeout(reflow,250); });
+  if(window.visualViewport) window.visualViewport.addEventListener('resize', reflow);
+  window.addEventListener('beforeprint', function(){
+    if(!fs.hidden) closeFS();
+    document.querySelectorAll('details').forEach(function(d){ d.open=true; });
+  });
+})();
+</script>
+</body>
+</html>

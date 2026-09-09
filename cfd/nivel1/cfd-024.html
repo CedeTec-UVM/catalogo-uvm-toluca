@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<title>OptoJump Next · Guía de laboratorio</title>
+<meta name="description" content="Cómo montar y usar la plataforma de salto OptoJump Next del Lab de Cultura Física y Deporte.">
+<meta name="theme-color" content="#E4E1D6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121A24" media="(prefers-color-scheme: dark)">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#E4E1D6; --card:#F2F0E9; --ink:#16283F; --ink-2:#455670;
+  --rule:#C6C0B0; --muted:#6F7787; --live:#B03A22;
+  --lcd:#C6DDD6; --lcd-deep:#9FBDB4; --lcd-ink:#10231D;
+  --display:"Barlow Condensed",Impact,"Arial Narrow",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,"SF Mono",Menlo,monospace;
+  --body:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#121A24; --card:#1B242F; --ink:#E6E9EC; --ink-2:#AFB7C0;
+        --rule:#2E3944; --muted:#8A939E; --live:#E8785A;}
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);
+  font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased;
+  -webkit-tap-highlight-color:transparent;overflow-wrap:break-word}
+body.lock{overflow:hidden}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+.wrap{max-width:780px;margin:0 auto;padding:0 16px calc(56px + env(safe-area-inset-bottom))}
+a{color:var(--ink)}
+
+.hero{padding:22px 0 16px}
+.brand{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin:0}
+h1{font-family:var(--display);font-weight:700;text-transform:uppercase;
+   font-size:clamp(44px,12vw,88px);line-height:.85;margin:4px 0 8px}
+.tagline{font-family:var(--display);font-weight:600;text-transform:uppercase;letter-spacing:.05em;
+   font-size:clamp(17px,4.6vw,23px);line-height:1.15;margin:0 0 16px;color:var(--ink-2)}
+.strip{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rule);
+   border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.strip div{background:var(--bg);padding:9px 10px 10px}
+.strip dt{font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:0 0 2px}
+.strip dd{margin:0;font-family:var(--mono);font-size:14px;font-weight:600}
+
+.jump{position:sticky;top:0;z-index:30;margin:0 -16px;
+  background:color-mix(in srgb,var(--bg) 92%,transparent);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--rule)}
+.jump ul{display:flex;overflow-x:auto;list-style:none;margin:0;padding:0 10px;scrollbar-width:none}
+.jump ul::-webkit-scrollbar{display:none}
+.jump a{display:block;white-space:nowrap;padding:13px 11px;text-decoration:none;
+  font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.jump a:active{color:var(--ink)}
+
+section{margin-top:34px;scroll-margin-top:56px}
+.sec-head{display:flex;align-items:baseline;gap:10px;border-bottom:1.5px solid var(--ink);padding-bottom:6px;margin-bottom:14px}
+.sec-num{font-family:var(--mono);font-size:11px;color:var(--live);letter-spacing:.08em}
+h2{font-family:var(--display);font-weight:700;text-transform:uppercase;
+   font-size:clamp(25px,7vw,34px);line-height:1;margin:0}
+.lede{color:var(--ink-2);margin:0 0 16px;font-size:15.5px}
+
+.panel-box{background:var(--card);border:1px solid var(--rule);border-radius:4px;padding:8px}
+#panelHost svg.panel{width:100%;height:auto;display:block;touch-action:manipulation}
+.panel-bar{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:8px}
+.panel-bar p{margin:0;font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.zoom-btn{font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;
+  background:var(--ink);color:var(--bg);border:1px solid var(--ink);border-radius:999px;
+  padding:11px 18px;min-height:44px;cursor:pointer}
+.zoom-btn:active{opacity:.75}
+
+.ctl{cursor:pointer}
+.ctl .hit{fill:transparent}
+.ring{fill:none;stroke:#B03A22;stroke-width:3;opacity:0}
+.ctl.on .ring{opacity:1}
+.ctl.on .cap{fill:#FFE08A;stroke:#B03A22}
+.ctl:focus-visible{outline:none}
+.ctl:focus-visible .ring{opacity:1;stroke-dasharray:6 4}
+
+.fs{position:fixed;inset:0;z-index:100;background:#0C1219;
+  display:flex;align-items:center;justify-content:center;overscroll-behavior:contain;overflow:hidden}
+.fs[hidden]{display:none}
+.fs-rot{position:relative;line-height:0;width:100vw;flex:0 0 auto}
+@media (orientation:portrait){ .fs-rot{transform:rotate(90deg)} }
+.fs-rot svg.panel{display:block;width:100%;height:auto}
+.fs-close,.fs-tip{position:absolute;z-index:4;font-family:var(--mono);
+  font-size:12px;letter-spacing:.08em;text-transform:uppercase;line-height:1}
+.fs-close{top:2%;right:1.6%;background:#16283F;color:#EBE8DE;border:0;
+  border-radius:999px;padding:11px 16px;min-height:42px;cursor:pointer}
+.fs-close:active{opacity:.75}
+.fs-tip{left:1.6%;bottom:3%;color:#8FA0B4;pointer-events:none}
+
+.pop{position:absolute;z-index:3;background:var(--lcd);color:var(--lcd-ink);
+  border:1px solid #6E8880;border-radius:4px;padding:.75em .85em;line-height:1.4;
+  box-shadow:0 8px 26px rgba(0,0,0,.45);text-align:left}
+.pop[hidden]{display:none}
+.pop h4{margin:0 0 .3em;font-family:var(--display);font-weight:700;text-transform:uppercase;
+  font-size:1.3em;line-height:1.05;letter-spacing:.02em}
+.pop p{margin:0;font-size:1em}
+.pop .num{font-family:var(--mono);font-size:.75em;opacity:.65;letter-spacing:.1em;display:block;margin-bottom:.15em}
+.pop::after{content:"";position:absolute;width:.62em;height:.62em;background:var(--lcd);
+  border:1px solid #6E8880;transform:rotate(45deg)}
+.pop.pr::after{left:-.35em;top:calc(var(--cy,50%) - .31em);border-right:0;border-top:0}
+.pop.pl::after{right:-.35em;top:calc(var(--cy,50%) - .31em);border-left:0;border-bottom:0}
+.pop.pb::after{top:-.35em;left:calc(50% - .31em);border-right:0;border-bottom:0}
+.pop.pt::after{bottom:-.35em;left:calc(50% - .31em);border-left:0;border-top:0}
+
+.ctl-list{margin-top:18px}
+.grp{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--live);margin:26px 0 0;padding:0 0 7px;border-bottom:1.5px solid var(--ink);font-weight:600}
+.grp:first-child{margin-top:0}
+.row{border-bottom:1px solid var(--rule)}
+.row>summary{display:flex;align-items:center;gap:12px;list-style:none;cursor:pointer;padding:15px 4px;min-height:56px}
+.row>summary::-webkit-details-marker{display:none}
+.row>summary:active{background:var(--card)}
+.badge{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--muted);min-width:26px}
+.nm{font-family:var(--display);font-weight:600;text-transform:uppercase;letter-spacing:.03em;
+  font-size:20px;line-height:1.05;flex:1}
+.chev{font-family:var(--mono);color:var(--muted);font-size:18px;line-height:1}
+.row[open] .chev,.row[open] .nm{color:var(--live)}
+
+.lcd{background:var(--lcd);color:var(--lcd-ink);border-radius:3px;padding:15px 15px 16px;margin:0 0 15px;
+  box-shadow:inset 0 0 0 3px rgba(0,0,0,.06);
+  background-image:repeating-linear-gradient(0deg,rgba(0,0,0,.04) 0 1px,transparent 1px 3px)}
+.lcd p{margin:0;font-size:15.5px;line-height:1.55}
+.lcd .tip{font-family:var(--mono);font-size:13.5px;line-height:1.5;
+  border-top:1px solid rgba(16,35,29,.3);padding-top:10px;margin-top:11px}
+.lcd .tip b{display:block;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
+  font-size:10.5px;opacity:.72;margin-bottom:3px}
+
+ol.steps{list-style:none;counter-reset:s;margin:0;padding:0;border-top:1px solid var(--rule)}
+ol.steps li{counter-increment:s;padding:14px 0 15px 46px;border-bottom:1px solid var(--rule);position:relative}
+ol.steps li::before{content:counter(s,decimal-leading-zero);position:absolute;left:0;top:16px;
+  font-family:var(--mono);font-size:12px;font-weight:600;color:var(--live)}
+ol.steps b{font-weight:600}
+ol.steps span{display:block;color:var(--ink-2);font-size:15px;margin-top:3px}
+
+.bd{padding:0 0 20px}
+.bd p{margin:0 0 12px;font-size:15.5px;color:var(--ink-2)}
+.bd p b,.bd li b{color:var(--ink);font-weight:600}
+.bd ul{margin:0 0 14px;padding-left:19px}
+.bd li{margin-bottom:8px;font-size:15.5px;color:var(--ink-2)}
+
+.tbl{border-top:1px solid var(--ink);margin:0 0 16px}
+.tbl .r{display:grid;grid-template-columns:1fr;gap:1px 14px;padding:11px 0;border-bottom:1px solid var(--rule)}
+.tbl .k{font-family:var(--mono);font-size:13.5px;font-weight:600}
+.tbl .v{font-size:15px;color:var(--ink-2)}
+@media (min-width:560px){.tbl .r{grid-template-columns:minmax(150px,34%) 1fr}}
+.m{font-family:var(--mono);font-size:.9em;background:color-mix(in srgb,var(--ink) 9%,transparent);padding:1px 5px;border-radius:2px}
+
+.warn{border-left:3px solid var(--live);background:var(--card);padding:12px 14px;margin:0 0 15px}
+.warn b{font-family:var(--mono);font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--live);display:block;margin-bottom:3px}
+.warn p{margin:0;font-size:15px}
+
+.top{display:block;margin:26px 0 0;text-align:center;font-family:var(--mono);font-size:12px;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-decoration:none;padding:14px}
+footer{margin-top:34px;border-top:1.5px solid var(--ink);padding-top:14px;
+  font-family:var(--mono);font-size:12px;color:var(--muted);line-height:1.75}
+
+@media print{
+  body{background:#fff;color:#000;font-size:11pt}
+  .jump,.panel-bar,.top,.fs{display:none}
+  .lcd{background:#fff;color:#000;box-shadow:none;border:1px solid #999;background-image:none}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero" id="top">
+  <p class="brand">Microgate · Lab de Cultura Física · CFD-024</p>
+  <h1>OptoJump<br>Next</h1>
+  <p class="tagline">Barras ópticas para análisis de salto y marcha</p>
+  <dl class="strip">
+    <div><dt>Separación de barras</dt><dd>1 a 6 m</dd></div>
+    <div><dt>Resolución</dt><dd>10 o 30 mm</dd></div>
+    <div><dt>Conexión</dt><dd>USB a la PC</dd></div>
+    <div><dt>Batería</dt><dd>≈ 11 h con 1 barra</dd></div>
+  </dl>
+</header>
+
+<nav class="jump" aria-label="Secciones">
+  <ul>
+    <li><a href="#montaje">Montaje</a></li>
+    <li><a href="#encendido">Orden de encendido</a></li>
+    <li><a href="#prueba">Hacer una prueba</a></li>
+    <li><a href="#tipos">Tipos de prueba</a></li>
+    <li><a href="#datos">Qué mide</a></li>
+    <li><a href="#errores">Errores</a></li>
+    <li><a href="#limites">Límites</a></li>
+    <li><a href="#datos-pc">Base de datos</a></li>
+  </ul>
+</nav>
+
+<section id="montaje">
+  <div class="sec-head"><span class="sec-num">01</span><h2>Cómo se monta</h2></div>
+  <p class="lede">Vista desde arriba. Toca cualquier elemento del esquema.</p>
+
+  <div class="panel-box">
+    <div id="panelHost">
+    <svg class="panel" id="svgPanel" viewBox="0 0 800 430" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Esquema de montaje del OptoJump Next visto desde arriba">
+      <defs><style>
+        .t{font-family:Helvetica,Arial,sans-serif;fill:#16283F}
+        .tc{font-family:Helvetica,Arial,sans-serif;fill:#16283F;text-anchor:middle;pointer-events:none}
+        .lb{font-family:Helvetica,Arial,sans-serif;fill:#455670;font-size:11px;text-anchor:middle;pointer-events:none}
+        .dim{font-family:"IBM Plex Mono",monospace;fill:#B03A22;font-size:11px;text-anchor:middle;pointer-events:none}
+        .cap:not([fill]){fill:#DCD8CE} .cap:not([stroke]){stroke:#A9A597} .cap{stroke-width:1}
+      </style></defs>
+
+      <rect x="0" y="0" width="800" height="430" fill="#F2F0E9"/>
+      <text class="t" x="60" y="36" font-size="15" font-weight="700">Montaje t&#237;pico &#183; dos barras enfrentadas</text>
+      <text class="t" x="60" y="56" font-size="11" fill="#6F7787">Esquema, no est&#225; a escala</text>
+
+      <!-- area de medicion -->
+      <rect x="204" y="158" width="472" height="118" fill="#E7E3D8" stroke="#CFC9BA" stroke-dasharray="6 6"/>
+      <text class="lb" x="330" y="222" font-size="11" fill="#8A9AA8">&#225;rea de medici&#243;n</text>
+
+      <!-- BARRA TX -->
+      <g class="ctl" data-id="tx" role="button" tabindex="0" aria-label="Barra Tx">
+        <rect class="ring" x="196" y="122" width="484" height="40" rx="5"/>
+        <rect class="cap" x="204" y="130" width="222" height="22" rx="3"/>
+        <rect class="cap" x="452" y="130" width="222" height="22" rx="3"/>
+        <g fill="#C0392B">
+          <circle cx="216" cy="141" r="2"/><circle cx="240" cy="141" r="2"/><circle cx="264" cy="141" r="2"/>
+          <circle cx="288" cy="141" r="2"/><circle cx="312" cy="141" r="2"/><circle cx="336" cy="141" r="2"/>
+          <circle cx="360" cy="141" r="2"/><circle cx="384" cy="141" r="2"/><circle cx="408" cy="141" r="2"/>
+          <circle cx="464" cy="141" r="2"/><circle cx="488" cy="141" r="2"/><circle cx="512" cy="141" r="2"/>
+          <circle cx="536" cy="141" r="2"/><circle cx="560" cy="141" r="2"/><circle cx="584" cy="141" r="2"/>
+          <circle cx="608" cy="141" r="2"/><circle cx="632" cy="141" r="2"/><circle cx="656" cy="141" r="2"/>
+        </g>
+        <text class="tc" x="440" y="116" font-size="12" font-weight="700" letter-spacing="1">BARRA TX &#183; emisora</text>
+        <rect class="hit" x="196" y="108" width="484" height="54"/>
+      </g>
+
+      <!-- BARRA RX -->
+      <g class="ctl" data-id="rx" role="button" tabindex="0" aria-label="Barra Rx">
+        <rect class="ring" x="196" y="272" width="484" height="40" rx="5"/>
+        <rect class="cap" x="204" y="280" width="222" height="22" rx="3"/>
+        <rect class="cap" x="452" y="280" width="222" height="22" rx="3"/>
+        <g fill="#3FAE45">
+          <circle cx="216" cy="291" r="2"/><circle cx="240" cy="291" r="2"/><circle cx="264" cy="291" r="2"/>
+          <circle cx="288" cy="291" r="2"/><circle cx="312" cy="291" r="2"/><circle cx="336" cy="291" r="2"/>
+          <circle cx="360" cy="291" r="2"/><circle cx="384" cy="291" r="2"/><circle cx="408" cy="291" r="2"/>
+          <circle cx="464" cy="291" r="2"/><circle cx="488" cy="291" r="2"/><circle cx="512" cy="291" r="2"/>
+          <circle cx="536" cy="291" r="2"/><circle cx="560" cy="291" r="2"/><circle cx="584" cy="291" r="2"/>
+          <circle cx="608" cy="291" r="2"/><circle cx="632" cy="291" r="2"/><circle cx="656" cy="291" r="2"/>
+        </g>
+        <text class="tc" x="440" y="330" font-size="12" font-weight="700" letter-spacing="1">BARRA RX &#183; receptora</text>
+        <rect class="hit" x="196" y="272" width="484" height="52"/>
+      </g>
+
+      <!-- tapas de union -->
+      <g class="ctl" data-id="tapas" role="button" tabindex="0" aria-label="Tapas de conexi&#243;n">
+        <rect class="ring" x="424" y="122" width="36" height="190" rx="5"/>
+        <rect class="cap" x="430" y="126" width="18" height="30" rx="3" fill="#B7BDC2" stroke="#8E959A"/>
+        <rect class="cap" x="430" y="276" width="18" height="30" rx="3" fill="#B7BDC2" stroke="#8E959A"/>
+        <text class="dim" x="439" y="252" font-size="9.5">tapas</text>
+        <rect class="hit" x="424" y="122" width="30" height="40"/>
+        <rect class="hit" x="424" y="272" width="30" height="84"/>
+      </g>
+
+      <!-- interfaz / tambor -->
+      <g class="ctl" data-id="interfaz" role="button" tabindex="0" aria-label="Interfaz o tambor">
+        <rect class="ring" x="142" y="118" width="60" height="196" rx="6"/>
+        <rect class="cap" x="148" y="124" width="52" height="34" rx="7" fill="#C7CCD1" stroke="#9AA1A8"/>
+        <rect x="154" y="130" width="12" height="6" rx="2" fill="#3A3F45"/>
+        <circle cx="188" cy="133" r="3" fill="#3A3F45"/>
+        <rect class="cap" x="148" y="274" width="52" height="34" rx="7" fill="#C7CCD1" stroke="#9AA1A8"/>
+        <rect x="154" y="280" width="12" height="6" rx="2" fill="#3A3F45"/>
+        <text class="lb" x="174" y="172">interfaz</text>
+        <rect class="hit" x="142" y="118" width="60" height="60"/>
+        <rect class="hit" x="142" y="270" width="60" height="44"/>
+      </g>
+
+      <!-- LED de estado -->
+      <g class="ctl" data-id="led" role="button" tabindex="0" aria-label="LED de estado">
+        <circle class="ring" cx="188" cy="290" r="20"/>
+        <circle cx="188" cy="290" r="8" fill="#2A2E32"/><circle class="cap" cx="188" cy="290" r="5" fill="#3FAE45" stroke="#1F7A2A"/>
+        <text class="dim" x="188" y="326" font-size="9.5">LED</text>
+        <circle class="hit" cx="188" cy="292" r="22"/>
+      </g>
+
+      <!-- separacion -->
+      <g class="ctl" data-id="separacion" role="button" tabindex="0" aria-label="Separaci&#243;n entre barras">
+        <rect class="ring" x="536" y="156" width="150" height="122" rx="5"/>
+        <line x1="560" y1="166" x2="560" y2="268" stroke="#B03A22" stroke-width="1.2"/>
+        <path d="M556 172 L560 164 L564 172" fill="#B03A22"/>
+        <path d="M556 262 L560 270 L564 262" fill="#B03A22"/>
+        <text class="dim" x="624" y="212">1 a 6 m</text>
+        <rect class="hit" x="536" y="156" width="150" height="122"/>
+      </g>
+
+      <!-- haces -->
+      <g stroke="#C9CEC7" stroke-dasharray="4 6" stroke-width="1">
+        <line x1="264" y1="154" x2="264" y2="278"/><line x1="312" y1="154" x2="312" y2="278"/>
+        <line x1="360" y1="154" x2="360" y2="278"/><line x1="408" y1="154" x2="408" y2="278"/>
+        <line x1="488" y1="154" x2="488" y2="278"/>
+      </g>
+
+      <!-- PC -->
+      <g class="ctl" data-id="pc" role="button" tabindex="0" aria-label="Computadora y software">
+        <rect class="ring" x="42" y="336" width="130" height="76" rx="6"/>
+        <rect class="cap" x="56" y="342" width="102" height="60" rx="4" fill="#3A3F45" stroke="#22262A"/>
+        <rect x="62" y="348" width="90" height="48" rx="2" fill="#1B4E86"/>
+        <path d="M70 386 L86 364 L100 378 L114 356 L142 372" stroke="#8FD0FF" stroke-width="2" fill="none"/>
+        <rect x="46" y="404" width="122" height="8" rx="3" fill="#B7BDC2" stroke="#8E959A"/>
+        <text class="lb" x="107" y="330">PC con OptoJump Next</text>
+        <rect class="hit" x="42" y="336" width="130" height="80"/>
+      </g>
+      <path d="M156 152 Q96 240 104 336" stroke="#8A9AA8" stroke-width="1.8" fill="none"/>
+      <text class="dim" x="72" y="250" font-size="9.5">USB</text>
+    </svg>
+    </div>
+    <div class="panel-bar">
+      <p>Toca un elemento</p>
+      <button class="zoom-btn" id="zoom" type="button">Ver en grande ⤢</button>
+    </div>
+  </div>
+
+  <div class="ctl-list">
+    <h3 class="grp">Las partes</h3>
+
+    <details class="row" id="c-tx" data-short="La barra emisora. Es la que se conecta por USB a la computadora. Va enfrente de la Rx, a la misma altura y paralela."><summary><span class="badge">01</span><span class="nm">Barra Tx</span><span class="chev">+</span></summary><div class="lcd">
+      <p>La barra <b>emisora</b>. Manda los haces infrarrojos hacia la otra barra. Es la que se conecta por cable USB a la computadora, desde su interfaz. Va colocada enfrente de la Rx, paralela y a la misma altura.</p>
+      <div class="tip"><b>En la práctica</b>Las barras están marcadas: dice si son TX o RX y si son de 10 o de 30 mm. Revisa la marca antes de armar.</div></div></details>
+
+    <details class="row" id="c-rx" data-short="La barra receptora. Recibe los haces y detecta cuáles se interrumpen. En ella está el LED que te dice si el sistema está listo."><summary><span class="badge">02</span><span class="nm">Barra Rx</span><span class="chev">+</span></summary><div class="lcd">
+      <p>La barra <b>receptora</b>. Detecta cuáles haces se están interrumpiendo, y de ahí sale toda la medición: cuánto tiempo estuvo el pie en el suelo, cuánto en el aire, y en qué parte de la barra se apoyó.</p>
+      <div class="tip"><b>En la práctica</b>La longitud del pie que reporta el sistema es en realidad el número de LEDs tapados. Por eso con las barras de 30 mm la medición del pie no es confiable, y con las de 10 mm sí.</div></div></details>
+
+    <details class="row" id="c-separacion" data-short="Mínimo 1 metro, máximo 6 metros entre la Tx y la Rx. Deben quedar paralelas y a la misma altura sobre el piso."><summary><span class="badge">03</span><span class="nm">Separación</span><span class="chev">+</span></summary><div class="lcd">
+      <p>Entre la barra Tx y la Rx debe haber <b>mínimo 1 metro y máximo 6 metros</b>. Tienen que quedar enfrentadas, paralelas, y apoyadas sobre una superficie pareja.</p>
+      <div class="tip"><b>En la práctica</b>El cable del cargador es lo bastante largo para trabajar a 5 o 6 metros aun estando conectado a la corriente. No hace falta desconectarlo para hacer pruebas.</div></div></details>
+
+    <details class="row" id="c-interfaz" data-short="El tambor plateado al inicio de la barra. Solo las barras con interfaz tienen apagador, puerto USB y las entradas jack."><summary><span class="badge">04</span><span class="nm">Interfaz (tambor)</span><span class="chev">+</span></summary><div class="lcd">
+      <p>Es el cilindro plateado que está al inicio de la barra. <b>Solo las barras con interfaz tienen apagador.</b> Ahí están el switch de encendido, el puerto USB para la computadora, la entrada del cargador y tres jacks para eventos externos: <b>azul</b> para contacto normalmente cerrado, <b>verde</b> para normalmente abierto y <b>negro</b> para tierra.</p>
+      <div class="tip"><b>En la práctica</b>Los jacks sirven para conectar una fotocelda o un botón de arranque, y así disparar la prueba desde afuera en lugar de con la entrada al área.</div></div></details>
+
+    <details class="row" id="c-led" data-short="Verde: ningún haz interrumpido, listo para medir. Rojo: hay al menos un haz tapado. Antes de empezar debe estar verde."><summary><span class="badge">05</span><span class="nm">LED de estado</span><span class="chev">+</span></summary><div class="lcd">
+      <p>Está junto a la interfaz y es tu confirmación de que el montaje quedó bien. <b>Verde: ningún haz interrumpido.</b> <b>Rojo: hay al menos un haz tapado.</b> Antes de empezar cualquier prueba tiene que estar en verde.</p>
+      <div class="tip"><b>En la práctica</b>Hay otro LED, el que está junto a la entrada del cargador, y ese es distinto: verde parpadeando es batería con carga, rojo parpadeando es batería baja, y naranja es cargando.</div></div></details>
+
+    <details class="row" id="c-tapas" data-short="Unen una barra con la siguiente. Entran de un solo lado. Si no entra, gírala 180 grados. Nunca la fuerces: dobla los pines."><summary><span class="badge">06</span><span class="nm">Tapas de conexión</span><span class="chev">+</span></summary><div class="lcd">
+      <p>Son las piezas que unen una barra con la siguiente cuando armas tramos largos. Se insertan en las ranuras y se empujan con <b>presión ligera y pareja de los dos lados</b>, hasta que entren completas y queden paralelas a las barras.</p>
+      <div class="tip"><b>En la práctica</b>La tapa entra de un solo lado. Si no entra, gírala 180 grados. <b>Nunca la fuerces</b>: se doblan los pines de conexión. Y si queda mal insertada, el software se comporta raro sin decirte por qué.</div></div></details>
+
+    <details class="row" id="c-pc" data-short="Todo se opera desde la computadora, no desde las barras. El software tiene tres secciones: Atletas, Pruebas y Resultados."><summary><span class="badge">07</span><span class="nm">La computadora</span><span class="chev">+</span></summary><div class="lcd">
+      <p>El OptoJump <b>no tiene pantalla ni botones propios</b>: todo se opera desde el software en la computadora. La interfaz tiene tres secciones: <b>Atletas</b>, donde se dan de alta las personas; <b>Pruebas</b>, donde se configuran y se ejecutan; y <b>Resultados</b>, donde se revisan, comparan y exportan.</p>
+      <div class="tip"><b>En la práctica</b>Antes de poder hacer una sola prueba hay que dar de alta al menos un atleta. El único campo obligatorio es el apellido, pero sin el peso no se calculan potencia ni energía.</div></div></details>
+  </div>
+  <a class="top" href="#top">↑ Inicio</a>
+</section>
+
+<section id="encendido">
+  <div class="sec-head"><span class="sec-num">02</span><h2>Orden de encendido</h2></div>
+  <p class="lede">Este orden no es sugerencia. Si lo cambias, el sistema no reconoce bien las barras.</p>
+  <ol class="steps">
+    <li><b>Apaga el OptoJump.</b><span>Se arma con el equipo apagado, no encendido.</span></li>
+    <li><b>Coloca las barras Tx y Rx enfrentadas.</b><span>Entre 1 y 6 metros, paralelas y a la misma altura.</span></li>
+    <li><b>Si usas varias barras, pon las tapas.</b><span>Presión ligera y pareja. Verifica que hayan quedado bien insertadas.</span></li>
+    <li><b>Conecta el cable USB de la interfaz Tx a la computadora.</b><span>Si vas a usar más de 3 metros por lado, o sea más de 3 barras Tx y 3 Rx, se necesita el adaptador.</span></li>
+    <li><b>Ahora sí, enciende el OptoJump.</b><span>Con el switch de la interfaz.</span></li>
+    <li><b>Verifica que el LED de la Rx esté en verde.</b><span>Si está rojo, hay un haz interrumpido: revisa que no haya nada entre las barras.</span></li>
+  </ol>
+  <div class="warn"><b>Si agregas o quitas barras</b><p>Hay que apagar el equipo y volverlo a encender. Si no, el software sigue creyendo que hay la cantidad anterior de barras y los resultados salen mal.</p></div>
+  <a class="top" href="#top">↑ Inicio</a>
+</section>
+
+<section id="prueba">
+  <div class="sec-head"><span class="sec-num">03</span><h2>Hacer una prueba</h2></div>
+  <ol class="steps">
+    <li><b>Da de alta al atleta.</b><span>Sección Atletas → Nuevo Atleta. El apellido es obligatorio; el peso hace falta si quieres potencia o energía.</span></li>
+    <li><b>Entra a Pruebas → Ejecutar.</b><span>La pantalla tiene una flecha naranja que marca el orden de las operaciones. Al menos la primera vez, síguela.</span></li>
+    <li><b>Selecciona al atleta.</b><span>Botón naranja Seleccionar, palomea a uno o varios, y confirma.</span></li>
+    <li><b>Selecciona la prueba.</b><span>Botón verde Seleccionar. Primero eliges la categoría: Rendimiento, Análisis de marcha o Rehabilitación. Luego la prueba dentro de esa categoría.</span></li>
+    <li><b>Revisa la configuración.</b><span>Botón Configurar: si quieres gráfica, tabla de datos y video, y en qué orden rotan atletas y pruebas.</span></li>
+    <li><b>Ejecuta.</b><span>Espera a que se active la webcam y a la señal sonora que da el visto bueno. Abajo a la izquierda aparecen las instrucciones: entrar o salir del área entre las barras.</span></li>
+    <li><b>Guarda.</b><span>Guardar conserva la prueba, Revisar vuelve a ver el video, Cancelar la descarta y Repetir la vuelve a hacer. Ojo: si presionas Repetir antes de guardar, la prueba anterior se borra.</span></li>
+  </ol>
+  <a class="top" href="#top">↑ Inicio</a>
+</section>
+
+<section id="tipos">
+  <div class="sec-head"><span class="sec-num">04</span><h2>Tipos de prueba</h2></div>
+  <div class="bd"><div class="tbl">
+    <div class="r"><div class="k">Salto</div><div class="v">Mide tiempo de vuelo y tiempo de contacto en una serie de saltos, y de ahí calcula la altura.</div></div>
+    <div class="r"><div class="k">Tiempos de reacción</div><div class="v">Mide cuánto tarda la persona en reaccionar a un estímulo visual (un círculo que cambia de rojo a verde en la pantalla), sonoro, ambos alternados, o un impulso externo.</div></div>
+    <div class="r"><div class="k">Sprint y marcha</div><div class="v">Analiza carrera o caminata. Además de vuelo y contacto, registra longitud de paso y de zancada.</div></div>
+    <div class="r"><div class="k">Carrera en banda</div><div class="v">Para correr sobre caminadora. Hay que indicarle al software la velocidad a la que está puesta la banda.</div></div>
+    <div class="r"><div class="k">Marcha en banda</div><div class="v">Igual, pero caminando. Aquí además hay que indicar de qué lado quedan los tambores de la interfaz.</div></div>
+    <div class="r"><div class="k">Tapping</div><div class="v">Prueba de frecuencia que registra los datos de cada pie por separado. Los pies deben quedar perpendiculares a las barras.</div></div>
+  </div>
+  <p>Puedes crear tus propias definiciones de prueba, y también <b>protocolos</b>, que son secuencias de pruebas que se ejecutan una tras otra. Las pruebas que vienen de fábrica no se pueden editar ni borrar, pero sí duplicar para partir de ellas.</p>
+  </div>
+  <a class="top" href="#top">↑ Inicio</a>
+</section>
+
+<section id="datos">
+  <div class="sec-head"><span class="sec-num">05</span><h2>Qué mide</h2></div>
+  <p class="lede">Las columnas que van a aparecer en la tabla de resultados.</p>
+  <div class="bd">
+    <div class="tbl">
+      <div class="r"><div class="k">TCont</div><div class="v">Tiempo de contacto: cuánto tiempo estuvo el pie en el suelo.</div></div>
+      <div class="r"><div class="k">TFlight</div><div class="v">Tiempo de vuelo: cuánto tiempo estuvo en el aire.</div></div>
+      <div class="r"><div class="k">Altura</div><div class="v">No se mide, <b>se calcula a partir del tiempo de vuelo</b>. Por eso un tiempo de vuelo mal capturado da una altura mal calculada.</div></div>
+      <div class="r"><div class="k">Potencia</div><div class="v">Se calcula a partir de los tiempos de vuelo y contacto. Necesita el peso del atleta para dar el valor total.</div></div>
+      <div class="r"><div class="k">Paso y zancada</div><div class="v">El <b>paso</b> es la distancia entre dos pies consecutivos; la <b>zancada</b>, entre dos apoyos consecutivos del mismo pie. Se pueden medir de punta a punta o de talón a talón, según se configure.</div></div>
+      <div class="r"><div class="k">Centroide</div><div class="v">Dónde quedó el punto medio de apoyo a lo largo de la barra. Un valor de 0 en "distancia de centroide" significa que el salto se repitió exactamente en el mismo lugar.</div></div>
+      <div class="r"><div class="k">Área ocupada</div><div class="v">Diferencia en centímetros entre el primer y el último LED tapado. Indica qué tan separadas están las piernas.</div></div>
+      <div class="r"><div class="k">Fases de la marcha</div><div class="v">Stance, swing, doble apoyo y apoyo simple. Son términos técnicos estándar y por eso el software los deja en inglés.</div></div>
+    </div>
+    <p>Todo se puede exportar a Excel, y los reportes a PDF, Word o HTML.</p>
+  </div>
+  <a class="top" href="#top">↑ Inicio</a>
+</section>
+
+<section id="errores">
+  <div class="sec-head"><span class="sec-num">06</span><h2>Errores típicos</h2></div>
+  <div class="bd">
+    <div class="warn"><b>Borrar un atleta borra todo lo suyo</b><p>Al eliminar un atleta se borran también todas sus pruebas, protocolos y análisis, <b>sin posibilidad de recuperarlos</b>. Lo mismo pasa al borrar una definición de prueba: se van con ella todas las pruebas hechas con esa definición.</p></div>
+    <div class="tbl">
+      <div class="r"><div class="k">Mezclar barras de 10 y 30 mm</div><div class="v">No se pueden conectar juntas. Están marcadas y se distinguen por la resolución y por si son TX o RX.</div></div>
+      <div class="r"><div class="k">Número de barras mal configurado</div><div class="v">En las pruebas de sprint y marcha hay que decirle al software cuántas barras hay. Si el número no coincide con lo que está montado, el software marca el error y suspende la prueba.</div></div>
+      <div class="r"><div class="k">Piso disparejo o golpe a las barras</div><div class="v">Genera tiempos de vuelo o contacto falsos. Se pueden corregir después, pero es mejor arreglar el montaje: usa la prueba de hardware en Utilidades para verificar.</div></div>
+      <div class="r"><div class="k">Un obstáculo entre las barras</div><div class="v">Una hoja, una piedra o un desnivel tapan LEDs y el LED de estado se pone rojo. Si no se puede quitar, el software permite excluir esos LEDs con el filtro, y quedan marcados en azul.</div></div>
+      <div class="r"><div class="k">La webcam no aparece</div><div class="v">Solo están soportadas las webcams Logitech de gama alta; las de otras marcas aparecen en gris. Es para evitar problemas de sincronía entre el video y los datos.</div></div>
+      <div class="r"><div class="k">El video se ve entrecortado</div><div class="v">No dejes la exposición en Automático. El manual recomienda fijarla en 1/100 o 1/200 y ajustar la ganancia hasta que la imagen quede bien expuesta.</div></div>
+    </div>
+  </div>
+  <a class="top" href="#top">↑ Inicio</a>
+</section>
+
+<section id="limites">
+  <div class="sec-head"><span class="sec-num">07</span><h2>Límites</h2></div>
+  <div class="bd"><div class="tbl">
+    <div class="r"><div class="k">Separación entre barras</div><div class="v">Mínimo 1 m, máximo 6 m</div></div>
+    <div class="r"><div class="k">Resolución</div><div class="v">Barras de 10 mm o de 30 mm, no se mezclan</div></div>
+    <div class="r"><div class="k">Sin adaptador</div><div class="v">Hasta 3 barras Tx y 3 Rx. Más allá de eso se necesita el adaptador</div></div>
+    <div class="r"><div class="k">Batería con 1 barra</div><div class="v">Alrededor de 11.5 h la Tx y 14.4 h la Rx</div></div>
+    <div class="r"><div class="k">Batería con 4 barras</div><div class="v">Baja a unas 2.9 h la Tx y 4.1 h la Rx</div></div>
+    <div class="r"><div class="k">Resolución de pantalla</div><div class="v">Mínimo recomendado 1024 × 768. Abajo de eso, usar el modo de pantalla Reducida</div></div>
+    <div class="r"><div class="k">Video</div><div class="v">Siempre se graba a 640 × 480, aunque se vea más chico. Formato ASF o AVI</div></div>
+  </div></div>
+  <a class="top" href="#top">↑ Inicio</a>
+</section>
+
+<section id="datos-pc">
+  <div class="sec-head"><span class="sec-num">08</span><h2>Dónde quedan los datos</h2></div>
+  <div class="bd">
+    <p>Todo (atletas, pruebas, resultados y ajustes) vive en <b>un solo archivo de base de datos</b> con extensión <span class="m">.sdf</span>, que por defecto se llama <span class="m">OptojumpNext.sdf</span> y está en la carpeta de datos de la aplicación del usuario de Windows. Los videos y las imágenes quedan en las subcarpetas <b>Video</b> e <b>Image</b> de ese mismo lugar.</p>
+    <p>Para llevarse los datos a otra computadora se usa <b>Exportar</b>, que genera un solo archivo comprimido con extensión <span class="m">.OJN</span> incluyendo videos e imágenes. Del otro lado se usa <b>Importar</b>, que permite crear una base nueva o mezclar con la existente.</p>
+    <div class="warn"><b>Antes de cerrar el semestre</b><p>Si van a empezar una base nueva, usen Exportar o Guardar como para conservar la anterior. La opción Limpiar vacía la base actual y <b>es irreversible</b>.</p></div>
+    <p>Si van a manejar varios grupos, conviene una base por grupo. Pero ojo: <b>con bases separadas no se pueden comparar pruebas entre ellas ni ver el histórico</b> de un atleta que esté en dos bases distintas.</p>
+  </div>
+</section>
+
+<footer>
+  <p>Guía de la plataforma de salto Microgate OptoJump Next, resumida del manual de usuario oficial.<br>
+  El manual completo y los controladores vienen en la memoria USB del equipo.<br>
+  El manual oficial y el encargado del laboratorio mandan sobre esta guía.<br>
+  CFD-024 · Versión 1.0 · Septiembre de 2026.</p>
+</footer>
+
+</div>
+
+<div class="fs" id="fs" hidden>
+  <div class="fs-rot" id="fsRot">
+    <button class="fs-close" id="fsClose" type="button">Cerrar ✕</button>
+    <span class="fs-tip" id="fsTip">Toca cualquier elemento</span>
+    <div class="pop" id="pop" hidden></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var svg = document.getElementById('svgPanel');
+  var host= document.getElementById('panelHost');
+  var fs  = document.getElementById('fs');
+  var rot = document.getElementById('fsRot');
+  var pop = document.getElementById('pop');
+  var tip = document.getElementById('fsTip');
+  var rows = Array.prototype.slice.call(document.querySelectorAll('.row'));
+  var ctls = Array.prototype.slice.call(document.querySelectorAll('.ctl'));
+  var VB_FULL = {minx:0, miny:0, w:800, h:430};
+  var VB_CROP = {minx:36, miny:20, w:730, h:396};
+  var VB_MINX = VB_FULL.minx, VB_MINY = VB_FULL.miny, VB_W = VB_FULL.w, VB_H = VB_FULL.h;
+  var RATIO = VB_W / VB_H, activeG = null;
+
+  function setCrop(on){
+    var vb = on ? VB_CROP : VB_FULL;
+    VB_MINX = vb.minx; VB_MINY = vb.miny; VB_W = vb.w; VB_H = vb.h;
+    RATIO = VB_W / VB_H;
+    svg.setAttribute('viewBox', vb.minx+' '+vb.miny+' '+vb.w+' '+vb.h);
+  }
+  function viewportSize(){
+    var vv = window.visualViewport;
+    return {w:(vv&&vv.width)||window.innerWidth, h:(vv&&vv.height)||window.innerHeight};
+  }
+  function sizeFS(){
+    if(fs.hidden) return;
+    var v = viewportSize();
+    fs.style.width = v.w+'px'; fs.style.height = v.h+'px';
+    var w = (v.h >= v.w) ? Math.min(v.h, v.w*RATIO) : Math.min(v.w, v.h*RATIO);
+    rot.style.width = w+'px'; rot.style.height = 'auto';
+  }
+
+  var DATA = {};
+  rows.forEach(function(r){
+    var id = r.id.replace(/^c-/,'');
+    DATA[id] = { badge:r.querySelector('.badge').textContent,
+                 title:r.querySelector('.nm').textContent,
+                 short:r.getAttribute('data-short') || r.querySelector('.lcd p').textContent };
+  });
+  function highlight(id){ ctls.forEach(function(g){ g.classList.toggle('on', g.dataset.id===id); }); }
+
+  rows.forEach(function(r){
+    r.addEventListener('toggle', function(){
+      if(r.open) rows.forEach(function(o){ if(o!==r) o.open=false; });
+      var open=null; rows.forEach(function(o){ if(o.open) open=o.id.replace(/^c-/,''); });
+      if(fs.hidden) highlight(open);
+    });
+  });
+
+  function hidePop(){ pop.hidden=true; activeG=null; highlight(null); }
+  function placePop(g){
+    var b = g.getBBox();
+    var sc = svg.getBoundingClientRect().width / VB_W;
+    if(!sc) return;
+    var W = rot.clientWidth, H = rot.clientHeight;
+    var bx=(b.x-VB_MINX)*sc, by=(b.y-VB_MINY)*sc, bw=b.width*sc, bh=b.height*sc;
+    pop.style.fontSize = Math.max(9, Math.min(15, W*0.0185))+'px';
+    pop.style.maxWidth = Math.min(W*0.34, 300)+'px';
+    pop.style.left='0px'; pop.style.top='0px';
+    var pw=pop.offsetWidth, ph=pop.offsetHeight;
+    var gap=Math.max(8, W*0.012), left, top, cls;
+    if(bx+bw+gap+pw <= W-6){ left=bx+bw+gap; cls='pr'; }
+    else if(bx-gap-pw >= 6){ left=bx-gap-pw; cls='pl'; }
+    else { left=Math.min(Math.max(bx+bw/2-pw/2,6), Math.max(6,W-pw-6));
+           cls=(by+bh+gap+ph <= H-6)?'pb':'pt'; }
+    if(cls==='pr'||cls==='pl') top=by+bh/2-ph/2;
+    else if(cls==='pb') top=by+bh+gap; else top=by-gap-ph;
+    top=Math.min(Math.max(top,6), Math.max(6,H-ph-6));
+    pop.className='pop '+cls; pop.style.left=left+'px'; pop.style.top=top+'px';
+    pop.style.setProperty('--cy', Math.min(Math.max(by+bh/2-top,10), Math.max(10,ph-10))+'px');
+  }
+  function showPop(g){
+    var d = DATA[g.dataset.id]; if(!d) return;
+    if(activeG===g){ hidePop(); return; }
+    activeG=g;
+    pop.innerHTML='<h4><span class="num">'+d.badge+'</span>'+d.title+'</h4><p>'+d.short+'</p>';
+    pop.hidden=false; highlight(g.dataset.id); placePop(g);
+    tip.style.visibility='hidden';
+  }
+  ctls.forEach(function(g){
+    function go(e){
+      if(e) e.stopPropagation();
+      if(!fs.hidden){ showPop(g); return; }
+      var r=document.getElementById('c-'+g.dataset.id); if(!r) return;
+      r.open=true; r.scrollIntoView({block:'center', behavior:'smooth'});
+    }
+    g.addEventListener('click', go);
+    g.addEventListener('keydown', function(e){
+      if(e.key==='Enter'||e.key===' '){ e.preventDefault(); go(e); }
+    });
+  });
+
+  var zoom=document.getElementById('zoom');
+  function openFS(){
+    rot.insertBefore(svg, rot.firstChild);
+    fs.hidden=false; document.body.classList.add('lock');
+    tip.style.visibility='visible'; highlight(null);
+    setCrop(true); sizeFS();
+    try{
+      var p=document.documentElement.requestFullscreen && document.documentElement.requestFullscreen();
+      if(p&&p.then) p.then(function(){
+        if(screen.orientation&&screen.orientation.lock){
+          var q=screen.orientation.lock('landscape'); if(q&&q.catch) q.catch(function(){});
+        }
+      }).catch(function(){});
+    }catch(e){}
+  }
+  function closeFS(){
+    hidePop(); host.appendChild(svg); fs.hidden=true;
+    fs.style.width=''; fs.style.height=''; rot.style.width=''; rot.style.height='';
+    setCrop(false); document.body.classList.remove('lock');
+    try{
+      if(screen.orientation&&screen.orientation.unlock) screen.orientation.unlock();
+      if(document.fullscreenElement&&document.exitFullscreen) document.exitFullscreen();
+    }catch(e){}
+  }
+  zoom.addEventListener('click', openFS);
+  document.getElementById('fsClose').addEventListener('click', function(e){ e.stopPropagation(); closeFS(); });
+  fs.addEventListener('click', function(){ if(!pop.hidden) hidePop(); });
+  pop.addEventListener('click', function(e){ e.stopPropagation(); });
+  document.addEventListener('keydown', function(e){
+    if(e.key!=='Escape'||fs.hidden) return;
+    if(!pop.hidden) hidePop(); else closeFS();
+  });
+  function reflow(){ sizeFS(); if(!fs.hidden&&activeG) placePop(activeG); }
+  window.addEventListener('resize', reflow);
+  window.addEventListener('orientationchange', function(){ setTimeout(reflow,250); });
+  if(window.visualViewport) window.visualViewport.addEventListener('resize', reflow);
+  window.addEventListener('beforeprint', function(){
+    if(!fs.hidden) closeFS();
+    document.querySelectorAll('details').forEach(function(d){ d.open=true; });
+  });
+})();
+</script>
+</body>
+</html>

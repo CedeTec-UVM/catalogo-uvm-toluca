@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fichas de Parafineros - Gimnasio Terapéutico</title>
+    <style>
+        :root {
+            --bg: #f8f6f0; --text: #1e1e1e; --surface: #ffffff; --border: #d0ccc0;
+            --accent: #b22234; --accent-light: #e8d0d0; --warn-bg: #fff3cd;
+            --warn-border: #ffe69c; --warn-text: #856404;
+            --font-sans: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+            --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root { --bg: #1a1a1a; --text: #e8e4db; --surface: #2a2a2a; --border: #4a4a4a;
+                --accent: #d45a5a; --accent-light: #4a2a2a; --warn-bg: #3d3200;
+                --warn-border: #665200; --warn-text: #ffe69c; }
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background: var(--bg); color: var(--text); font-family: var(--font-sans);
+            font-weight: 400; line-height: 1.5; padding: 2rem 1rem; display: flex;
+            flex-direction: column; align-items: center; gap: 2.5rem; }
+        .card { max-width: 820px; width: 100%; background: var(--surface); border: 1px solid var(--border);
+            border-radius: 12px; padding: 2rem 2.2rem; box-shadow: 0 8px 20px rgba(0,0,0,0.08); }
+        .header { border-bottom: 3px solid var(--accent); padding-bottom: 1rem; margin-bottom: 1.5rem; }
+        .header h1 { font-size: 2.2rem; font-weight: 700; letter-spacing: 0.5px; line-height: 1.1; text-transform: uppercase; }
+        .header .codigo { font-family: var(--font-mono); font-size: 1rem; color: var(--accent); background: var(--accent-light);
+            display: inline-block; padding: 0.2rem 0.8rem; border-radius: 20px; margin-top: 0.3rem; font-weight: 600; }
+        .badges { display: flex; flex-wrap: wrap; gap: 0.8rem 1.5rem; margin: 0.8rem 0 0.2rem; font-size: 1rem; font-weight: 500;
+            text-transform: uppercase; letter-spacing: 0.3px; }
+        .badges span { background: var(--bg); padding: 0.15rem 0.8rem; border-radius: 16px; border: 1px solid var(--border); }
+        .badges strong { font-weight: 700; margin-right: 0.3rem; }
+        .warn { background: var(--warn-bg); border-left: 6px solid var(--warn-border); color: var(--warn-text); padding: 1rem 1.2rem;
+            margin: 1.2rem 0; border-radius: 0 8px 8px 0; font-family: var(--font-mono); font-size: 0.95rem; }
+        .warn b { font-weight: 700; display: block; margin-bottom: 0.2rem; }
+        .warn p { margin: 0 0 0.5rem; }
+        .warn p:last-child { margin-bottom: 0; }
+        .security-box { background: var(--accent-light); border: 2px solid var(--accent); border-radius: 10px; padding: 1rem 1.4rem;
+            margin: 1.2rem 0; font-weight: 500; }
+        .security-box strong { color: var(--accent); font-weight: 700; text-transform: uppercase; display: block; margin-bottom: 0.2rem; }
+        .security-box ul { margin: 0.4rem 0 0 1.2rem; font-weight: 400; }
+        .section { margin-top: 1.6rem; }
+        .section h2 { font-size: 1.4rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
+            border-bottom: 1px solid var(--border); padding-bottom: 0.2rem; margin-bottom: 0.6rem; }
+        .section p, .section li { font-size: 1.05rem; font-weight: 400; }
+        .section ul { list-style: square; padding-left: 1.4rem; margin: 0.3rem 0; }
+        .section li { margin-bottom: 0.15rem; }
+        hr { border: none; border-top: 1px solid var(--border); margin: 1.8rem 0 0.5rem; }
+        .footer-note { font-family: var(--font-mono); font-size: 0.8rem; color: var(--border); text-align: right;
+            margin-top: 1.5rem; border-top: 1px solid var(--border); padding-top: 0.6rem; }
+        @media (max-width: 500px) {
+            .card { padding: 1.2rem; } .header h1 { font-size: 1.7rem; } .badges { font-size: 0.85rem; gap: 0.4rem; }
+            .section p, .section li { font-size: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ============================================================ -->
+<!-- COMÚN A LOS 2                                                  -->
+<!-- ============================================================ -->
+<div class="card">
+    <div class="header">
+        <h1>Parafinero — GT-081 (2 unidades)</h1>
+        <div class="codigo">GT-081</div>
+        <div class="badges">
+            <span><strong>Unidades confirmadas:</strong> 2 (ver detalle abajo)</span>
+            <span><strong>Función:</strong> Baño de parafina para termoterapia</span>
+        </div>
+    </div>
+
+    <div class="warn">
+        <b>Código único para 2 equipos físicos distintos</b>
+        <p>El catálogo institucional registra un solo renglón "GT-081 Parafinero", sin marcarlo como grupo, pero se localizaron
+        <b>dos unidades de marca y calidad distinta</b>: un Waxwel Paraffin Heat Treatment Bath (marca médica establecida, con
+        manual real) y un "Paraffin Wax Warmer" genérico modelo YM-8005 (producto tipo bazar/importación, sin ficha técnica
+        publicada). Es el mismo tipo de discrepancia ya reportada con las básculas de GT-009 y los plicómetros de GT-083.
+        Mientras se decide si el catálogo debe corregirse, cada uno se documenta abajo con un código provisional.</p>
+    </div>
+
+    <div class="section">
+        <h2>Para qué sirve (aplica a los 2)</h2>
+        <p>Calienta y mantiene parafina líquida a temperatura de tratamiento, para sumergir manos, pies o zonas del cuerpo con
+        fines de termoterapia: alivia dolor articular, relaja músculos y mejora la circulación local, sobre todo en
+        condiciones como artritis o rigidez articular.</p>
+    </div>
+
+    <div class="section">
+        <h2>Uso correcto (aplica a los 2)</h2>
+        <ul>
+            <li><strong>Encendido:</strong> encender el equipo con suficiente anticipación para que la parafina se derrita por completo (varias horas si está sólida).</li>
+            <li><strong>Verificación de temperatura:</strong> antes de que el paciente sumerja la zona, comprobar que la parafina esté tibia, no caliente al tacto — nunca confiar solo en el indicador sin probar.</li>
+            <li><strong>Preparación del paciente:</strong> retirar anillos, pulseras o joyería de la zona a tratar. Revisar que no haya heridas abiertas ni piel muy sensible.</li>
+            <li><strong>Inmersión:</strong> sumergir la zona varias veces (formando capas), dejando que cada capa se solidifique un poco antes de la siguiente.</li>
+            <li><strong>Envoltura:</strong> cubrir la zona con la bolsa plástica y el guante o forro incluido, y dejar actuar el tiempo indicado por el protocolo.</li>
+            <li><strong>Retiro:</strong> quitar la parafina solidificada al terminar; puede reutilizarse según el protocolo de higiene del laboratorio.</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>Riesgos y seguridad (aplica a los 2)</h2>
+        <div class="security-box">
+            <strong>⚠️ Riesgo de quemadura</strong>
+            <ul>
+                <li>Siempre probar la temperatura de la parafina antes de que el paciente la toque; nunca confiar únicamente en el indicador del equipo.</li>
+                <li>No usar en pacientes con pérdida de sensibilidad en la zona, heridas abiertas, infecciones activas o mala circulación no evaluada por un profesional.</li>
+                <li>Mantener el equipo fuera del alcance de niños; las bolsas plásticas incluidas son riesgo de asfixia si no se manejan con cuidado.</li>
+                <li>No sumergir el cable ni la base eléctrica en agua ni en la parafina derretida.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Limpieza y cuidado (aplica a los 2)</h2>
+        <ul>
+            <li>Retirar residuos de parafina de las paredes del recipiente entre usos, según lo permita cada modelo.</li>
+            <li>Usar forros o bolsas desechables por paciente para higiene, cuando el protocolo del laboratorio lo indique.</li>
+            <li>No sumergir la base ni el cable de alimentación en agua.</li>
+            <li>Guardar tapado para evitar que entre polvo o suciedad a la parafina.</li>
+        </ul>
+    </div>
+
+    <hr>
+    <div class="footer-note">Ficha de uso — GT-081 v1.0 · Gimnasio Terapéutico</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- UNIDAD A: Waxwel                                               -->
+<!-- ============================================================ -->
+<div class="card" id="gt-081-a">
+    <div class="header">
+        <h1>Parafinero Waxwel</h1>
+        <div class="codigo">GT-081-A</div>
+        <div class="badges">
+            <span><strong>Marca:</strong> Waxwel</span>
+            <span><strong>Modelo:</strong> Paraffin Heat Treatment Bath</span>
+            <span><strong>Capacidad:</strong> 1 galón (4 L) de parafina</span>
+        </div>
+    </div>
+    <div class="section">
+        <h2>Límites o especificaciones</h2>
+        <ul>
+            <li><strong>Capacidad de parafina:</strong> hasta 1 galón / 4 litros.</li>
+            <li><strong>Incluye:</strong> mitón de tratamiento térmico, forros desechables (plástico) para mano y pie, guía de uso y cuidado.</li>
+            <li><strong>Uso indicado:</strong> manos, pies, tobillos o muñecas hasta talla de calzado 12.5 (según el fabricante).</li>
+        </ul>
+        <p style="margin-top: 0.4rem; font-style: italic;">*Marca médica establecida en EE.UU.; datos confirmados por la caja original del producto.</p>
+    </div>
+    <hr>
+    <div class="footer-note">Ficha de uso — GT-081-A v1.0 · Gimnasio Terapéutico</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- UNIDAD B: YM-8005                                              -->
+<!-- ============================================================ -->
+<div class="card" id="gt-081-b">
+    <div class="header">
+        <h1>Parafinero genérico YM-8005</h1>
+        <div class="codigo">GT-081-B</div>
+        <div class="badges">
+            <span><strong>Modelo:</strong> Paraffin Wax Warmer YM-8005</span>
+            <span><strong>Controles:</strong> +, −, SET, encendido (táctiles)</span>
+        </div>
+    </div>
+    <div class="warn">
+        <b>Sin ficha técnica pública</b>
+        <p>Es un producto de importación tipo bazar, sin marca reconocible ni ficha técnica oficial publicada. Solo trae una
+        hoja de instrucciones genérica incluida en la caja. No inventar capacidad, rango de temperatura ni certificaciones
+        para este modelo — usar solo la hoja de instrucciones física incluida.</p>
+    </div>
+    <div class="section">
+        <h2>Límites o especificaciones</h2>
+        <p>No se encontró una fuente confiable de especificaciones técnicas (capacidad, rango de temperatura, potencia) para
+        este modelo en particular. Consultar la hoja de instrucciones incluida en la caja física del equipo.</p>
+    </div>
+    <hr>
+    <div class="footer-note">Ficha de uso — GT-081-B v1.0 · Gimnasio Terapéutico</div>
+</div>
+
+</body>
+</html>

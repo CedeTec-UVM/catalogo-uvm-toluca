@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fichas de Láseres Terapéuticos - Gimnasio Terapéutico</title>
+    <style>
+        :root {
+            --bg: #f8f6f0; --text: #1e1e1e; --surface: #ffffff; --border: #d0ccc0;
+            --accent: #b22234; --accent-light: #e8d0d0; --warn-bg: #fff3cd;
+            --warn-border: #ffe69c; --warn-text: #856404;
+            --font-sans: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+            --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root { --bg: #1a1a1a; --text: #e8e4db; --surface: #2a2a2a; --border: #4a4a4a;
+                --accent: #d45a5a; --accent-light: #4a2a2a; --warn-bg: #3d3200;
+                --warn-border: #665200; --warn-text: #ffe69c; }
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background: var(--bg); color: var(--text); font-family: var(--font-sans);
+            font-weight: 400; line-height: 1.5; padding: 2rem 1rem; display: flex;
+            flex-direction: column; align-items: center; gap: 2.5rem; }
+        .card { max-width: 820px; width: 100%; background: var(--surface); border: 1px solid var(--border);
+            border-radius: 12px; padding: 2rem 2.2rem; box-shadow: 0 8px 20px rgba(0,0,0,0.08); }
+        .header { border-bottom: 3px solid var(--accent); padding-bottom: 1rem; margin-bottom: 1.5rem; }
+        .header h1 { font-size: 2.2rem; font-weight: 700; letter-spacing: 0.5px; line-height: 1.1; text-transform: uppercase; }
+        .header .codigo { font-family: var(--font-mono); font-size: 1rem; color: var(--accent); background: var(--accent-light);
+            display: inline-block; padding: 0.2rem 0.8rem; border-radius: 20px; margin-top: 0.3rem; font-weight: 600; }
+        .badges { display: flex; flex-wrap: wrap; gap: 0.8rem 1.5rem; margin: 0.8rem 0 0.2rem; font-size: 1rem; font-weight: 500;
+            text-transform: uppercase; letter-spacing: 0.3px; }
+        .badges span { background: var(--bg); padding: 0.15rem 0.8rem; border-radius: 16px; border: 1px solid var(--border); }
+        .badges strong { font-weight: 700; margin-right: 0.3rem; }
+        .warn { background: var(--warn-bg); border-left: 6px solid var(--warn-border); color: var(--warn-text); padding: 1rem 1.2rem;
+            margin: 1.2rem 0; border-radius: 0 8px 8px 0; font-family: var(--font-mono); font-size: 0.95rem; }
+        .warn b { font-weight: 700; display: block; margin-bottom: 0.2rem; }
+        .warn p { margin: 0 0 0.5rem; }
+        .warn p:last-child { margin-bottom: 0; }
+        .security-box { background: var(--accent-light); border: 2px solid var(--accent); border-radius: 10px; padding: 1rem 1.4rem;
+            margin: 1.2rem 0; font-weight: 500; }
+        .security-box strong { color: var(--accent); font-weight: 700; text-transform: uppercase; display: block; margin-bottom: 0.2rem; }
+        .security-box ul { margin: 0.4rem 0 0 1.2rem; font-weight: 400; }
+        .section { margin-top: 1.6rem; }
+        .section h2 { font-size: 1.4rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
+            border-bottom: 1px solid var(--border); padding-bottom: 0.2rem; margin-bottom: 0.6rem; }
+        .section p, .section li { font-size: 1.05rem; font-weight: 400; }
+        .section ul { list-style: square; padding-left: 1.4rem; margin: 0.3rem 0; }
+        .section li { margin-bottom: 0.15rem; }
+        hr { border: none; border-top: 1px solid var(--border); margin: 1.8rem 0 0.5rem; }
+        .footer-note { font-family: var(--font-mono); font-size: 0.8rem; color: var(--border); text-align: right;
+            margin-top: 1.5rem; border-top: 1px solid var(--border); padding-top: 0.6rem; }
+        @media (max-width: 500px) {
+            .card { padding: 1.2rem; } .header h1 { font-size: 1.6rem; } .badges { font-size: 0.85rem; gap: 0.4rem; }
+            .section p, .section li { font-size: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ============================================================ -->
+<!-- COMÚN A LOS 2                                                  -->
+<!-- ============================================================ -->
+<div class="card">
+    <div class="header">
+        <h1>Láser Terapéutico — GT-061 (2 unidades)</h1>
+        <div class="codigo">GT-061</div>
+        <div class="badges">
+            <span><strong>Unidades confirmadas:</strong> 2 (ver detalle abajo)</span>
+            <span><strong>Función:</strong> Fotobiomodulación / bioestimulación láser</span>
+        </div>
+    </div>
+
+    <div class="warn">
+        <b>Código único para 2 equipos físicos distintos</b>
+        <p>El catálogo institucional registra un solo renglón "GT-061 Láser Terapéutico", sin marcarlo como grupo, pero se
+        localizaron <b>dos láseres de marca distinta</b>: un I-TECH Medical Division (con controles digitales tipo
+        Time/Power/PROBE/Start-Wait-Stop) y un Cosmogamma LP 50 (con pantalla y botones de colores, en su propio estuche con
+        lentes de protección). Es el mismo patrón de discrepancia ya documentado con las básculas, plicómetros y parafineros.
+        Cada uno se documenta abajo con un código provisional, mientras se decide si el catálogo debe corregirse.</p>
+    </div>
+
+    <div class="section">
+        <h2>Para qué sirve (aplica a los 2)</h2>
+        <p>Emite luz láser de baja o mediana potencia sobre tejido biológico (fotobiomodulación o bioestimulación) para
+        reducir dolor, inflamación y acelerar la recuperación de tejidos, en padecimientos ortopédicos, neurológicos y
+        dermatológicos.</p>
+    </div>
+
+    <div class="section">
+        <h2>Uso correcto (aplica a los 2)</h2>
+        <ul>
+            <li><strong>Evaluación previa:</strong> confirmar que el paciente no tenga ninguna de las contraindicaciones listadas abajo.</li>
+            <li><strong>Protección ocular:</strong> tanto el operador como el paciente deben usar lentes de protección específicos para láser durante todo el tratamiento.</li>
+            <li><strong>Colocación de la pieza de mano (o sonda):</strong> en contacto directo o a la distancia indicada por el protocolo, sobre la zona a tratar.</li>
+            <li><strong>Configuración de parámetros:</strong> potencia, tiempo de tratamiento y modo (continuo o intermitente), según el protocolo clínico indicado — nunca a criterio propio sin capacitación.</li>
+            <li><strong>Inicio y monitoreo:</strong> iniciar el tratamiento y permanecer con el paciente durante toda la sesión.</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>Riesgos y seguridad (aplica a los 2)</h2>
+        <div class="security-box">
+            <strong>⚠️ Uso exclusivo con capacitación específica</strong>
+            <ul>
+                <li>Nunca dirigir el haz láser hacia los ojos, propios o del paciente.</li>
+                <li>Uso obligatorio de lentes de protección para láser durante toda la sesión.</li>
+                <li>No usar sobre tejido con cáncer conocido o sospechado.</li>
+                <li>No usar durante el embarazo sobre el abdomen o la zona lumbar.</li>
+                <li>No usar sobre la glándula tiroides ni sobre marcapasos u otros dispositivos electrónicos implantados sin indicación médica expresa.</li>
+                <li>Precaución en pacientes bajo tratamiento con medicamentos fotosensibilizantes.</li>
+                <li>Uso exclusivo por personal capacitado específicamente en terapia láser.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Limpieza y cuidado (aplica a los 2)</h2>
+        <ul>
+            <li>Limpiar la pieza de mano o sonda con un paño suave después de cada paciente, según lo indique el manual de cada unidad.</li>
+            <li>No sumergir en agua ni usar solventes agresivos sobre la lente de salida del láser.</li>
+            <li>Guardar en su estuche original, con los lentes de protección, para evitar daños al trasladarlo.</li>
+            <li>Revisar el cable de la pieza de mano periódicamente; no debe estar deshilachado ni con el aislante dañado.</li>
+        </ul>
+    </div>
+
+    <hr>
+    <div class="footer-note">Ficha de uso — GT-061 v1.0 · Gimnasio Terapéutico</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- UNIDAD A: I-TECH Medical Division                              -->
+<!-- ============================================================ -->
+<div class="card">
+    <div class="header">
+        <h1>Láser I-TECH Medical Division</h1>
+        <div class="codigo">GT-061-A</div>
+        <div class="badges">
+            <span><strong>Fabricante:</strong> I.A.C.E.R. Srl (I-TECH Medical Division), Italia</span>
+            <span><strong>Modelo exacto:</strong> No confirmado</span>
+            <span><strong>Controles:</strong> Time(sec), Power(mW), PROBE, On/Off Time, Cont./Cycle, llave de seguridad, Start/Wait/Stop</span>
+        </div>
+    </div>
+    <div class="warn">
+        <b>Marca real, modelo exacto sin confirmar</b>
+        <p>I-TECH Medical Division (I.A.C.E.R. Srl, Italia) es un fabricante real de equipos de laserterapia, con fichas
+        técnicas públicas para varios modelos (por ejemplo, LA500, LA8000/LA10000). Sin embargo, el diseño de controles de
+        esta unidad en particular (con botones separados de Time y Power, puerto PROBE, llave física de seguridad y botón
+        "Wait") no coincide exactamente con las fichas públicas revisadas. No se le atribuyen a esta unidad las
+        especificaciones de otro modelo de la misma marca sin poder confirmarlas — habría que localizar una placa de
+        identificación con el modelo exacto para completar potencia, longitud de onda y clase de láser.</p>
+    </div>
+    <div class="section">
+        <h2>Uso correcto específico</h2>
+        <ul>
+            <li><strong>Time (sec):</strong> ajusta el tiempo de tratamiento con las teclas + / −.</li>
+            <li><strong>Power (mW):</strong> ajusta la potencia de salida con las teclas + / −.</li>
+            <li><strong>PROBE:</strong> puerto donde se conecta la sonda o pieza de mano.</li>
+            <li><strong>On/Off Time (sec), Cont./Cycle:</strong> configuran si la emisión es continua o en ciclos de encendido/apagado.</li>
+            <li><strong>Llave de seguridad (OFF/ON):</strong> debe estar en posición ON para poder operar el equipo; permite bloquear el uso cuando no está en sesión.</li>
+            <li><strong>Start / Wait / Stop:</strong> inician, pausan y detienen el tratamiento respectivamente.</li>
+        </ul>
+    </div>
+    <div class="section">
+        <h2>Límites o especificaciones</h2>
+        <p>No se encontró una fuente confiable de especificaciones exactas (potencia máxima, longitud de onda, clase de
+        láser) para este modelo específico. Consultar la placa de identificación física del equipo o contactar al
+        distribuidor para obtener la ficha técnica correspondiente al modelo exacto.</p>
+    </div>
+    <hr>
+    <div class="footer-note">Ficha de uso — GT-061-A v1.0 · Gimnasio Terapéutico</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- UNIDAD B: Cosmogamma LP 50                                     -->
+<!-- ============================================================ -->
+<div class="card">
+    <div class="header">
+        <h1>Láser Cosmogamma LP 50</h1>
+        <div class="codigo">GT-061-B</div>
+        <div class="badges">
+            <span><strong>Marca:</strong> Cosmogamma</span>
+            <span><strong>Modelo:</strong> LP 50</span>
+            <span><strong>Incluye:</strong> Lentes de protección, sonda con estuche, cargador</span>
+        </div>
+    </div>
+    <div class="warn">
+        <b>Sin ficha técnica pública</b>
+        <p>No se encontró una ficha técnica oficial publicada para "Cosmogamma LP 50" — es probable que sea una marca o
+        importador regional sin presencia pública, similar a otros casos ya documentados en este catálogo (Eagle Alum,
+        SGAIJE). No inventar potencia, longitud de onda ni clase de láser para este modelo.</p>
+    </div>
+    <div class="section">
+        <h2>Contenido confirmado del kit</h2>
+        <ul>
+            <li>Unidad principal con pantalla y botones de colores (verde, amarillo, rojo).</li>
+            <li>Lentes de protección para láser, de uso obligatorio durante el tratamiento.</li>
+            <li>Sonda o pieza de mano en estuche con cierre.</li>
+            <li>Cargador / fuente de alimentación.</li>
+            <li>Accesorio metálico adicional (función exacta no confirmada; posible sonda de calibración).</li>
+        </ul>
+    </div>
+    <div class="section">
+        <h2>Límites o especificaciones</h2>
+        <p>No se encontró una fuente confiable de especificaciones técnicas (potencia, longitud de onda, clase de láser)
+        para esta marca y modelo. Consultar el manual físico si se localiza dentro del maletín, o la etiqueta del equipo.</p>
+    </div>
+    <hr>
+    <div class="footer-note">Ficha de uso — GT-061-B v1.0 · Gimnasio Terapéutico</div>
+</div>
+
+</body>
+</html>

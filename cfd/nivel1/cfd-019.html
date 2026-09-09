@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<title>Accutrend Plus · Guía de laboratorio</title>
+<meta name="description" content="Cómo usar el medidor Accutrend Plus del Lab de Cultura Física y Deporte: tiras, codificación, medición, control de calidad y limpieza.">
+<meta name="theme-color" content="#E4E1D6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121A24" media="(prefers-color-scheme: dark)">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#E4E1D6; --card:#F2F0E9; --ink:#16283F; --ink-2:#455670;
+  --rule:#C6C0B0; --muted:#6F7787; --live:#B03A22;
+  --lcd:#C6DDD6; --lcd-deep:#9FBDB4; --lcd-ink:#10231D;
+  --display:"Barlow Condensed",Impact,"Arial Narrow",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,"SF Mono",Menlo,monospace;
+  --body:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#121A24; --card:#1B242F; --ink:#E6E9EC; --ink-2:#AFB7C0;
+        --rule:#2E3944; --muted:#8A939E; --live:#E8785A;}
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);
+  font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased;
+  -webkit-tap-highlight-color:transparent;overflow-wrap:break-word}
+body.lock{overflow:hidden}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+.wrap{max-width:780px;margin:0 auto;padding:0 16px calc(56px + env(safe-area-inset-bottom))}
+a{color:var(--ink)}
+
+.hero{padding:22px 0 16px}
+.brand{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin:0}
+h1{font-family:var(--display);font-weight:700;text-transform:uppercase;
+   font-size:clamp(46px,13vw,92px);line-height:.85;margin:4px 0 8px}
+.tagline{font-family:var(--display);font-weight:600;text-transform:uppercase;letter-spacing:.05em;
+   font-size:clamp(17px,4.6vw,23px);line-height:1.15;margin:0 0 16px;color:var(--ink-2)}
+.strip{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rule);
+   border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.strip div{background:var(--bg);padding:9px 10px 10px}
+.strip dt{font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:0 0 2px}
+.strip dd{margin:0;font-family:var(--mono);font-size:14px;font-weight:600}
+
+.jump{position:sticky;top:0;z-index:30;margin:0 -16px;
+  background:color-mix(in srgb,var(--bg) 92%,transparent);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--rule)}
+.jump ul{display:flex;overflow-x:auto;list-style:none;margin:0;padding:0 10px;scrollbar-width:none}
+.jump ul::-webkit-scrollbar{display:none}
+.jump a{display:block;white-space:nowrap;padding:13px 11px;text-decoration:none;
+  font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.jump a:active{color:var(--ink)}
+
+section{margin-top:34px;scroll-margin-top:56px}
+.sec-head{display:flex;align-items:baseline;gap:10px;border-bottom:1.5px solid var(--ink);padding-bottom:6px;margin-bottom:14px}
+.sec-num{font-family:var(--mono);font-size:11px;color:var(--live);letter-spacing:.08em}
+h2{font-family:var(--display);font-weight:700;text-transform:uppercase;
+   font-size:clamp(25px,7vw,34px);line-height:1;margin:0}
+.lede{color:var(--ink-2);margin:0 0 16px;font-size:15.5px}
+
+.panel-box{background:var(--card);border:1px solid var(--rule);border-radius:4px;padding:8px}
+#panelHost svg.panel{width:100%;height:auto;display:block;touch-action:manipulation}
+.panel-bar{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:8px}
+.panel-bar p{margin:0;font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.zoom-btn{font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;
+  background:var(--ink);color:var(--bg);border:1px solid var(--ink);border-radius:999px;
+  padding:11px 18px;min-height:44px;cursor:pointer}
+.zoom-btn:active{opacity:.75}
+
+.ctl{cursor:pointer}
+.ctl .hit{fill:transparent}
+.ring{fill:none;stroke:#B03A22;stroke-width:3;opacity:0}
+.ctl.on .ring{opacity:1}
+.ctl.on .cap{fill:#FFE08A;stroke:#B03A22}
+.ctl:focus-visible{outline:none}
+.ctl:focus-visible .ring{opacity:1;stroke-dasharray:6 4}
+
+.fs{position:fixed;inset:0;z-index:100;background:#0C1219;
+  display:flex;align-items:center;justify-content:center;overscroll-behavior:contain;overflow:hidden}
+.fs[hidden]{display:none}
+.fs-rot{position:relative;line-height:0;width:100vw;flex:0 0 auto}
+@media (orientation:portrait){ .fs-rot{transform:rotate(90deg)} }
+.fs-rot svg.panel{display:block;width:100%;height:auto}
+.fs-close,.fs-tip{position:absolute;z-index:4;font-family:var(--mono);
+  font-size:12px;letter-spacing:.08em;text-transform:uppercase;line-height:1}
+.fs-close{top:2%;right:1.6%;background:#16283F;color:#EBE8DE;border:0;
+  border-radius:999px;padding:11px 16px;min-height:42px;cursor:pointer}
+.fs-close:active{opacity:.75}
+.fs-tip{left:1.6%;bottom:3%;color:#8FA0B4;pointer-events:none}
+
+.pop{position:absolute;z-index:3;background:var(--lcd);color:var(--lcd-ink);
+  border:1px solid #6E8880;border-radius:4px;padding:.75em .85em;line-height:1.4;
+  box-shadow:0 8px 26px rgba(0,0,0,.45);text-align:left}
+.pop[hidden]{display:none}
+.pop h4{margin:0 0 .3em;font-family:var(--display);font-weight:700;text-transform:uppercase;
+  font-size:1.3em;line-height:1.05;letter-spacing:.02em}
+.pop p{margin:0;font-size:1em}
+.pop .num{font-family:var(--mono);font-size:.75em;opacity:.65;letter-spacing:.1em;display:block;margin-bottom:.15em}
+.pop::after{content:"";position:absolute;width:.62em;height:.62em;background:var(--lcd);
+  border:1px solid #6E8880;transform:rotate(45deg)}
+.pop.pr::after{left:-.35em;top:calc(var(--cy,50%) - .31em);border-right:0;border-top:0}
+.pop.pl::after{right:-.35em;top:calc(var(--cy,50%) - .31em);border-left:0;border-bottom:0}
+.pop.pb::after{top:-.35em;left:calc(50% - .31em);border-right:0;border-bottom:0}
+.pop.pt::after{bottom:-.35em;left:calc(50% - .31em);border-left:0;border-top:0}
+
+.ctl-list{margin-top:18px}
+.grp{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--live);margin:26px 0 0;padding:0 0 7px;border-bottom:1.5px solid var(--ink);font-weight:600}
+.grp:first-child{margin-top:0}
+.row{border-bottom:1px solid var(--rule)}
+.row>summary{display:flex;align-items:center;gap:12px;list-style:none;cursor:pointer;padding:15px 4px;min-height:56px}
+.row>summary::-webkit-details-marker{display:none}
+.row>summary:active{background:var(--card)}
+.badge{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--muted);min-width:26px}
+.nm{font-family:var(--display);font-weight:600;text-transform:uppercase;letter-spacing:.03em;
+  font-size:20px;line-height:1.05;flex:1}
+.chev{font-family:var(--mono);color:var(--muted);font-size:18px;line-height:1}
+.row[open] .chev,.row[open] .nm{color:var(--live)}
+
+.lcd{background:var(--lcd);color:var(--lcd-ink);border-radius:3px;padding:15px 15px 16px;margin:0 0 15px;
+  box-shadow:inset 0 0 0 3px rgba(0,0,0,.06);
+  background-image:repeating-linear-gradient(0deg,rgba(0,0,0,.04) 0 1px,transparent 1px 3px)}
+.lcd p{margin:0;font-size:15.5px;line-height:1.55}
+.lcd .tip{font-family:var(--mono);font-size:13.5px;line-height:1.5;
+  border-top:1px solid rgba(16,35,29,.3);padding-top:10px;margin-top:11px}
+.lcd .tip b{display:block;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
+  font-size:10.5px;opacity:.72;margin-bottom:3px}
+
+ol.steps{list-style:none;counter-reset:s;margin:0;padding:0;border-top:1px solid var(--rule)}
+ol.steps li{counter-increment:s;padding:14px 0 15px 46px;border-bottom:1px solid var(--rule);position:relative}
+ol.steps li::before{content:counter(s,decimal-leading-zero);position:absolute;left:0;top:16px;
+  font-family:var(--mono);font-size:12px;font-weight:600;color:var(--live)}
+ol.steps b{font-weight:600}
+ol.steps span{display:block;color:var(--ink-2);font-size:15px;margin-top:3px}
+
+.bd{padding:0 0 20px}
+.bd p{margin:0 0 12px;font-size:15.5px;color:var(--ink-2)}
+.bd p b,.bd li b{color:var(--ink);font-weight:600}
+.bd ul{margin:0 0 14px;padding-left:19px}
+.bd li{margin-bottom:8px;font-size:15.5px;color:var(--ink-2)}
+
+.tbl{border-top:1px solid var(--ink);margin:0 0 16px}
+.tbl .r{display:grid;grid-template-columns:1fr;gap:1px 14px;padding:11px 0;border-bottom:1px solid var(--rule)}
+.tbl .k{font-family:var(--mono);font-size:13.5px;font-weight:600}
+.tbl .v{font-size:15px;color:var(--ink-2)}
+@media (min-width:560px){.tbl .r{grid-template-columns:minmax(150px,34%) 1fr}}
+.m{font-family:var(--mono);font-size:.9em;background:color-mix(in srgb,var(--ink) 9%,transparent);padding:1px 5px;border-radius:2px}
+
+.warn{border-left:3px solid var(--live);background:var(--card);padding:12px 14px;margin:0 0 15px}
+.warn b{font-family:var(--mono);font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--live);display:block;margin-bottom:3px}
+.warn p{margin:0 0 8px;font-size:15px}
+.warn p:last-child{margin-bottom:0}
+.warn.big{border-left-width:5px}
+
+.top{display:block;margin:26px 0 0;text-align:center;font-family:var(--mono);font-size:12px;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-decoration:none;padding:14px}
+footer{margin-top:34px;border-top:1.5px solid var(--ink);padding-top:14px;
+  font-family:var(--mono);font-size:12px;color:var(--muted);line-height:1.75}
+
+@media print{
+  body{background:#fff;color:#000;font-size:11pt}
+  .jump,.panel-bar,.top,.fs{display:none}
+  .lcd{background:#fff;color:#000;box-shadow:none;border:1px solid #999;background-image:none}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero" id="top">
+  <p class="brand">Roche · Lab de Cultura Física · CFD-019</p>
+  <h1>Accutrend<br>Plus</h1>
+  <p class="tagline">Medidor de glucosa, colesterol, triglicéridos y lactato</p>
+  <dl class="strip">
+    <div><dt>Método</dt><dd>Fotometría de reflectancia</dd></div>
+    <div><dt>Muestra</dt><dd>Sangre capilar fresca</dd></div>
+    <div><dt>Memoria</dt><dd>100 por parámetro</dd></div>
+    <div><dt>Pilas</dt><dd>4 × AAA · +1000 tests</dd></div>
+  </dl>
+</header>
+
+<div class="warn big" style="margin-top:18px">
+  <b>Lee esto primero</b>
+  <p>Esta guía explica <b>cómo se opera el aparato</b>. No explica cómo interpretar un resultado, ni qué valores son normales, ni qué hacer ante un valor alto o bajo. Eso es criterio del personal de salud responsable de la práctica.</p>
+  <p>El Accutrend Plus es un <b>producto sanitario para diagnóstico in vitro</b> y trabaja con sangre. Antes de usarlo lee la sección de seguridad y sigue las indicaciones del profesor a cargo.</p>
+</div>
+
+<nav class="jump" aria-label="Secciones">
+  <ul>
+    <li><a href="#tiras">Las tiras</a></li>
+    <li><a href="#seguridad">Seguridad</a></li>
+    <li><a href="#preparar">Preparar</a></li>
+    <li><a href="#medir">Medir</a></li>
+    <li><a href="#gota">La gota</a></li>
+    <li><a href="#control">Test de control</a></li>
+    <li><a href="#limpieza">Limpieza</a></li>
+    <li><a href="#errores">Errores</a></li>
+    <li><a href="#limites">Límites</a></li>
+  </ul>
+</nav>
+
+<section id="tiras">
+  <div class="sec-head"><span class="sec-num">01</span><h2>Las dos tiras</h2></div>
+  <p class="lede">Son distintas y se confunden. Toca cada parte del esquema.</p>
+
+  <div class="panel-box">
+    <div id="panelHost">
+    <svg class="panel" id="svgPanel" viewBox="0 0 800 420" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Esquema de la tira reactiva y la tira de codificación">
+      <defs><style>
+        .t{font-family:Helvetica,Arial,sans-serif;fill:#16283F}
+        .tc{font-family:Helvetica,Arial,sans-serif;fill:#16283F;text-anchor:middle;pointer-events:none}
+        .lb{font-family:Helvetica,Arial,sans-serif;fill:#6F7787;font-size:11px;text-anchor:middle;pointer-events:none}
+        .dim{font-family:"IBM Plex Mono",monospace;fill:#B03A22;font-size:10.5px;text-anchor:middle;pointer-events:none}
+        .cap:not([fill]){fill:#EFEDE6} .cap:not([stroke]){stroke:#B5B0A3} .cap{stroke-width:1}
+      </style></defs>
+
+      <rect x="0" y="0" width="800" height="420" fill="#F2F0E9"/>
+      <text class="t" x="56" y="34" font-size="15" font-weight="700">Tira reactiva y tira de codificaci&#243;n</text>
+      <text class="t" x="56" y="53" font-size="11" fill="#6F7787">Esquema, no est&#225; a escala</text>
+
+      <text class="tc" x="204" y="84" font-size="12" font-weight="700" letter-spacing="1">TIRA REACTIVA</text>
+      <text class="tc" x="596" y="84" font-size="12" font-weight="700" letter-spacing="1">TIRA DE CODIFICACI&#211;N</text>
+      <line x1="400" y1="70" x2="400" y2="356" stroke="#CFC9BA" stroke-dasharray="5 5"/>
+
+      <!-- tira reactiva, frente -->
+      <rect class="cap" x="104" y="98" width="86" height="216" rx="6"/>
+      <text class="tc" x="147" y="120" font-size="11" font-weight="700">TG</text>
+      <g class="ctl" data-id="aplicacion" role="button" tabindex="0" aria-label="&#193;rea de aplicaci&#243;n">
+        <rect class="ring" x="108" y="132" width="78" height="78" rx="5"/>
+        <rect class="cap" x="115" y="139" width="64" height="64" rx="4" fill="#E8C22A" stroke="#B08A18"/>
+        <text class="dim" x="147" y="228" font-size="9.5">&#225;rea de</text>
+        <text class="dim" x="147" y="240" font-size="9.5">aplicaci&#243;n</text>
+        <rect class="hit" x="108" y="132" width="78" height="78"/>
+      </g>
+      <text class="lb" x="147" y="336">frente</text>
+
+      <!-- tira reactiva, reverso -->
+      <rect class="cap" x="216" y="98" width="86" height="216" rx="6"/>
+      <g class="ctl" data-id="barras" role="button" tabindex="0" aria-label="C&#243;digo de barras">
+        <rect class="ring" x="220" y="110" width="78" height="56" rx="5"/>
+        <g fill="#2A2C2E">
+          <rect x="228" y="118" width="4" height="40"/><rect x="236" y="118" width="2" height="40"/>
+          <rect x="242" y="118" width="5" height="40"/><rect x="251" y="118" width="2" height="40"/>
+          <rect x="257" y="118" width="3" height="40"/><rect x="264" y="118" width="5" height="40"/>
+          <rect x="273" y="118" width="2" height="40"/><rect x="279" y="118" width="4" height="40"/>
+          <rect x="287" y="118" width="3" height="40"/>
+        </g>
+        <rect class="hit" x="220" y="110" width="78" height="56"/>
+      </g>
+      <g class="ctl" data-id="hendidura" role="button" tabindex="0" aria-label="Hendidura circular">
+        <circle class="ring" cx="259" cy="248" r="34"/>
+        <circle class="cap" cx="259" cy="248" r="26" fill="#C8B27A" stroke="#96844F"/>
+        <text class="dim" x="259" y="300" font-size="9.5">hendidura</text>
+        <circle class="hit" cx="259" cy="248" r="34"/>
+      </g>
+      <text class="lb" x="259" y="336">reverso</text>
+
+      <!-- tira de codificacion, frente -->
+      <rect class="cap" x="496" y="98" width="86" height="216" rx="6"/>
+      <text class="tc" x="539" y="120" font-size="11" font-weight="700">TG</text>
+      <rect x="502" y="132" width="74" height="26" fill="#2A2C2E"/>
+      <g class="ctl" data-id="sujecion" role="button" tabindex="0" aria-label="Zona blanca para sujetar">
+        <rect class="ring" x="500" y="234" width="78" height="74" rx="5"/>
+        <rect class="cap" x="506" y="240" width="66" height="62" rx="4" fill="#FFFFFF" stroke="#C6C0B0"/>
+        <text class="dim" x="539" y="276" font-size="9.5">tomar aqu&#237;</text>
+        <rect class="hit" x="500" y="234" width="78" height="74"/>
+      </g>
+      <text class="lb" x="539" y="336">frente</text>
+
+      <!-- tira de codificacion, reverso -->
+      <g class="ctl" data-id="codificacion" role="button" tabindex="0" aria-label="Tira de codificaci&#243;n">
+        <rect class="ring" x="604" y="94" width="94" height="224" rx="7"/>
+        <rect class="cap" x="608" y="98" width="86" height="216" rx="6"/>
+        <g fill="#2A2C2E">
+          <rect x="620" y="118" width="4" height="46"/><rect x="628" y="118" width="2" height="46"/>
+          <rect x="634" y="118" width="5" height="46"/><rect x="643" y="118" width="3" height="46"/>
+          <rect x="650" y="118" width="2" height="46"/><rect x="656" y="118" width="5" height="46"/>
+          <rect x="665" y="118" width="3" height="46"/><rect x="672" y="118" width="4" height="46"/>
+          <rect x="680" y="118" width="2" height="46"/>
+        </g>
+        <text class="dim" x="651" y="200" font-size="9.5">c&#243;digo del lote</text>
+        <rect class="hit" x="604" y="94" width="94" height="120"/>
+        <rect class="hit" x="604" y="240" width="94" height="78"/>
+      </g>
+      <text class="lb" x="651" y="336">reverso</text>
+
+      <!-- guia del medidor -->
+      <g class="ctl" data-id="guia" role="button" tabindex="0" aria-label="Gu&#237;a para tiras del medidor">
+        <rect class="ring" x="56" y="358" width="688" height="48" rx="6"/>
+        <rect class="cap" x="62" y="364" width="676" height="36" rx="5" fill="#D6D2C7" stroke="#A9A597"/>
+        <rect x="120" y="374" width="60" height="16" rx="2" fill="#2A2C2E" opacity=".18"/>
+        <rect x="512" y="374" width="60" height="16" rx="2" fill="#2A2C2E" opacity=".18"/>
+        <text class="tc" x="400" y="388" font-size="11" font-weight="700">GU&#205;A PARA TIRAS DEL MEDIDOR</text>
+        <rect class="hit" x="56" y="358" width="688" height="48"/>
+      </g>
+      <path d="M112 322 L112 356" stroke="#B03A22" stroke-width="1.6" marker-end="url(#f)"/>
+      <path d="M504 322 L504 356" stroke="#B03A22" stroke-width="1.6" marker-end="url(#f)"/>
+      <defs><marker id="f" markerWidth="8" markerHeight="8" refX="4" refY="7" orient="auto">
+        <path d="M0,0 L8,0 L4,8 z" fill="#B03A22"/></marker></defs>
+    </svg>
+    </div>
+    <div class="panel-bar">
+      <p>Toca un elemento</p>
+      <button class="zoom-btn" id="zoom" type="button">Ver en grande ⤢</button>
+    </div>
+  </div>
+
+  <div class="ctl-list">
+    <h3 class="grp">Las partes</h3>
+
+    <details class="row" id="c-aplicacion" data-short="El cuadro amarillo donde va la gota. No lo toques con el dedo ni con la pipeta: se daña y el resultado sale mal."><summary><span class="badge">01</span><span class="nm">Área de aplicación</span><span class="chev">+</span></summary><div class="lcd">
+      <p>El cuadro amarillo de la tira reactiva. Ahí va la gota de sangre, y tiene que quedar <b>completamente cubierta</b>. <b>No lo toques con el dedo</b> ni con el borde de la pipeta: se daña el área y el resultado sale incorrecto.</p>
+      <div class="tip"><b>En la práctica</b>Si aplicaste muy poca sangre, no la extiendas ni le agregues más. Se repite la medición con una tira nueva.</div></div></details>
+
+    <details class="row" id="c-barras" data-short="El código de barras del reverso identifica el tipo y el lote de la tira. Por eso el medidor sabe solo qué parámetro va a medir."><summary><span class="badge">02</span><span class="nm">Código de barras</span><span class="chev">+</span></summary><div class="lcd">
+      <p>Está impreso al reverso de la tira reactiva e identifica <b>el tipo y el lote</b>. Gracias a él, al insertar la tira el medidor sabe solo qué parámetro va a medir y qué código necesita, sin que tú lo selecciones.</p>
+      <div class="tip"><b>En la práctica</b>Si el medidor marca "código desconocido", saca la tira y revisa que el código de barras no esté sucio o rayado.</div></div></details>
+
+    <details class="row" id="c-hendidura" data-short="El círculo del reverso. En glucosa y colesterol se revisa ANTES de usar la tira, y en glucosa también DESPUÉS, para verificar el resultado."><summary><span class="badge">03</span><span class="nm">Hendidura circular</span><span class="chev">+</span></summary><div class="lcd">
+      <p>El círculo del reverso de la tira. Tiene dos usos. <b>Antes de medir</b>, en las tiras de glucosa y colesterol, se revisa que no esté descolorido: si lo está, esa tira ya no sirve. <b>Después de medir glucosa</b>, se voltea la tira y se compara su color con la escala impresa en la etiqueta del tubo.</p>
+      <div class="tip"><b>En la práctica</b>Si el color no corresponde con el resultado que salió en pantalla, hay que hacer un test de control con solución.</div></div></details>
+
+    <details class="row" id="c-codificacion" data-short="Trae los datos del lote de tiras. Se inserta UNA vez por cada tubo nuevo, no en cada medición. El medidor guarda cuatro códigos, uno por parámetro."><summary><span class="badge">04</span><span class="nm">Tira de codificación</span><span class="chev">+</span></summary><div class="lcd">
+      <p>Viene una en cada tubo de tiras reactivas y le dice al medidor las características de ese lote. <b>Se inserta una sola vez, al abrir un tubo nuevo</b>, antes de la primera medición. El medidor guarda los datos de <b>un código por parámetro</b>, o sea cuatro a la vez.</p>
+      <div class="tip"><b>En la práctica</b>No la insertes en cada medición: se daña el código de barras y después no va a servir cuando de verdad la necesites, por ejemplo tras un cambio de pilas.</div></div></details>
+
+    <details class="row" id="c-sujecion" data-short="La zona blanca del extremo. Se toma de ahí con el pulgar y el índice, sin tocar la parte impresa detrás de la barra negra."><summary><span class="badge">05</span><span class="nm">Zona de sujeción</span><span class="chev">+</span></summary><div class="lcd">
+      <p>La franja blanca del extremo de la tira de codificación. <b>Se toma de ahí con el pulgar y el índice</b> y no se toca el área impresa que está detrás de la barra negra, para no ensuciar el código.</p>
+      <div class="tip"><b>En la práctica</b>Guarda la tira de codificación en el empaque exterior, junto con el tubo pero nunca adentro de él: si se guardan juntas, se afecta la calidad de las dos.</div></div></details>
+
+    <details class="row" id="c-guia" data-short="La ranura del medidor donde entran las dos tiras. La tira de codificación se mete hasta el tope y se saca de inmediato."><summary><span class="badge">06</span><span class="nm">Guía para tiras</span><span class="chev">+</span></summary><div class="lcd">
+      <p>Es la ranura del medidor donde entran las dos tiras, siempre hasta el tope. Con la <b>tira de codificación</b> se inserta y <b>se retira de inmediato</b>, con la tapa de la cámara cerrada. Con la <b>tira reactiva</b> se deja puesta: dos pitidos, uno corto y uno largo, confirman que quedó en posición.</p>
+      <div class="tip"><b>En la práctica</b>La guía se desmonta para limpiarla y es lo que más se ensucia. Un sistema óptico sucio da resultados imprecisos.</div></div></details>
+  </div>
+  <a class="top" href="#top">↑ Inicio</a>
+</section>
+
+<section id="seguridad">
+  <div class="sec-head"><span class="sec-num">02</span><h2>Seguridad</h2></div>
+  <p class="lede">Este aparato trabaja con sangre. Estas no son recomendaciones, son requisitos.</p>
+  <div class="bd">
+    <div class="warn"><b>Protección contra infecciones</b><p>Cualquier objeto que entre en contacto con sangre humana es una posible fuente de infección. Y la contaminación cruzada entre personas es un riesgo real, no teórico.</p></div>
+    <ul>
+      <li><b>Usa guantes</b>, y cámbialos entre una persona y otra, aunque uses lancetas de un solo uso.</li>
+      <li><b>Un dispositivo de punción de un solo uso y con desactivación automática por cada persona.</b> Nunca se reutiliza ni se comparte.</li>
+      <li>Las <b>lancetas usadas van en un recipiente rígido con tapa</b> para objetos punzocortantes. Nunca a la basura común.</li>
+      <li>Las tiras usadas se desechan según las reglas de control de infecciones de la institución.</li>
+      <li>Si se mide a más de una persona, <b>el medidor se limpia y desinfecta después de cada una</b>.</li>
+      <li>Después de limpiar y desinfectar, se quitan los guantes y se lavan las manos con agua y jabón antes de la siguiente medición.</li>
+      <li>Si se van a hacer varias mediciones a la misma persona, la sangre se aplica <b>fuera del medidor</b>.</li>
+    </ul>
+    <div class="warn"><b>Medidor dedicado</b><p>Una persona con una infección, con enfermedad infecciosa, o portadora de un organismo multirresistente, debe tener asignado su propio medidor. Lo mismo aplica mientras exista la sospecha: durante ese tiempo ese medidor no se usa con nadie más.</p></div>
+  </div>
+  <a class="top" href="#top">↑ Inicio</a>
+</section>
+
+<section id="preparar">
+  <div class="sec-head"><span class="sec-num">03</span><h2>Antes de la primera vez</h2></div>
+  <ol class="steps">
+    <li><b>Coloca las cuatro pilas.</b><span>AAA alcalinas de manganeso de 1.5 V. Se cambian las cuatro al mismo tiempo y no se usan recargables.</span></li>
+    <li><b>Ajusta fecha, hora y señal acústica.</b><span>Se entra al modo de ajuste presionando la tecla Set con el medidor apagado. La tecla M cambia el valor que parpadea y Set confirma y avanza.</span></li>
+    <li><b>Elige cómo se muestra el lactato.</b><span>BL para sangre total o PL para plasma. Solo cambia la presentación del valor.</span></li>
+    <li><b>Inserta la tira de codificación.</b><span>También se puede hacer justo antes de medir.</span></li>
+  </ol>
+  <div class="warn"><b>Sin fecha y hora, no hay registro</b><p>Si usas el medidor sin configurar fecha y hora, los resultados se guardan sin ellas y aparecen guiones. Y cada vez que se cambien las pilas hay que verificarlas: si tardas más de un minuto en poner las nuevas, se pierde el ajuste.</p></div>
+  <div class="warn"><b>La ventana de infrarrojos no sirve para bajar datos</b><p>Es de uso interno de Roche. Los resultados de este medidor <b>no se pueden descargar a una computadora</b>: se leen desde la memoria del aparato, que guarda 100 por parámetro.</p></div>
+  <a class="top" href="#top">↑ Inicio</a>
+</section>
+
+<section id="medir">
+  <div class="sec-head"><span class="sec-num">04</span><h2>Hacer una medición</h2></div>
+  <ol class="steps">
+    <li><b>Revisa el tubo de tiras.</b><span>Que sea el del parámetro que vas a medir y que no esté caducado.</span></li>
+    <li><b>Codifica el medidor, si es un tubo nuevo.</b><span>Solo la primera vez con ese lote.</span></li>
+    <li><b>Enciende y verifica la pantalla.</b><span>Al encender aparecen todos los elementos: si falta un segmento, un resultado se puede leer mal. Revisa también el ícono de pila.</span></li>
+    <li><b>Saca una tira y cierra el tubo de inmediato.</b><span>El tubo trae desecante. Si se queda abierto, las tiras se echan a perder antes de su fecha de caducidad.</span></li>
+    <li><b>Inserta la tira hasta el tope.</b><span>Con la leyenda del parámetro y el área de aplicación hacia arriba. Dos pitidos confirman la posición.</span></li>
+    <li><b>Abre la tapa de la cámara.</b><span>Se traba sola al llegar a la vertical. Una flecha parpadeando te lo indica.</span></li>
+    <li><b>Aplica la gota.</b><span>Ver la siguiente sección. El área amarilla debe quedar completamente cubierta.</span></li>
+    <li><b>Cierra la tapa.</b><span>Eso arranca la medición sola. En pantalla aparece la cuenta regresiva.</span></li>
+    <li><b>Lee el resultado y anótalo.</b><span>En glucosa, además, voltea la tira y compara el color de la hendidura contra la escala del tubo.</span></li>
+  </ol>
+  <div class="bd">
+    <div class="tbl">
+      <div class="r"><div class="k">Glucosa</div><div class="v">12 segundos</div></div>
+      <div class="r"><div class="k">Lactato</div><div class="v">60 segundos</div></div>
+      <div class="r"><div class="k">Triglicéridos</div><div class="v">hasta 174 segundos</div></div>
+      <div class="r"><div class="k">Colesterol</div><div class="v">180 segundos</div></div>
+    </div>
+    <p>Durante la medición <b>no toques ni saques la tira</b>, y no muevas bruscamente el aparato. Si el resultado queda fuera del rango que mide el aparato, aparece <span class="m">Hi</span> o <span class="m">Lo</span> en lugar del número.</p>
+  </div>
+  <a class="top" href="#top">↑ Inicio</a>
+</section>
+
+<section id="gota">
+  <div class="sec-head"><span class="sec-num">05</span><h2>Sacar la gota</h2></div>
+  <p class="lede">Aquí es donde se arruinan la mayoría de las mediciones.</p>
+  <div class="bd">
+    <ul>
+      <li><b>Lávate las manos con agua tibia</b> y sécalas bien. Las manos frías y húmedas no sueltan sangre.</li>
+      <li>Masajea la yema del dedo antes de puncionar.</li>
+      <li>Puncionar <b>el costado de la yema</b>, que es la parte menos sensible al dolor.</li>
+      <li><b>Descarta la primera gota.</b></li>
+      <li>Consigue una gota grande y colgante <b>sin exprimir ni apretar de más</b>.</li>
+      <li><b>Aplícala inmediatamente</b> después de puncionar. No se puede agregar sangre después: si la gota queda chica, se repite con tira nueva.</li>
+    </ul>
+    <div class="warn"><b>En triglicéridos, las cremas arruinan la medición</b><p>Casi todas las cremas y muchos jabones, geles y shampoos contienen grasa. Si quedan restos en la piel y tocan la tira, el resultado sale mal. Para esta medición hay que lavarse muy bien y enjuagarse con bastante agua limpia.</p></div>
+    <p><b>Aplicar dentro o fuera del medidor.</b> Con la tira puesta en el aparato es lo normal para una sola persona. Fuera del medidor se usa cuando se mide a varias personas o cuando se usan pipetas capilares: se saca la tira con la tapa abierta, se aplica la gota, y se vuelve a insertar.</p>
+  </div>
+  <a class="top" href="#top">↑ Inicio</a>
+</section>
+
+<section id="control">
+  <div class="sec-head"><span class="sec-num">06</span><h2>Test de control</h2></div>
+  <p class="lede">Es la forma de saber si el aparato y las tiras están funcionando bien.</p>
+  <div class="bd">
+    <p>Se hace igual que una medición normal, pero en lugar de sangre se aplica la <b>solución de control</b> del parámetro correspondiente. Antes de aplicarla se presiona la tecla M para marcar el resultado como test de control, y aparece el ícono del frasquito.</p>
+    <p><b>Hazlo siempre en estas cuatro situaciones:</b></p>
+    <ul>
+      <li>Al abrir un tubo de tiras nuevo.</li>
+      <li>Después de cambiar las pilas.</li>
+      <li>Después de limpiar el medidor.</li>
+      <li>Cuando dudes de que un valor medido sea correcto.</li>
+    </ul>
+    <p>El valor esperado viene en la etiqueta o el prospecto de la solución de control. Si el resultado queda fuera de ese rango, se repite. <b>Si a la segunda sigue fuera, el equipo necesita servicio</b> y hay que reportarlo con el encargado.</p>
+    <div class="warn"><b>Los rangos de temperatura del control son distintos</b><p>No son los mismos que para medir con sangre. Consulta el prospecto de cada solución.</p></div>
+  </div>
+  <a class="top" href="#top">↑ Inicio</a>
+</section>
+
+<section id="limpieza">
+  <div class="sec-head"><span class="sec-num">07</span><h2>Limpieza</h2></div>
+  <div class="bd">
+    <p>Un sistema óptico limpio es requisito para que los resultados sean precisos. <b>Siempre apaga el medidor antes de limpiarlo.</b></p>
+    <div class="tbl">
+      <div class="r"><div class="k">Qué se usa</div><div class="v">Hisopos y paños sin pelusa. Agua jabonosa suave, o etanol o alcohol isopropílico al 70 %. En ámbito profesional, la mezcla de propanoles con glutaraldehído que indica el manual.</div></div>
+      <div class="r"><div class="k">Carcasa</div><div class="v">Paño sin pelusa ligeramente humedecido.</div></div>
+      <div class="r"><div class="k">Guía de tiras</div><div class="v">Se desmonta empujándola hacia el centro del medidor y jalando hacia arriba. Se puede enjuagar con agua tibia, <b>separada del aparato</b>, y se seca con un paño limpio.</div></div>
+      <div class="r"><div class="k">Sistema óptico</div><div class="v">Solo las zonas accesibles, con hisopo humedecido. No metas objetos dentro del medidor.</div></div>
+    </div>
+    <div class="warn"><b>Nada de líquido adentro</b><p>No uses aerosoles ni hisopos escurriendo: si entra líquido al medidor, se descompone. No vuelvas a montar la guía hasta que esté completamente seca. Y al terminar de limpiar, <b>haz un test de control</b>.</p></div>
+  </div>
+  <a class="top" href="#top">↑ Inicio</a>
+</section>
+
+<section id="errores">
+  <div class="sec-head"><span class="sec-num">08</span><h2>Errores en pantalla</h2></div>
+  <div class="bd"><div class="tbl">
+    <div class="r"><div class="k">Código desconocido</div><div class="v">No se pudo leer el código de barras. Saca la tira y revisa que no esté sucia. Con la de codificación, repite metiéndola y sacándola de inmediato. Revisa también que no haya equipos que generen campos electromagnéticos cerca.</div></div>
+    <div class="r"><div class="k">El código no coincide</div><div class="v">La tira es de un lote distinto al que está codificado. O usas una tira del lote codificado, o codificas el medidor con la tira de codificación de este tubo.</div></div>
+    <div class="r"><div class="k">Tira inservible</div><div class="v">Ya se usó o está sucia. Deséchala y repite con una nueva.</div></div>
+    <div class="r"><div class="k">Temperatura</div><div class="v">El aparato o el ambiente están fuera del rango. Muévelo a un lugar adecuado y espera unos minutos. <b>No lo calientes ni lo enfríes a propósito.</b></div></div>
+    <div class="r"><div class="k">Tapa abierta</div><div class="v">La tapa de la cámara no cerró bien. Ciérrala.</div></div>
+    <div class="r"><div class="k">Tapa sin cerrar tras aplicar</div><div class="v">Se tardaron en cerrar y la medición no arrancó a tiempo. Saca la tira y repite con una nueva.</div></div>
+    <div class="r"><div class="k">Error interno con número</div><div class="v">Apaga y vuelve a encender. Si persiste, el medidor está defectuoso: repórtalo, no lo sigas usando.</div></div>
+  </div></div>
+  <a class="top" href="#top">↑ Inicio</a>
+</section>
+
+<section id="limites">
+  <div class="sec-head"><span class="sec-num">09</span><h2>Límites del aparato</h2></div>
+  <p class="lede">Estos son los rangos que el aparato es capaz de medir. No son valores de referencia ni indican qué es normal.</p>
+  <div class="bd"><div class="tbl">
+    <div class="r"><div class="k">Glucosa</div><div class="v">20 a 600 mg/dL · 1.1 a 33.3 mmol/L · temperatura de uso 18 a 35 °C</div></div>
+    <div class="r"><div class="k">Colesterol</div><div class="v">150 a 300 mg/dL · 3.88 a 7.76 mmol/L · 18 a 35 °C</div></div>
+    <div class="r"><div class="k">Triglicéridos</div><div class="v">70 a 600 mg/dL · 0.80 a 6.86 mmol/L · 18 a 30 °C</div></div>
+    <div class="r"><div class="k">Lactato</div><div class="v">0.8 a 21.7 mmol/L en sangre · 15 a 35 °C</div></div>
+    <div class="r"><div class="k">Humedad</div><div class="v">10 a 85 %, sin condensación</div></div>
+    <div class="r"><div class="k">Memoria</div><div class="v">100 resultados por parámetro, con fecha, hora y marcas</div></div>
+    <div class="r"><div class="k">Apagado automático</div><div class="v">A los 2 minutos sin actividad. Los resultados se conservan</div></div>
+    <div class="r"><div class="k">Pilas</div><div class="v">4 × AAA alcalinas. Más de 1000 mediciones. Cuando aparece el aviso, quedan unas 50</div></div>
+    <div class="r"><div class="k">Tamaño y peso</div><div class="v">154 × 81 × 30 mm · unos 140 g</div></div>
+  </div>
+  <p>Si un resultado no parece plausible, el manual indica hacer un test de control con solución y tira nueva. Si el control sale bien, repetir la medición. <b>Si el segundo resultado tampoco parece plausible, hay que consultarlo con el personal de salud responsable.</b></p>
+  </div>
+</section>
+
+<footer>
+  <p>Guía del medidor Roche Accutrend Plus, resumida de las Instrucciones de uso oficiales, versión 2.0 de 2011-06.<br>
+  Documenta la operación del equipo, no la interpretación de resultados.<br>
+  Las instrucciones oficiales, los prospectos de las tiras y el personal responsable del laboratorio mandan sobre esta guía.<br>
+  CFD-019 · Versión 1.0 · Septiembre de 2026.</p>
+</footer>
+
+</div>
+
+<div class="fs" id="fs" hidden>
+  <div class="fs-rot" id="fsRot">
+    <button class="fs-close" id="fsClose" type="button">Cerrar ✕</button>
+    <span class="fs-tip" id="fsTip">Toca cualquier elemento</span>
+    <div class="pop" id="pop" hidden></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var svg = document.getElementById('svgPanel');
+  var host= document.getElementById('panelHost');
+  var fs  = document.getElementById('fs');
+  var rot = document.getElementById('fsRot');
+  var pop = document.getElementById('pop');
+  var tip = document.getElementById('fsTip');
+  var rows = Array.prototype.slice.call(document.querySelectorAll('.row'));
+  var ctls = Array.prototype.slice.call(document.querySelectorAll('.ctl'));
+  var VB_FULL = {minx:0, miny:0, w:800, h:420};
+  var VB_CROP = {minx:40, miny:62, w:720, h:352};
+  var VB_MINX = VB_FULL.minx, VB_MINY = VB_FULL.miny, VB_W = VB_FULL.w, VB_H = VB_FULL.h;
+  var RATIO = VB_W / VB_H, activeG = null;
+
+  function setCrop(on){
+    var vb = on ? VB_CROP : VB_FULL;
+    VB_MINX = vb.minx; VB_MINY = vb.miny; VB_W = vb.w; VB_H = vb.h;
+    RATIO = VB_W / VB_H;
+    svg.setAttribute('viewBox', vb.minx+' '+vb.miny+' '+vb.w+' '+vb.h);
+  }
+  function viewportSize(){
+    var vv = window.visualViewport;
+    return {w:(vv&&vv.width)||window.innerWidth, h:(vv&&vv.height)||window.innerHeight};
+  }
+  function sizeFS(){
+    if(fs.hidden) return;
+    var v = viewportSize();
+    fs.style.width = v.w+'px'; fs.style.height = v.h+'px';
+    var w = (v.h >= v.w) ? Math.min(v.h, v.w*RATIO) : Math.min(v.w, v.h*RATIO);
+    rot.style.width = w+'px'; rot.style.height = 'auto';
+  }
+
+  var DATA = {};
+  rows.forEach(function(r){
+    var id = r.id.replace(/^c-/,'');
+    DATA[id] = { badge:r.querySelector('.badge').textContent,
+                 title:r.querySelector('.nm').textContent,
+                 short:r.getAttribute('data-short') || r.querySelector('.lcd p').textContent };
+  });
+  function highlight(id){ ctls.forEach(function(g){ g.classList.toggle('on', g.dataset.id===id); }); }
+
+  rows.forEach(function(r){
+    r.addEventListener('toggle', function(){
+      if(r.open) rows.forEach(function(o){ if(o!==r) o.open=false; });
+      var open=null; rows.forEach(function(o){ if(o.open) open=o.id.replace(/^c-/,''); });
+      if(fs.hidden) highlight(open);
+    });
+  });
+
+  function hidePop(){ pop.hidden=true; activeG=null; highlight(null); }
+  function placePop(g){
+    var b = g.getBBox();
+    var sc = svg.getBoundingClientRect().width / VB_W;
+    if(!sc) return;
+    var W = rot.clientWidth, H = rot.clientHeight;
+    var bx=(b.x-VB_MINX)*sc, by=(b.y-VB_MINY)*sc, bw=b.width*sc, bh=b.height*sc;
+    pop.style.fontSize = Math.max(9, Math.min(15, W*0.0185))+'px';
+    pop.style.maxWidth = Math.min(W*0.34, 300)+'px';
+    pop.style.left='0px'; pop.style.top='0px';
+    var pw=pop.offsetWidth, ph=pop.offsetHeight;
+    var gap=Math.max(8, W*0.012), left, top, cls;
+    if(bx+bw+gap+pw <= W-6){ left=bx+bw+gap; cls='pr'; }
+    else if(bx-gap-pw >= 6){ left=bx-gap-pw; cls='pl'; }
+    else { left=Math.min(Math.max(bx+bw/2-pw/2,6), Math.max(6,W-pw-6));
+           cls=(by+bh+gap+ph <= H-6)?'pb':'pt'; }
+    if(cls==='pr'||cls==='pl') top=by+bh/2-ph/2;
+    else if(cls==='pb') top=by+bh+gap; else top=by-gap-ph;
+    top=Math.min(Math.max(top,6), Math.max(6,H-ph-6));
+    pop.className='pop '+cls; pop.style.left=left+'px'; pop.style.top=top+'px';
+    pop.style.setProperty('--cy', Math.min(Math.max(by+bh/2-top,10), Math.max(10,ph-10))+'px');
+  }
+  function showPop(g){
+    var d = DATA[g.dataset.id]; if(!d) return;
+    if(activeG===g){ hidePop(); return; }
+    activeG=g;
+    pop.innerHTML='<h4><span class="num">'+d.badge+'</span>'+d.title+'</h4><p>'+d.short+'</p>';
+    pop.hidden=false; highlight(g.dataset.id); placePop(g);
+    tip.style.visibility='hidden';
+  }
+  ctls.forEach(function(g){
+    function go(e){
+      if(e) e.stopPropagation();
+      if(!fs.hidden){ showPop(g); return; }
+      var r=document.getElementById('c-'+g.dataset.id); if(!r) return;
+      r.open=true; r.scrollIntoView({block:'center', behavior:'smooth'});
+    }
+    g.addEventListener('click', go);
+    g.addEventListener('keydown', function(e){
+      if(e.key==='Enter'||e.key===' '){ e.preventDefault(); go(e); }
+    });
+  });
+
+  var zoom=document.getElementById('zoom');
+  function openFS(){
+    rot.insertBefore(svg, rot.firstChild);
+    fs.hidden=false; document.body.classList.add('lock');
+    tip.style.visibility='visible'; highlight(null);
+    setCrop(true); sizeFS();
+    try{
+      var p=document.documentElement.requestFullscreen && document.documentElement.requestFullscreen();
+      if(p&&p.then) p.then(function(){
+        if(screen.orientation&&screen.orientation.lock){
+          var q=screen.orientation.lock('landscape'); if(q&&q.catch) q.catch(function(){});
+        }
+      }).catch(function(){});
+    }catch(e){}
+  }
+  function closeFS(){
+    hidePop(); host.appendChild(svg); fs.hidden=true;
+    fs.style.width=''; fs.style.height=''; rot.style.width=''; rot.style.height='';
+    setCrop(false); document.body.classList.remove('lock');
+    try{
+      if(screen.orientation&&screen.orientation.unlock) screen.orientation.unlock();
+      if(document.fullscreenElement&&document.exitFullscreen) document.exitFullscreen();
+    }catch(e){}
+  }
+  zoom.addEventListener('click', openFS);
+  document.getElementById('fsClose').addEventListener('click', function(e){ e.stopPropagation(); closeFS(); });
+  fs.addEventListener('click', function(){ if(!pop.hidden) hidePop(); });
+  pop.addEventListener('click', function(e){ e.stopPropagation(); });
+  document.addEventListener('keydown', function(e){
+    if(e.key!=='Escape'||fs.hidden) return;
+    if(!pop.hidden) hidePop(); else closeFS();
+  });
+  function reflow(){ sizeFS(); if(!fs.hidden&&activeG) placePop(activeG); }
+  window.addEventListener('resize', reflow);
+  window.addEventListener('orientationchange', function(){ setTimeout(reflow,250); });
+  if(window.visualViewport) window.visualViewport.addEventListener('resize', reflow);
+  window.addEventListener('beforeprint', function(){
+    if(!fs.hidden) closeFS();
+    document.querySelectorAll('details').forEach(function(d){ d.open=true; });
+  });
+})();
+</script>
+</body>
+</html>

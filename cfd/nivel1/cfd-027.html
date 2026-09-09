@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<title>Stages Power · Guía de laboratorio</title>
+<meta name="description" content="Cómo usar el potenciómetro Stages Power del Lab de Cultura Física y Deporte: puesta a cero, LED, batería y errores.">
+<meta name="theme-color" content="#E4E1D6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121A24" media="(prefers-color-scheme: dark)">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#E4E1D6; --card:#F2F0E9; --ink:#16283F; --ink-2:#455670;
+  --rule:#C6C0B0; --muted:#6F7787; --live:#B03A22;
+  --lcd:#C6DDD6; --lcd-deep:#9FBDB4; --lcd-ink:#10231D;
+  --display:"Barlow Condensed",Impact,"Arial Narrow",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,"SF Mono",Menlo,monospace;
+  --body:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#121A24; --card:#1B242F; --ink:#E6E9EC; --ink-2:#AFB7C0;
+        --rule:#2E3944; --muted:#8A939E; --live:#E8785A;}
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);
+  font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased;
+  -webkit-tap-highlight-color:transparent;overflow-wrap:break-word}
+body.lock{overflow:hidden}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+.wrap{max-width:780px;margin:0 auto;padding:0 16px calc(56px + env(safe-area-inset-bottom))}
+a{color:var(--ink)}
+
+.hero{padding:22px 0 16px}
+.brand{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin:0}
+h1{font-family:var(--display);font-weight:700;text-transform:uppercase;
+   font-size:clamp(52px,15vw,100px);line-height:.85;margin:4px 0 8px}
+.tagline{font-family:var(--display);font-weight:600;text-transform:uppercase;letter-spacing:.05em;
+   font-size:clamp(17px,4.6vw,23px);line-height:1.15;margin:0 0 16px;color:var(--ink-2)}
+.strip{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rule);
+   border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.strip div{background:var(--bg);padding:9px 10px 10px}
+.strip dt{font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:0 0 2px}
+.strip dd{margin:0;font-family:var(--mono);font-size:14px;font-weight:600}
+
+.jump{position:sticky;top:0;z-index:30;margin:0 -16px;
+  background:color-mix(in srgb,var(--bg) 92%,transparent);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--rule)}
+.jump ul{display:flex;overflow-x:auto;list-style:none;margin:0;padding:0 10px;scrollbar-width:none}
+.jump ul::-webkit-scrollbar{display:none}
+.jump a{display:block;white-space:nowrap;padding:13px 11px;text-decoration:none;
+  font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.jump a:active{color:var(--ink)}
+
+section{margin-top:34px;scroll-margin-top:56px}
+.sec-head{display:flex;align-items:baseline;gap:10px;border-bottom:1.5px solid var(--ink);padding-bottom:6px;margin-bottom:14px}
+.sec-num{font-family:var(--mono);font-size:11px;color:var(--live);letter-spacing:.08em}
+h2{font-family:var(--display);font-weight:700;text-transform:uppercase;
+   font-size:clamp(25px,7vw,34px);line-height:1;margin:0}
+.lede{color:var(--ink-2);margin:0 0 16px;font-size:15.5px}
+
+.panel-box{background:var(--card);border:1px solid var(--rule);border-radius:4px;padding:8px}
+#panelHost svg.panel{width:100%;height:auto;display:block;touch-action:manipulation}
+.panel-bar{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:8px}
+.panel-bar p{margin:0;font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.zoom-btn{font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;
+  background:var(--ink);color:var(--bg);border:1px solid var(--ink);border-radius:999px;
+  padding:11px 18px;min-height:44px;cursor:pointer}
+.zoom-btn:active{opacity:.75}
+
+.ctl{cursor:pointer}
+.ctl .hit{fill:transparent}
+.ring{fill:none;stroke:#B03A22;stroke-width:3;opacity:0}
+.ctl.on .ring{opacity:1}
+.ctl.on .cap{fill:#FFE08A;stroke:#B03A22}
+.ctl:focus-visible{outline:none}
+.ctl:focus-visible .ring{opacity:1;stroke-dasharray:6 4}
+
+.fs{position:fixed;inset:0;z-index:100;background:#0C1219;
+  display:flex;align-items:center;justify-content:center;overscroll-behavior:contain;overflow:hidden}
+.fs[hidden]{display:none}
+.fs-rot{position:relative;line-height:0;width:100vw;flex:0 0 auto}
+@media (orientation:portrait){ .fs-rot{transform:rotate(90deg)} }
+.fs-rot svg.panel{display:block;width:100%;height:auto}
+.fs-close,.fs-tip{position:absolute;z-index:4;font-family:var(--mono);
+  font-size:12px;letter-spacing:.08em;text-transform:uppercase;line-height:1}
+.fs-close{top:2%;right:1.6%;background:#16283F;color:#EBE8DE;border:0;
+  border-radius:999px;padding:11px 16px;min-height:42px;cursor:pointer}
+.fs-close:active{opacity:.75}
+.fs-tip{left:1.6%;bottom:3%;color:#8FA0B4;pointer-events:none}
+
+.pop{position:absolute;z-index:3;background:var(--lcd);color:var(--lcd-ink);
+  border:1px solid #6E8880;border-radius:4px;padding:.75em .85em;line-height:1.4;
+  box-shadow:0 8px 26px rgba(0,0,0,.45);text-align:left}
+.pop[hidden]{display:none}
+.pop h4{margin:0 0 .3em;font-family:var(--display);font-weight:700;text-transform:uppercase;
+  font-size:1.3em;line-height:1.05;letter-spacing:.02em}
+.pop p{margin:0;font-size:1em}
+.pop .num{font-family:var(--mono);font-size:.75em;opacity:.65;letter-spacing:.1em;display:block;margin-bottom:.15em}
+.pop::after{content:"";position:absolute;width:.62em;height:.62em;background:var(--lcd);
+  border:1px solid #6E8880;transform:rotate(45deg)}
+.pop.pr::after{left:-.35em;top:calc(var(--cy,50%) - .31em);border-right:0;border-top:0}
+.pop.pl::after{right:-.35em;top:calc(var(--cy,50%) - .31em);border-left:0;border-bottom:0}
+.pop.pb::after{top:-.35em;left:calc(50% - .31em);border-right:0;border-bottom:0}
+.pop.pt::after{bottom:-.35em;left:calc(50% - .31em);border-left:0;border-top:0}
+
+.ctl-list{margin-top:18px}
+.grp{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--live);margin:26px 0 0;padding:0 0 7px;border-bottom:1.5px solid var(--ink);font-weight:600}
+.grp:first-child{margin-top:0}
+.row{border-bottom:1px solid var(--rule)}
+.row>summary{display:flex;align-items:center;gap:12px;list-style:none;cursor:pointer;padding:15px 4px;min-height:56px}
+.row>summary::-webkit-details-marker{display:none}
+.row>summary:active{background:var(--card)}
+.badge{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--muted);min-width:26px}
+.nm{font-family:var(--display);font-weight:600;text-transform:uppercase;letter-spacing:.03em;
+  font-size:20px;line-height:1.05;flex:1}
+.chev{font-family:var(--mono);color:var(--muted);font-size:18px;line-height:1}
+.row[open] .chev,.row[open] .nm{color:var(--live)}
+
+.lcd{background:var(--lcd);color:var(--lcd-ink);border-radius:3px;padding:15px 15px 16px;margin:0 0 15px;
+  box-shadow:inset 0 0 0 3px rgba(0,0,0,.06);
+  background-image:repeating-linear-gradient(0deg,rgba(0,0,0,.04) 0 1px,transparent 1px 3px)}
+.lcd p{margin:0;font-size:15.5px;line-height:1.55}
+.lcd .tip{font-family:var(--mono);font-size:13.5px;line-height:1.5;
+  border-top:1px solid rgba(16,35,29,.3);padding-top:10px;margin-top:11px}
+.lcd .tip b{display:block;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
+  font-size:10.5px;opacity:.72;margin-bottom:3px}
+
+ol.steps{list-style:none;counter-reset:s;margin:0;padding:0;border-top:1px solid var(--rule)}
+ol.steps li{counter-increment:s;padding:14px 0 15px 46px;border-bottom:1px solid var(--rule);position:relative}
+ol.steps li::before{content:counter(s,decimal-leading-zero);position:absolute;left:0;top:16px;
+  font-family:var(--mono);font-size:12px;font-weight:600;color:var(--live)}
+ol.steps b{font-weight:600}
+ol.steps span{display:block;color:var(--ink-2);font-size:15px;margin-top:3px}
+
+.bd{padding:0 0 20px}
+.bd p{margin:0 0 12px;font-size:15.5px;color:var(--ink-2)}
+.bd p b,.bd li b{color:var(--ink);font-weight:600}
+.bd ul{margin:0 0 14px;padding-left:19px}
+.bd li{margin-bottom:8px;font-size:15.5px;color:var(--ink-2)}
+
+.tbl{border-top:1px solid var(--ink);margin:0 0 16px}
+.tbl .r{display:grid;grid-template-columns:1fr;gap:1px 14px;padding:11px 0;border-bottom:1px solid var(--rule)}
+.tbl .k{font-family:var(--mono);font-size:13.5px;font-weight:600}
+.tbl .v{font-size:15px;color:var(--ink-2)}
+@media (min-width:560px){.tbl .r{grid-template-columns:minmax(150px,34%) 1fr}}
+.m{font-family:var(--mono);font-size:.9em;background:color-mix(in srgb,var(--ink) 9%,transparent);padding:1px 5px;border-radius:2px}
+
+.warn{border-left:3px solid var(--live);background:var(--card);padding:12px 14px;margin:0 0 15px}
+.warn b{font-family:var(--mono);font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--live);display:block;margin-bottom:3px}
+.warn p{margin:0 0 8px;font-size:15px}
+.warn p:last-child{margin-bottom:0}
+
+.top{display:block;margin:26px 0 0;text-align:center;font-family:var(--mono);font-size:12px;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-decoration:none;padding:14px}
+footer{margin-top:34px;border-top:1.5px solid var(--ink);padding-top:14px;
+  font-family:var(--mono);font-size:12px;color:var(--muted);line-height:1.75}
+
+@media print{
+  body{background:#fff;color:#000;font-size:11pt}
+  .jump,.panel-bar,.top,.fs{display:none}
+  .lcd{background:#fff;color:#000;box-shadow:none;border:1px solid #999;background-image:none}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero" id="top">
+  <p class="brand">Stages Cycling · Lab de Cultura Física · CFD-027</p>
+  <h1>Stages<br>Power</h1>
+  <p class="tagline">Potenciómetro de biela para medir vatios y cadencia</p>
+  <dl class="strip">
+    <div><dt>Exactitud</dt><dd>± 1.5 %</dd></div>
+    <div><dt>Rango de potencia</dt><dd>0 a 5000 W</dd></div>
+    <div><dt>Cadencia</dt><dd>10 a 220 rpm</dd></div>
+    <div><dt>Pila</dt><dd>CR2032 · 150-200 h</dd></div>
+  </dl>
+</header>
+
+<div class="warn" style="margin-top:18px">
+  <b>Verificar antes de publicar</b>
+  <p>El catálogo de la universidad registra este equipo como <b>FSA Powerbox</b>, pero el aparato del laboratorio es un <b>Stages Power sobre biela Shimano Ultegra</b>. Esta guía está escrita para el Stages, que es lo que hay físicamente.</p>
+  <p>Confirma también que sea el modelo de biela y no el de bicicleta estática: son productos distintos con manuales distintos.</p>
+</div>
+
+<nav class="jump" aria-label="Secciones">
+  <ul>
+    <li><a href="#partes">Las partes</a></li>
+    <li><a href="#cero">Puesta a cero</a></li>
+    <li><a href="#usar">Usarlo</a></li>
+    <li><a href="#errores">Errores</a></li>
+    <li><a href="#pila">La pila</a></li>
+    <li><a href="#cuidado">Cuidado</a></li>
+    <li><a href="#limites">Límites</a></li>
+  </ul>
+</nav>
+
+<section id="partes">
+  <div class="sec-head"><span class="sec-num">01</span><h2>Las partes</h2></div>
+  <p class="lede">Toca cualquier elemento del esquema.</p>
+
+  <div class="panel-box">
+    <div id="panelHost">
+    <svg class="panel" id="svgPanel" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Esquema del potenciómetro Stages sobre la biela">
+      <defs><style>
+        .t{font-family:Helvetica,Arial,sans-serif;fill:#16283F}
+        .tc{font-family:Helvetica,Arial,sans-serif;fill:#16283F;text-anchor:middle;pointer-events:none}
+        .lb{font-family:Helvetica,Arial,sans-serif;fill:#6F7787;font-size:11px;text-anchor:middle;pointer-events:none}
+        .dim{font-family:"IBM Plex Mono",monospace;fill:#B03A22;font-size:10.5px;text-anchor:middle;pointer-events:none}
+        .cap:not([fill]){fill:#D6D2C7} .cap:not([stroke]){stroke:#A9A597} .cap{stroke-width:1}
+      </style></defs>
+
+      <rect x="0" y="0" width="800" height="400" fill="#F2F0E9"/>
+      <text class="t" x="52" y="32" font-size="15" font-weight="700">Potenci&#243;metro montado en la biela izquierda</text>
+      <text class="t" x="52" y="51" font-size="11" fill="#6F7787">Esquema, no est&#225; a escala</text>
+
+      <!-- referencia vertical -->
+      <g class="ctl" data-id="vertical" role="button" tabindex="0" aria-label="Posici&#243;n vertical para la puesta a cero">
+        <rect class="ring" x="204" y="76" width="48" height="250" rx="6"/>
+        <line x1="228" y1="82" x2="228" y2="320" stroke="#B03A22" stroke-width="1.4" stroke-dasharray="7 6"/>
+        <text class="dim" x="228" y="72">vertical</text>
+        <rect class="hit" x="206" y="76" width="44" height="250"/>
+      </g>
+
+      <!-- catalina -->
+      <circle cx="280" cy="286" r="66" fill="#DCD8CE" stroke="#A9A597"/>
+      <circle cx="280" cy="286" r="52" fill="none" stroke="#BFBAAE" stroke-dasharray="4 6"/>
+      <text class="lb" x="280" y="372">catalina</text>
+
+      <!-- biela -->
+      <g class="ctl" data-id="biela" role="button" tabindex="0" aria-label="Biela">
+        <rect class="ring" x="256" y="98" width="48" height="196" rx="6"/>
+        <rect class="cap" x="264" y="106" width="30" height="182" rx="7" fill="#B9BDC1" stroke="#8E9296"/>
+        <circle cx="279" cy="286" r="14" fill="#8E9296" stroke="#6C7074"/>
+        <text class="lb" x="196" y="238">biela</text>
+        <rect class="hit" x="256" y="98" width="48" height="120"/>
+      </g>
+
+      <!-- pedal -->
+      <rect class="cap" x="240" y="78" width="78" height="20" rx="4" fill="#5A5F64" stroke="#3C4145"/>
+      <text class="lb" x="279" y="66">pedal</text>
+
+      <!-- carcasa del medidor -->
+      <g class="ctl" data-id="medidor" role="button" tabindex="0" aria-label="Carcasa del medidor">
+        <rect class="ring" x="298" y="132" width="86" height="128" rx="10"/>
+        <rect class="cap" x="304" y="138" width="74" height="116" rx="10" fill="#3A3F45" stroke="#22262A"/>
+        <text class="tc" x="341" y="160" font-size="9" fill="#C8CCD0" letter-spacing="1">STAGES</text>
+        <rect class="hit" x="298" y="132" width="86" height="40"/>
+      </g>
+
+      <!-- LED -->
+      <g class="ctl" data-id="led" role="button" tabindex="0" aria-label="LED indicador">
+        <circle class="ring" cx="341" cy="182" r="22"/>
+        <circle cx="341" cy="182" r="10" fill="#22262A"/>
+        <circle class="cap" cx="341" cy="182" r="6" fill="#3FAE45" stroke="#1F7A2A"/>
+        <text class="dim" x="428" y="166" font-size="9.5">LED</text>
+        <line x1="354" y1="178" x2="404" y2="164" stroke="#B03A22" stroke-width="1"/>
+        <circle class="hit" cx="341" cy="182" r="22"/>
+      </g>
+
+      <!-- tapa de pila -->
+      <g class="ctl" data-id="pila" role="button" tabindex="0" aria-label="Tapa de la pila">
+        <circle class="ring" cx="341" cy="224" r="28"/>
+        <circle class="cap" cx="341" cy="224" r="20" fill="#8E9296" stroke="#6C7074"/>
+        <line x1="329" y1="224" x2="353" y2="224" stroke="#5A5F64" stroke-width="3"/>
+        <text class="dim" x="438" y="306" font-size="9.5">tapa CR2032</text>
+        <line x1="358" y1="238" x2="410" y2="298" stroke="#B03A22" stroke-width="1"/>
+        <circle class="hit" cx="341" cy="224" r="28"/>
+      </g>
+
+      <!-- receptor -->
+      <g class="ctl" data-id="receptor" role="button" tabindex="0" aria-label="Receptor: app o ciclocomputadora">
+        <rect class="ring" x="556" y="126" width="164" height="180" rx="12"/>
+        <rect class="cap" x="564" y="134" width="148" height="164" rx="12" fill="#3A3F45" stroke="#22262A"/>
+        <rect x="576" y="150" width="124" height="132" rx="6" fill="#1B4E86"/>
+        <text class="tc" x="638" y="200" font-size="34" fill="#CFE2F5" font-family="IBM Plex Mono, monospace" font-weight="600">215</text>
+        <text class="tc" x="638" y="220" font-size="12" fill="#8FBEE8" font-family="IBM Plex Mono, monospace">watts</text>
+        <text class="tc" x="638" y="256" font-size="17" fill="#CFE2F5" font-family="IBM Plex Mono, monospace">88 rpm</text>
+        <text class="lb" x="638" y="322">app o ciclocomputadora</text>
+        <rect class="hit" x="556" y="126" width="164" height="180"/>
+      </g>
+
+      <!-- ondas -->
+      <g stroke="#8A9AA8" fill="none" stroke-width="1.8">
+        <path d="M404 196 a20 20 0 0 1 0 26"/>
+        <path d="M418 188 a32 32 0 0 1 0 42"/>
+        <path d="M432 180 a44 44 0 0 1 0 58"/>
+      </g>
+      <text class="dim" x="512" y="256" font-size="9.5">ANT+ / Bluetooth</text>
+    </svg>
+    </div>
+    <div class="panel-bar">
+      <p>Toca un elemento</p>
+      <button class="zoom-btn" id="zoom" type="button">Ver en grande ⤢</button>
+    </div>
+  </div>
+
+  <div class="ctl-list">
+    <h3 class="grp">Las partes</h3>
+
+    <details class="row" id="c-medidor" data-short="La carcasa negra pegada a la cara interna de la biela izquierda. No tiene pantalla ni botones: solo mide y transmite."><summary><span class="badge">01</span><span class="nm">El medidor</span><span class="chev">+</span></summary><div class="lcd">
+      <p>Es la carcasa negra montada en la cara interna de la biela izquierda. <b>No tiene pantalla ni botones</b>: mide la fuerza que aplicas al pedalear, la convierte a vatios, y la transmite por radio. Todo lo que ves lo ves en otro aparato.</p>
+      <div class="tip"><b>En la práctica</b>Como mide solo la pierna izquierda, el valor total se calcula duplicando ese lado. Por eso una asimetría marcada entre piernas afecta la lectura.</div></div></details>
+
+    <details class="row" id="c-biela" data-short="El brazo que une el pedal con el eje. El medidor va sobre la biela izquierda y no se desmonta salvo para servicio."><summary><span class="badge">02</span><span class="nm">Biela</span><span class="chev">+</span></summary><div class="lcd">
+      <p>El brazo que une el pedal con el eje del pedalier. El medidor viene montado de fábrica sobre la biela izquierda y forma una sola pieza con ella.</p>
+      <div class="tip"><b>En la práctica</b>Cada vez que el medidor se desmonta y se vuelve a montar, o que se cambian los pedales de posición, <b>hay que hacer la puesta a cero</b>: el apriete de los tornillos mete tensión en el material y desplaza la lectura.</div></div></details>
+
+    <details class="row" id="c-led" data-short="Verde: pila entre 6 y 100 por ciento. Rojo: entre 1 y 5, cámbiala. Parpadea los primeros 60 segundos después de despertar el medidor."><summary><span class="badge">03</span><span class="nm">LED indicador</span><span class="chev">+</span></summary><div class="lcd">
+      <p>Está al centro de la carcasa y dice dos cosas: que el medidor está despierto y funcionando, y el nivel de pila. <b>Verde</b> es entre 6 y 100 %. <b>Rojo</b> es crítico, entre 1 y 5 %, y hay que cambiar la pila.</p>
+      <div class="tip"><b>En la práctica</b>Parpadea solo durante los primeros 60 segundos después de despertar el medidor. Si no ves nada, gira las bielas y vuelve a mirar antes de asumir que está muerto.</div></div></details>
+
+    <details class="row" id="c-pila" data-short="Pila de botón CR2032 de 3 V, dura entre 150 y 200 horas de uso. La tapa y el empaque son de las pocas piezas que se pueden abrir."><summary><span class="badge">04</span><span class="nm">Tapa de la pila</span><span class="chev">+</span></summary><div class="lcd">
+      <p>Debajo va una <b>pila de botón CR2032 de 3 V</b>, que dura entre 150 y 200 horas de uso. La tapa y su empaque de hule (el o-ring) son, junto con la pila, <b>las únicas piezas que el usuario puede tocar</b>.</p>
+      <div class="tip"><b>En la práctica</b>El o-ring es lo que mantiene la resistencia al agua. Si se pierde o se maltrata, entra humedad. Revisa también que el contacto no tenga corrosión.</div></div></details>
+
+    <details class="row" id="c-vertical" data-short="Para la puesta a cero las bielas deben quedar verticales, sin peso en los pedales y con la bici estable. Si no, marca error 32."><summary><span class="badge">05</span><span class="nm">Posición vertical</span><span class="chev">+</span></summary><div class="lcd">
+      <p>Es la posición obligatoria para hacer la puesta a cero: <b>las bielas rectas, hacia arriba y hacia abajo</b>, sin nada de peso sobre los pedales y con la bicicleta estable.</p>
+      <div class="tip"><b>En la práctica</b>Si no están verticales, el sistema devuelve el <b>error 32</b>. Es el error más común y se arregla acomodando las bielas.</div></div></details>
+
+    <details class="row" id="c-receptor" data-short="El medidor transmite por ANT+ y Bluetooth LE. Los datos se leen en una ciclocomputadora o en la app Stages Cycling; sin receptor no hay lectura."><summary><span class="badge">06</span><span class="nm">El receptor</span><span class="chev">+</span></summary><div class="lcd">
+      <p>El medidor transmite en 2.4 GHz por <b>ANT+ y por Bluetooth LE</b>. Los datos se leen en una ciclocomputadora compatible o en la <b>app Stages Cycling</b> del celular o de la tablet. <b>Sin un receptor emparejado no hay lectura</b>: el medidor por sí solo no guarda nada.</p>
+      <div class="tip"><b>En la práctica</b>El emparejamiento es de dos vías: desde el receptor se le puede mandar al medidor la orden de puesta a cero. Por eso la calibración se hace desde ahí y no desde el aparato.</div></div></details>
+  </div>
+  <a class="top" href="#top">↑ Inicio</a>
+</section>
+
+<section id="cero">
+  <div class="sec-head"><span class="sec-num">02</span><h2>La puesta a cero</h2></div>
+  <p class="lede">Es lo único que de verdad tienes que saber hacer con este equipo.</p>
+  <div class="bd">
+    <p>El <b>cero</b> es lo que el sensor lee cuando no hay nadie pedaleando. Todo lo que se mide después se calcula a partir de ese punto de partida, así que si el cero está corrido, <b>todos los vatios salen corridos</b>. La temperatura, el montaje y hasta el apriete de los tornillos lo mueven.</p>
+  </div>
+  <ol class="steps">
+    <li><b>Verifica que la pila sirva.</b><span>Si el LED sale en rojo, cámbiala antes de intentar nada.</span></li>
+    <li><b>Despierta el medidor.</b><span>Gira las bielas dos vueltas completas. El LED debe parpadear.</span></li>
+    <li><b>Confirma que esté emparejado.</b><span>Con la ciclocomputadora o con la app, y que esté recibiendo señal.</span></li>
+    <li><b>Pon las bielas verticales.</b><span>Rectas, sin peso en los pedales, con la bicicleta estable.</span></li>
+    <li><b>Ejecuta Calibrar o Zero Reset.</b><span>Desde el menú del receptor. En la app: Devices, agregas el medidor, y ahí está la función.</span></li>
+    <li><b>Lee el valor que devuelve.</b><span>Tarda hasta 30 segundos y el receptor dice si funcionó o falló.</span></li>
+  </ol>
+  <div class="warn"><b>El valor no va a ser cero</b><p>Aunque se llame "puesta a cero", el número que devuelve <b>no es 0</b>: es la lectura del sensor sin carga, y lo esperado ronda <b>890, más menos 50 puntos</b>. Si sale muy lejos de ahí, algo anda mal con el montaje o con el sensor.</p></div>
+  <div class="bd">
+    <p><b>Hazla siempre en estos casos:</b> la primera vez que uses el equipo, cada vez que el medidor se desmonte y se vuelva a montar, cuando se cambien los pedales de posición, y de forma periódica para asegurar que sigue midiendo bien.</p>
+  </div>
+  <a class="top" href="#top">↑ Inicio</a>
+</section>
+
+<section id="usar">
+  <div class="sec-head"><span class="sec-num">03</span><h2>Usarlo en una sesión</h2></div>
+  <ol class="steps">
+    <li><b>Despierta el medidor.</b><span>Dos vueltas de biela. Revisa el color del LED.</span></li>
+    <li><b>Empareja el receptor.</b><span>Ciclocomputadora o app Stages Cycling. Por ANT+ o por Bluetooth.</span></li>
+    <li><b>Haz la puesta a cero.</b><span>Con las bielas verticales, antes de empezar.</span></li>
+    <li><b>Pedalea.</b><span>El receptor muestra potencia en vatios y cadencia en rpm en tiempo real.</span></li>
+    <li><b>Guarda o exporta desde el receptor.</b><span>El medidor no almacena nada: los datos viven en el aparato que los recibe.</span></li>
+  </ol>
+  <div class="warn"><b>Un dato para interpretar los resultados</b><p>Este es un medidor de <b>un solo lado</b>, montado en la biela izquierda. La potencia total se estima duplicando lo que mide esa pierna. Es válido y es como funcionan muchos potenciómetros, pero conviene que el alumno lo sepa al comparar contra otros equipos.</p></div>
+  <a class="top" href="#top">↑ Inicio</a>
+</section>
+
+<section id="errores">
+  <div class="sec-head"><span class="sec-num">04</span><h2>Errores</h2></div>
+  <div class="bd">
+    <p>Estos códigos aparecen cuando falla la puesta a cero.</p>
+    <div class="tbl">
+      <div class="r"><div class="k">Código 0</div><div class="v">Se agotó el tiempo. El sensor estaba dormido: gira las bielas para despertarlo y vuelve a intentar.</div></div>
+      <div class="r"><div class="k">Códigos 1, 2, 4 y 16</div><div class="v">Simplemente vuelve a intentar. Si el código persiste después de varios intentos, hay que reportarlo a soporte técnico.</div></div>
+      <div class="r"><div class="k">Código 32</div><div class="v">Las bielas no están en posición vertical. Acomódalas y repite.</div></div>
+    </div>
+    <p><b>Si no llega señal de potencia ni de cadencia</b>, revisa en este orden:</p>
+    <ul>
+      <li>Que haya una <b>pila CR2032 que sirva</b> y esté bien colocada.</li>
+      <li>Que el medidor esté <b>emparejado correctamente</b> con el receptor, según las instrucciones de ese aparato.</li>
+      <li>Conectarlo a la <b>app Stages Cycling</b> para confirmar que el medidor enciende y funciona.</li>
+    </ul>
+  </div>
+  <a class="top" href="#top">↑ Inicio</a>
+</section>
+
+<section id="pila">
+  <div class="sec-head"><span class="sec-num">05</span><h2>La pila</h2></div>
+  <div class="bd">
+    <div class="tbl">
+      <div class="r"><div class="k">Tipo</div><div class="v">CR2032 de botón, 3.0 V</div></div>
+      <div class="r"><div class="k">Duración</div><div class="v">Aproximadamente 150 a 200 horas de uso</div></div>
+      <div class="r"><div class="k">Cuándo cambiarla</div><div class="v">Cuando el LED sale rojo. A partir de ahí queda entre 1 y 5 %</div></div>
+    </div>
+    <div class="warn"><b>Las pilas de botón son peligrosas si se ingieren</b><p>El fabricante dedica una sección completa a esto. Guárdalas fuera del alcance de cualquier persona que pueda tragárselas, y desecha las usadas de inmediato y de forma responsable. Si alguien se traga una, es una urgencia médica.</p></div>
+    <p>Al cambiarla, <b>cuida el empaque de hule de la tapa</b>: es lo que mantiene el sello contra el agua. Revisa que el contacto de la pila no tenga corrosión.</p>
+  </div>
+  <a class="top" href="#top">↑ Inicio</a>
+</section>
+
+<section id="cuidado">
+  <div class="sec-head"><span class="sec-num">06</span><h2>Cuidado</h2></div>
+  <div class="bd">
+    <div class="warn"><b>Casi nada se puede abrir</b><p>Las <b>únicas piezas que el usuario puede tocar son la pila, la tapa de la pila y el o-ring</b>. Ninguna otra parte es ajustable ni reparable, y no se debe intentar.</p></div>
+    <ul>
+      <li>Para limpiarlo, <b>solo un paño humedecido con agua</b>.</li>
+      <li><b>Nunca químicos agresivos</b>: dañan la carcasa de plástico.</li>
+      <li><b>Nunca chorro de agua a presión</b> sobre el medidor ni sobre la tapa de la pila.</li>
+      <li>Aunque tiene resistencia al agua IPX7, eso no significa que aguante presión ni inmersión prolongada.</li>
+    </ul>
+  </div>
+  <a class="top" href="#top">↑ Inicio</a>
+</section>
+
+<section id="limites">
+  <div class="sec-head"><span class="sec-num">07</span><h2>Límites</h2></div>
+  <div class="bd"><div class="tbl">
+    <div class="r"><div class="k">Exactitud</div><div class="v">± 1.5 % de la potencia medida</div></div>
+    <div class="r"><div class="k">Rango de potencia</div><div class="v">0 a 5000 watts</div></div>
+    <div class="r"><div class="k">Rango de cadencia</div><div class="v">10 a 220 rpm</div></div>
+    <div class="r"><div class="k">Transmisión</div><div class="v">2.4 GHz, ANT+ y Bluetooth LE</div></div>
+    <div class="r"><div class="k">Resistencia al agua</div><div class="v">IPX7</div></div>
+    <div class="r"><div class="k">Temperatura de uso</div><div class="v">−18 a 50 °C</div></div>
+    <div class="r"><div class="k">Temperatura de guardado</div><div class="v">−30 a 60 °C</div></div>
+    <div class="r"><div class="k">Peso del medidor</div><div class="v">15 g el de un lado</div></div>
+  </div>
+  <p>El valor esperado de la puesta a cero ronda <b>890 ± 50 puntos</b>. Anótalo cada vez: si empieza a alejarse sesión tras sesión, es señal de que el montaje o el sensor necesitan revisión.</p>
+  </div>
+</section>
+
+<footer>
+  <p>Guía del potenciómetro Stages Power, resumida de la guía del usuario oficial de Stages Cycling.<br>
+  El catálogo institucional registra este equipo como FSA Powerbox; el aparato físico es un Stages.<br>
+  El manual oficial y el encargado del laboratorio mandan sobre esta guía.<br>
+  CFD-027 · Versión 1.0 · Septiembre de 2026.</p>
+</footer>
+
+</div>
+
+<div class="fs" id="fs" hidden>
+  <div class="fs-rot" id="fsRot">
+    <button class="fs-close" id="fsClose" type="button">Cerrar ✕</button>
+    <span class="fs-tip" id="fsTip">Toca cualquier elemento</span>
+    <div class="pop" id="pop" hidden></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var svg = document.getElementById('svgPanel');
+  var host= document.getElementById('panelHost');
+  var fs  = document.getElementById('fs');
+  var rot = document.getElementById('fsRot');
+  var pop = document.getElementById('pop');
+  var tip = document.getElementById('fsTip');
+  var rows = Array.prototype.slice.call(document.querySelectorAll('.row'));
+  var ctls = Array.prototype.slice.call(document.querySelectorAll('.ctl'));
+  var VB_FULL = {minx:0, miny:0, w:800, h:400};
+  var VB_CROP = {minx:120, miny:56, w:620, h:326};
+  var VB_MINX = VB_FULL.minx, VB_MINY = VB_FULL.miny, VB_W = VB_FULL.w, VB_H = VB_FULL.h;
+  var RATIO = VB_W / VB_H, activeG = null;
+
+  function setCrop(on){
+    var vb = on ? VB_CROP : VB_FULL;
+    VB_MINX = vb.minx; VB_MINY = vb.miny; VB_W = vb.w; VB_H = vb.h;
+    RATIO = VB_W / VB_H;
+    svg.setAttribute('viewBox', vb.minx+' '+vb.miny+' '+vb.w+' '+vb.h);
+  }
+  function viewportSize(){
+    var vv = window.visualViewport;
+    return {w:(vv&&vv.width)||window.innerWidth, h:(vv&&vv.height)||window.innerHeight};
+  }
+  function sizeFS(){
+    if(fs.hidden) return;
+    var v = viewportSize();
+    fs.style.width = v.w+'px'; fs.style.height = v.h+'px';
+    var w = (v.h >= v.w) ? Math.min(v.h, v.w*RATIO) : Math.min(v.w, v.h*RATIO);
+    rot.style.width = w+'px'; rot.style.height = 'auto';
+  }
+
+  var DATA = {};
+  rows.forEach(function(r){
+    var id = r.id.replace(/^c-/,'');
+    DATA[id] = { badge:r.querySelector('.badge').textContent,
+                 title:r.querySelector('.nm').textContent,
+                 short:r.getAttribute('data-short') || r.querySelector('.lcd p').textContent };
+  });
+  function highlight(id){ ctls.forEach(function(g){ g.classList.toggle('on', g.dataset.id===id); }); }
+
+  rows.forEach(function(r){
+    r.addEventListener('toggle', function(){
+      if(r.open) rows.forEach(function(o){ if(o!==r) o.open=false; });
+      var open=null; rows.forEach(function(o){ if(o.open) open=o.id.replace(/^c-/,''); });
+      if(fs.hidden) highlight(open);
+    });
+  });
+
+  function hidePop(){ pop.hidden=true; activeG=null; highlight(null); }
+  function placePop(g){
+    var b = g.getBBox();
+    var sc = svg.getBoundingClientRect().width / VB_W;
+    if(!sc) return;
+    var W = rot.clientWidth, H = rot.clientHeight;
+    var bx=(b.x-VB_MINX)*sc, by=(b.y-VB_MINY)*sc, bw=b.width*sc, bh=b.height*sc;
+    pop.style.fontSize = Math.max(9, Math.min(15, W*0.0185))+'px';
+    pop.style.maxWidth = Math.min(W*0.34, 300)+'px';
+    pop.style.left='0px'; pop.style.top='0px';
+    var pw=pop.offsetWidth, ph=pop.offsetHeight;
+    var gap=Math.max(8, W*0.012), left, top, cls;
+    if(bx+bw+gap+pw <= W-6){ left=bx+bw+gap; cls='pr'; }
+    else if(bx-gap-pw >= 6){ left=bx-gap-pw; cls='pl'; }
+    else { left=Math.min(Math.max(bx+bw/2-pw/2,6), Math.max(6,W-pw-6));
+           cls=(by+bh+gap+ph <= H-6)?'pb':'pt'; }
+    if(cls==='pr'||cls==='pl') top=by+bh/2-ph/2;
+    else if(cls==='pb') top=by+bh+gap; else top=by-gap-ph;
+    top=Math.min(Math.max(top,6), Math.max(6,H-ph-6));
+    pop.className='pop '+cls; pop.style.left=left+'px'; pop.style.top=top+'px';
+    pop.style.setProperty('--cy', Math.min(Math.max(by+bh/2-top,10), Math.max(10,ph-10))+'px');
+  }
+  function showPop(g){
+    var d = DATA[g.dataset.id]; if(!d) return;
+    if(activeG===g){ hidePop(); return; }
+    activeG=g;
+    pop.innerHTML='<h4><span class="num">'+d.badge+'</span>'+d.title+'</h4><p>'+d.short+'</p>';
+    pop.hidden=false; highlight(g.dataset.id); placePop(g);
+    tip.style.visibility='hidden';
+  }
+  ctls.forEach(function(g){
+    function go(e){
+      if(e) e.stopPropagation();
+      if(!fs.hidden){ showPop(g); return; }
+      var r=document.getElementById('c-'+g.dataset.id); if(!r) return;
+      r.open=true; r.scrollIntoView({block:'center', behavior:'smooth'});
+    }
+    g.addEventListener('click', go);
+    g.addEventListener('keydown', function(e){
+      if(e.key==='Enter'||e.key===' '){ e.preventDefault(); go(e); }
+    });
+  });
+
+  var zoom=document.getElementById('zoom');
+  function openFS(){
+    rot.insertBefore(svg, rot.firstChild);
+    fs.hidden=false; document.body.classList.add('lock');
+    tip.style.visibility='visible'; highlight(null);
+    setCrop(true); sizeFS();
+    try{
+      var p=document.documentElement.requestFullscreen && document.documentElement.requestFullscreen();
+      if(p&&p.then) p.then(function(){
+        if(screen.orientation&&screen.orientation.lock){
+          var q=screen.orientation.lock('landscape'); if(q&&q.catch) q.catch(function(){});
+        }
+      }).catch(function(){});
+    }catch(e){}
+  }
+  function closeFS(){
+    hidePop(); host.appendChild(svg); fs.hidden=true;
+    fs.style.width=''; fs.style.height=''; rot.style.width=''; rot.style.height='';
+    setCrop(false); document.body.classList.remove('lock');
+    try{
+      if(screen.orientation&&screen.orientation.unlock) screen.orientation.unlock();
+      if(document.fullscreenElement&&document.exitFullscreen) document.exitFullscreen();
+    }catch(e){}
+  }
+  zoom.addEventListener('click', openFS);
+  document.getElementById('fsClose').addEventListener('click', function(e){ e.stopPropagation(); closeFS(); });
+  fs.addEventListener('click', function(){ if(!pop.hidden) hidePop(); });
+  pop.addEventListener('click', function(e){ e.stopPropagation(); });
+  document.addEventListener('keydown', function(e){
+    if(e.key!=='Escape'||fs.hidden) return;
+    if(!pop.hidden) hidePop(); else closeFS();
+  });
+  function reflow(){ sizeFS(); if(!fs.hidden&&activeG) placePop(activeG); }
+  window.addEventListener('resize', reflow);
+  window.addEventListener('orientationchange', function(){ setTimeout(reflow,250); });
+  if(window.visualViewport) window.visualViewport.addEventListener('resize', reflow);
+  window.addEventListener('beforeprint', function(){
+    if(!fs.hidden) closeFS();
+    document.querySelectorAll('details').forEach(function(d){ d.open=true; });
+  });
+})();
+</script>
+</body>
+</html>

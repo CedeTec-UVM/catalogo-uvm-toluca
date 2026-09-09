@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<title>Witty · Guía de laboratorio</title>
+<meta name="description" content="Cómo montar y usar el sistema de fotoceldas Microgate Witty del Lab de Cultura Física y Deporte.">
+<meta name="theme-color" content="#E4E1D6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121A24" media="(prefers-color-scheme: dark)">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#E4E1D6; --card:#F2F0E9; --ink:#16283F; --ink-2:#455670;
+  --rule:#C6C0B0; --muted:#6F7787; --live:#B03A22;
+  --lcd:#C6DDD6; --lcd-deep:#9FBDB4; --lcd-ink:#10231D;
+  --display:"Barlow Condensed",Impact,"Arial Narrow",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,"SF Mono",Menlo,monospace;
+  --body:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#121A24; --card:#1B242F; --ink:#E6E9EC; --ink-2:#AFB7C0;
+        --rule:#2E3944; --muted:#8A939E; --live:#E8785A;}
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);
+  font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased;
+  -webkit-tap-highlight-color:transparent;overflow-wrap:break-word}
+body.lock{overflow:hidden}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+.wrap{max-width:780px;margin:0 auto;padding:0 16px calc(56px + env(safe-area-inset-bottom))}
+a{color:var(--ink)}
+
+.hero{padding:22px 0 16px}
+.brand{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin:0}
+h1{font-family:var(--display);font-weight:700;text-transform:uppercase;
+   font-size:clamp(58px,17vw,110px);line-height:.82;margin:4px 0 8px}
+.tagline{font-family:var(--display);font-weight:600;text-transform:uppercase;letter-spacing:.05em;
+   font-size:clamp(17px,4.6vw,23px);line-height:1.15;margin:0 0 16px;color:var(--ink-2)}
+.strip{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rule);
+   border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.strip div{background:var(--bg);padding:9px 10px 10px}
+.strip dt{font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:0 0 2px}
+.strip dd{margin:0;font-family:var(--mono);font-size:14px;font-weight:600}
+
+.jump{position:sticky;top:0;z-index:30;margin:0 -16px;
+  background:color-mix(in srgb,var(--bg) 92%,transparent);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--rule)}
+.jump ul{display:flex;overflow-x:auto;list-style:none;margin:0;padding:0 10px;scrollbar-width:none}
+.jump ul::-webkit-scrollbar{display:none}
+.jump a{display:block;white-space:nowrap;padding:13px 11px;text-decoration:none;
+  font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.jump a:active{color:var(--ink)}
+
+section{margin-top:34px;scroll-margin-top:56px}
+.sec-head{display:flex;align-items:baseline;gap:10px;border-bottom:1.5px solid var(--ink);padding-bottom:6px;margin-bottom:14px}
+.sec-num{font-family:var(--mono);font-size:11px;color:var(--live);letter-spacing:.08em}
+h2{font-family:var(--display);font-weight:700;text-transform:uppercase;
+   font-size:clamp(25px,7vw,34px);line-height:1;margin:0}
+.lede{color:var(--ink-2);margin:0 0 16px;font-size:15.5px}
+
+.panel-box{background:var(--card);border:1px solid var(--rule);border-radius:4px;padding:8px}
+#panelHost svg.panel{width:100%;height:auto;display:block;touch-action:manipulation}
+.panel-bar{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:8px}
+.panel-bar p{margin:0;font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.zoom-btn{font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;
+  background:var(--ink);color:var(--bg);border:1px solid var(--ink);border-radius:999px;
+  padding:11px 18px;min-height:44px;cursor:pointer}
+.zoom-btn:active{opacity:.75}
+
+.ctl{cursor:pointer}
+.ctl .hit{fill:transparent}
+.ring{fill:none;stroke:#B03A22;stroke-width:3;opacity:0}
+.ctl.on .ring{opacity:1}
+.ctl.on .cap{fill:#FFE08A;stroke:#B03A22}
+.ctl:focus-visible{outline:none}
+.ctl:focus-visible .ring{opacity:1;stroke-dasharray:6 4}
+
+.fs{position:fixed;inset:0;z-index:100;background:#0C1219;
+  display:flex;align-items:center;justify-content:center;overscroll-behavior:contain;overflow:hidden}
+.fs[hidden]{display:none}
+.fs-rot{position:relative;line-height:0;width:100vw;flex:0 0 auto}
+@media (orientation:portrait){ .fs-rot{transform:rotate(90deg)} }
+.fs-rot svg.panel{display:block;width:100%;height:auto}
+.fs-close,.fs-tip{position:absolute;z-index:4;font-family:var(--mono);
+  font-size:12px;letter-spacing:.08em;text-transform:uppercase;line-height:1}
+.fs-close{top:2%;right:1.6%;background:#16283F;color:#EBE8DE;border:0;
+  border-radius:999px;padding:11px 16px;min-height:42px;cursor:pointer}
+.fs-close:active{opacity:.75}
+.fs-tip{left:1.6%;bottom:3%;color:#8FA0B4;pointer-events:none}
+
+.pop{position:absolute;z-index:3;background:var(--lcd);color:var(--lcd-ink);
+  border:1px solid #6E8880;border-radius:4px;padding:.75em .85em;line-height:1.4;
+  box-shadow:0 8px 26px rgba(0,0,0,.45);text-align:left}
+.pop[hidden]{display:none}
+.pop h4{margin:0 0 .3em;font-family:var(--display);font-weight:700;text-transform:uppercase;
+  font-size:1.3em;line-height:1.05;letter-spacing:.02em}
+.pop p{margin:0;font-size:1em}
+.pop .num{font-family:var(--mono);font-size:.75em;opacity:.65;letter-spacing:.1em;display:block;margin-bottom:.15em}
+.pop::after{content:"";position:absolute;width:.62em;height:.62em;background:var(--lcd);
+  border:1px solid #6E8880;transform:rotate(45deg)}
+.pop.pr::after{left:-.35em;top:calc(var(--cy,50%) - .31em);border-right:0;border-top:0}
+.pop.pl::after{right:-.35em;top:calc(var(--cy,50%) - .31em);border-left:0;border-bottom:0}
+.pop.pb::after{top:-.35em;left:calc(50% - .31em);border-right:0;border-bottom:0}
+.pop.pt::after{bottom:-.35em;left:calc(50% - .31em);border-left:0;border-top:0}
+
+.ctl-list{margin-top:18px}
+.grp{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--live);margin:26px 0 0;padding:0 0 7px;border-bottom:1.5px solid var(--ink);font-weight:600}
+.grp:first-child{margin-top:0}
+.row{border-bottom:1px solid var(--rule)}
+.row>summary{display:flex;align-items:center;gap:12px;list-style:none;cursor:pointer;padding:15px 4px;min-height:56px}
+.row>summary::-webkit-details-marker{display:none}
+.row>summary:active{background:var(--card)}
+.badge{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--muted);min-width:26px}
+.nm{font-family:var(--display);font-weight:600;text-transform:uppercase;letter-spacing:.03em;
+  font-size:20px;line-height:1.05;flex:1}
+.chev{font-family:var(--mono);color:var(--muted);font-size:18px;line-height:1}
+.row[open] .chev,.row[open] .nm{color:var(--live)}
+
+.lcd{background:var(--lcd);color:var(--lcd-ink);border-radius:3px;padding:15px 15px 16px;margin:0 0 15px;
+  box-shadow:inset 0 0 0 3px rgba(0,0,0,.06);
+  background-image:repeating-linear-gradient(0deg,rgba(0,0,0,.04) 0 1px,transparent 1px 3px)}
+.lcd p{margin:0;font-size:15.5px;line-height:1.55}
+.lcd .tip{font-family:var(--mono);font-size:13.5px;line-height:1.5;
+  border-top:1px solid rgba(16,35,29,.3);padding-top:10px;margin-top:11px}
+.lcd .tip b{display:block;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
+  font-size:10.5px;opacity:.72;margin-bottom:3px}
+
+ol.steps{list-style:none;counter-reset:s;margin:0;padding:0;border-top:1px solid var(--rule)}
+ol.steps li{counter-increment:s;padding:14px 0 15px 46px;border-bottom:1px solid var(--rule);position:relative}
+ol.steps li::before{content:counter(s,decimal-leading-zero);position:absolute;left:0;top:16px;
+  font-family:var(--mono);font-size:12px;font-weight:600;color:var(--live)}
+ol.steps b{font-weight:600}
+ol.steps span{display:block;color:var(--ink-2);font-size:15px;margin-top:3px}
+
+ul.check{list-style:none;margin:0;padding:0;border-top:1px solid var(--rule)}
+ul.check li{padding:11px 0 11px 30px;border-bottom:1px solid var(--rule);position:relative;font-size:15.5px}
+ul.check li::before{content:"☐";position:absolute;left:2px;top:9px;font-size:17px;color:var(--muted)}
+
+.bd{padding:0 0 20px}
+.bd p{margin:0 0 12px;font-size:15.5px;color:var(--ink-2)}
+.bd p b,.bd li b{color:var(--ink);font-weight:600}
+.bd ul{margin:0 0 14px;padding-left:19px}
+.bd li{margin-bottom:8px;font-size:15.5px;color:var(--ink-2)}
+
+.tbl{border-top:1px solid var(--ink);margin:0 0 16px}
+.tbl .r{display:grid;grid-template-columns:1fr;gap:1px 14px;padding:11px 0;border-bottom:1px solid var(--rule)}
+.tbl .k{font-family:var(--mono);font-size:13.5px;font-weight:600}
+.tbl .v{font-size:15px;color:var(--ink-2)}
+@media (min-width:560px){.tbl .r{grid-template-columns:minmax(150px,34%) 1fr}}
+.m{font-family:var(--mono);font-size:.9em;background:color-mix(in srgb,var(--ink) 9%,transparent);padding:1px 5px;border-radius:2px}
+
+.warn{border-left:3px solid var(--live);background:var(--card);padding:12px 14px;margin:0 0 15px}
+.warn b{font-family:var(--mono);font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--live);display:block;margin-bottom:3px}
+.warn p{margin:0;font-size:15px}
+
+.top{display:block;margin:26px 0 0;text-align:center;font-family:var(--mono);font-size:12px;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-decoration:none;padding:14px}
+footer{margin-top:34px;border-top:1.5px solid var(--ink);padding-top:14px;
+  font-family:var(--mono);font-size:12px;color:var(--muted);line-height:1.75}
+
+@media print{
+  body{background:#fff;color:#000;font-size:11pt}
+  .jump,.panel-bar,.top,.fs{display:none}
+  .lcd{background:#fff;color:#000;box-shadow:none;border:1px solid #999;background-image:none}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero" id="top">
+  <p class="brand">Microgate · Lab de Cultura Física · CFD-018</p>
+  <h1>Witty</h1>
+  <p class="tagline">Sistema de fotoceldas para pruebas de velocidad y agilidad</p>
+  <dl class="strip">
+    <div><dt>Resolución</dt><dd>1/25 000 s</dd></div>
+    <div><dt>Alcance de radio</dt><dd>hasta 150 m</dd></div>
+    <div><dt>Fotocelda–reflector</dt><dd>7 m normal · 12 m strong</dd></div>
+    <div><dt>Batería</dt><dd>más de 10 h</dd></div>
+  </dl>
+</header>
+
+<nav class="jump" aria-label="Secciones">
+  <ul>
+    <li><a href="#montaje">Montaje</a></li>
+    <li><a href="#kit">El kit</a></li>
+    <li><a href="#prueba">Primera prueba</a></li>
+    <li><a href="#teclas">Teclas</a></li>
+    <li><a href="#modo">Normal o Strong</a></li>
+    <li><a href="#errores">Errores</a></li>
+    <li><a href="#limites">Límites</a></li>
+    <li><a href="#cuidado">Cuidado</a></li>
+  </ul>
+</nav>
+
+<section id="montaje">
+  <div class="sec-head"><span class="sec-num">01</span><h2>Cómo se monta</h2></div>
+  <p class="lede">Vista desde arriba de una prueba de velocidad. Toca cualquier elemento del esquema.</p>
+
+  <div class="panel-box">
+    <div id="panelHost">
+    <svg class="panel" id="svgPanel" viewBox="0 0 800 440" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Esquema de montaje del sistema Witty visto desde arriba">
+      <defs>
+        <marker id="a" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+          <path d="M0,0 L9,4.5 L0,9 z" fill="#8A9AA8"/></marker>
+        <style>
+        .t{font-family:Helvetica,Arial,sans-serif;fill:#16283F}
+        .tc{font-family:Helvetica,Arial,sans-serif;fill:#16283F;text-anchor:middle;pointer-events:none}
+        .lb{font-family:Helvetica,Arial,sans-serif;fill:#455670;font-size:11px;text-anchor:middle;pointer-events:none}
+        .dim{font-family:"IBM Plex Mono",monospace;fill:#B03A22;font-size:11px;text-anchor:middle;pointer-events:none}
+        .cap:not([fill]){fill:#DCD8CE} .cap:not([stroke]){stroke:#A9A597} .cap{stroke-width:1}
+      </style></defs>
+
+      <rect x="0" y="0" width="800" height="440" fill="#F2F0E9"/>
+      <text class="t" x="70" y="40" font-size="15" font-weight="700">Montaje t&#237;pico &#183; prueba de velocidad en l&#237;nea</text>
+      <text class="t" x="70" y="60" font-size="11" fill="#6F7787">Esquema, no est&#225; a escala</text>
+
+      <rect x="70" y="150" width="670" height="96" fill="#E7E3D8" stroke="#CFC9BA"/>
+      <line x1="70" y1="198" x2="740" y2="198" stroke="#CFC9BA" stroke-dasharray="8 8"/>
+      <path d="M652 198 L716 198" stroke="#8A9AA8" stroke-width="2" marker-end="url(#a)"/>
+      <text class="lb" x="684" y="188" font-size="10.5">carrera</text>
+
+      <text class="tc" x="205" y="96" font-size="13" font-weight="700" letter-spacing="1">START</text>
+      <g class="ctl" data-id="fotocelda" role="button" tabindex="0" aria-label="Fotocelda">
+        <rect class="ring" x="176" y="104" width="58" height="42" rx="5"/>
+        <rect class="cap" x="182" y="110" width="46" height="32" rx="4"/>
+        <circle cx="205" cy="126" r="6" fill="#2B3238"/><circle cx="205" cy="126" r="2.5" fill="#C9A227"/>
+        <rect x="196" y="112" width="18" height="4" rx="2" fill="#3FAE45"/>
+        <text class="lb" x="205" y="160">fotocelda</text>
+        <rect class="hit" x="172" y="100" width="66" height="66"/>
+      </g>
+      <g class="ctl" data-id="reflector" role="button" tabindex="0" aria-label="Reflector">
+        <rect class="ring" x="180" y="252" width="50" height="40" rx="5"/>
+        <rect class="cap" x="186" y="258" width="38" height="28" rx="3" fill="#B9C6CF" stroke="#8FA0AC"/>
+        <path d="M191 263 L219 263 M191 268 L219 268 M191 273 L219 273 M191 278 L219 278" stroke="#7E909C"/>
+        <text class="lb" x="205" y="304">reflector</text>
+        <rect class="hit" x="176" y="250" width="58" height="62"/>
+      </g>
+      <g class="ctl" data-id="haz" role="button" tabindex="0" aria-label="Haz y alineaci&#243;n">
+        <rect class="ring" x="192" y="142" width="26" height="118" rx="4"/>
+        <line x1="205" y1="144" x2="205" y2="256" stroke="#B03A22" stroke-width="2" stroke-dasharray="7 5"/>
+        <rect class="hit" x="190" y="142" width="30" height="118"/>
+      </g>
+
+      <text class="tc" x="600" y="96" font-size="13" font-weight="700" letter-spacing="1">STOP</text>
+      <rect class="cap" x="577" y="110" width="46" height="32" rx="4"/>
+      <circle cx="600" cy="126" r="6" fill="#2B3238"/><circle cx="600" cy="126" r="2.5" fill="#C9A227"/>
+      <rect x="591" y="112" width="18" height="4" rx="2" fill="#3FAE45"/>
+      <text class="lb" x="600" y="160">fotocelda</text>
+      <rect class="cap" x="581" y="258" width="38" height="28" rx="3" fill="#B9C6CF" stroke="#8FA0AC"/>
+      <path d="M586 263 L614 263 M586 268 L614 268 M586 273 L614 273 M586 278 L614 278" stroke="#7E909C"/>
+      <text class="lb" x="600" y="304">reflector</text>
+      <line x1="600" y1="144" x2="600" y2="256" stroke="#B03A22" stroke-width="2" stroke-dasharray="7 5"/>
+
+      <g class="ctl" data-id="distancia" role="button" tabindex="0" aria-label="Distancia entre fotocelda y reflector">
+        <rect class="ring" x="288" y="150" width="150" height="96" rx="5"/>
+        <line x1="312" y1="160" x2="312" y2="238" stroke="#B03A22" stroke-width="1.2"/>
+        <path d="M308 166 L312 158 L316 166" fill="#B03A22"/>
+        <path d="M308 232 L312 240 L316 232" fill="#B03A22"/>
+        <text class="dim" x="378" y="194">1 a 7 m</text>
+        <text class="dim" x="378" y="210" font-size="9.5">modo Normal</text>
+        <rect class="hit" x="288" y="150" width="150" height="96"/>
+      </g>
+
+      <g class="ctl" data-id="radio" role="button" tabindex="0" aria-label="Transmisi&#243;n por radio">
+        <rect class="ring" x="112" y="112" width="220" height="230" rx="6"/>
+        <g stroke="#8A9AA8" fill="none" stroke-width="1.6">
+          <path d="M240 116 a16 16 0 0 1 0 22"/><path d="M250 110 a26 26 0 0 1 0 34"/>
+        </g>
+        <path d="M186 132 Q120 200 132 356" stroke="#8A9AA8" stroke-width="1.6" fill="none" stroke-dasharray="5 5"/>
+        <text class="dim" x="258" y="330">radio &#183; m&#225;x. 150 m</text>
+        <rect class="hit" x="196" y="308" width="130" height="34"/>
+        <rect class="hit" x="228" y="104" width="46" height="46"/>
+      </g>
+
+      <line x1="205" y1="348" x2="600" y2="348" stroke="#B03A22" stroke-width="1.2"/>
+      <path d="M211 344 L203 348 L211 352" fill="#B03A22"/>
+      <path d="M594 344 L602 348 L594 352" fill="#B03A22"/>
+      <text class="dim" x="440" y="342">distancia de la prueba &#183; ej. 30 m</text>
+
+      <g class="ctl" data-id="timer" role="button" tabindex="0" aria-label="Timer Witty">
+        <rect class="ring" x="60" y="356" width="128" height="62" rx="6"/>
+        <rect class="cap" x="66" y="362" width="116" height="50" rx="5" fill="#3A3F45" stroke="#22262A"/>
+        <rect x="72" y="368" width="52" height="38" rx="2" fill="#1B4E86"/>
+        <text class="tc" x="98" y="392" font-size="12" fill="#CFE2F5" font-family="IBM Plex Mono, monospace">4.83</text>
+        <g fill="#5A6068">
+          <rect x="132" y="369" width="12" height="9" rx="2"/><rect x="148" y="369" width="12" height="9" rx="2"/><rect x="164" y="369" width="12" height="9" rx="2"/>
+          <rect x="132" y="382" width="12" height="9" rx="2"/><rect x="148" y="382" width="12" height="9" rx="2"/><rect x="164" y="382" width="12" height="9" rx="2"/>
+          <rect x="132" y="395" width="12" height="9" rx="2"/><rect x="148" y="395" width="12" height="9" rx="2"/><rect x="164" y="395" width="12" height="9" rx="2"/>
+        </g>
+        <text class="lb" x="124" y="430">timer &#183; m&#237;n. 50 cm del suelo</text>
+        <rect class="hit" x="58" y="354" width="132" height="66"/>
+      </g>
+    </svg>
+    </div>
+    <div class="panel-bar">
+      <p>Toca un elemento</p>
+      <button class="zoom-btn" id="zoom" type="button">Ver en grande ⤢</button>
+    </div>
+  </div>
+
+  <div class="ctl-list">
+    <h3 class="grp">En el campo</h3>
+
+    <details class="row" id="c-fotocelda" data-short="Se enciende con el botón ON un segundo. Pita hasta que encuentra la alineación con el reflector. LED verde: batería bien. Naranja: baja."><summary><span class="badge">01</span><span class="nm">Fotocelda</span><span class="chev">+</span></summary><div class="lcd">
+      <p>Es la que detecta el paso del atleta. Se enciende presionando el botón <b>ON durante un segundo</b>. El LED de estado parpadea en verde si la batería está bien, o en naranja si está baja, y el aparato <b>emite un pitido continuo hasta que encuentra la alineación correcta</b> con el reflector. Para apagarla se mantiene el botón hasta que el LED se pone rojo y ahí se suelta.</p>
+      <div class="tip"><b>En la práctica</b>Móntala a la altura del pecho del atleta. Si la pones más abajo, un brazo o una pierna adelantada puede cortar el haz antes de tiempo.</div></div></details>
+
+    <details class="row" id="c-reflector" data-short="No lleva batería ni se enciende. Solo regresa el haz a la fotocelda. Va montado en su propio trípode, enfrente."><summary><span class="badge">02</span><span class="nm">Reflector</span><span class="chev">+</span></summary><div class="lcd">
+      <p>Es la placa que va del otro lado del carril. <b>No tiene batería ni se enciende</b>: su único trabajo es regresarle el haz a la fotocelda. Va montado en su propio trípode, justo enfrente y a la misma altura.</p>
+      <div class="tip"><b>En la práctica</b>Cualquier superficie reflejante puede hacer que la fotocelda deje de pitar aunque no esté apuntando al reflector. Verifica que de verdad se estén viendo entre ellos.</div></div></details>
+
+    <details class="row" id="c-haz" data-short="El pitido continuo se apaga cuando la fotocelda queda alineada con el reflector. Ese silencio es la señal de que ya quedó."><summary><span class="badge">03</span><span class="nm">Alineación</span><span class="chev">+</span></summary><div class="lcd">
+      <p>La fotocelda y el reflector tienen que quedar viéndose de frente. <b>El pitido continuo se apaga en cuanto quedan alineados</b>, y ese silencio es la única confirmación que te va a dar el aparato.</p>
+      <div class="tip"><b>En la práctica</b>Si el pitido no se calla, mueve el trípode del reflector en pequeños ángulos, no lo recorras de lugar. Casi siempre es cuestión de girarlo unos grados.</div></div></details>
+
+    <details class="row" id="c-distancia" data-short="De 1 a 7 metros en modo Normal, hasta 12 en modo Strong. El modo se configura desde el timer y cambia también la distancia mínima."><summary><span class="badge">04</span><span class="nm">Distancia al reflector</span><span class="chev">+</span></summary><div class="lcd">
+      <p>La separación entre la fotocelda y su reflector va de <b>1 a 7 metros en modo Normal</b>. Si necesitas más, hay un modo <b>Strong</b> que llega a 12 metros, pero se configura desde el timer y cambia también la distancia mínima.</p>
+      <div class="tip"><b>En la práctica</b>Es la sección "Normal o Strong" de esta guía. Elegir mal el modo hace que algunas pasadas no se registren y es de los errores más difíciles de detectar.</div></div></details>
+
+    <details class="row" id="c-radio" data-short="Las fotoceldas le hablan al timer por radio, hasta 150 m. El timer va a 50 cm del suelo como mínimo y nunca sobre metal."><summary><span class="badge">05</span><span class="nm">Radio</span><span class="chev">+</span></summary><div class="lcd">
+      <p>Las fotoceldas no llevan cable al timer: le transmiten por radio, con un <b>alcance máximo recomendado de 150 metros</b>. Para que la recepción sea buena, el timer debe estar a <b>por lo menos 50 cm del suelo</b>, sin tocarlo, y <b>nunca encima de objetos metálicos</b>.</p>
+      <div class="tip"><b>En la práctica</b>Con lluvia las gotas estorban la transmisión y hay que reducir la distancia. Si el timer no recibe nada, revisa primero el canal antes de mover los trípodes.</div></div></details>
+
+    <details class="row" id="c-timer" data-short="Se enciende con la tecla Microgate. Para apagar, mantenla 5 segundos. Si se traba, 10 segundos lo resetea."><summary><span class="badge">06</span><span class="nm">Timer</span><span class="chev">+</span></summary><div class="lcd">
+      <p>Es la consola que recibe los tiempos. <b>Se enciende presionando la tecla Microgate</b>; tras unos segundos aparece la versión de firmware y con cualquier tecla entras al menú principal. Para apagarlo, mantén la tecla Microgate <b>5 segundos</b> y confirma con F1. Si el equipo se traba y no responde, mantenla <b>10 segundos</b>: se resetea y se apaga.</p>
+      <div class="tip"><b>En la práctica</b>La tecla Microgate también funciona como "atrás" o "escape" en cualquier pantalla. Es la que más vas a usar.</div></div></details>
+  </div>
+  <a class="top" href="#top">↑ Inicio</a>
+</section>
+
+<section id="kit">
+  <div class="sec-head"><span class="sec-num">02</span><h2>Qué trae el kit</h2></div>
+  <p class="lede">Contenido oficial del kit básico. Revísalo al recibir y al devolver.</p>
+  <ul class="check">
+    <li>1 timer Witty</li>
+    <li>2 fotoceldas</li>
+    <li>2 reflectores</li>
+    <li>4 trípodes</li>
+    <li>1 mochila acolchada</li>
+    <li>1 cargador de pared con 4 clavijas y 3 cables USB, para cargar timer y fotoceldas a la vez</li>
+    <li>1 cable USB para conectar a la PC</li>
+    <li>1 memoria USB con los manuales y el software Witty Manager</li>
+    <li>1 cordón</li>
+  </ul>
+  <div class="warn"><b>La memoria USB importa</b><p>Ahí viene el manual completo y el software Witty Manager, que es lo que se usa para bajar los datos a la computadora. Sin ella, los resultados se quedan en el timer.</p></div>
+  <a class="top" href="#top">↑ Inicio</a>
+</section>
+
+<section id="prueba">
+  <div class="sec-head"><span class="sec-num">03</span><h2>Tu primera prueba</h2></div>
+  <ol class="steps">
+    <li><b>Enciende el timer.</b><span>Tecla Microgate. Espera la pantalla de firmware y presiona cualquier tecla.</span></li>
+    <li><b>Monta fotoceldas y reflectores en los trípodes.</b><span>Quita la plaquita de la parte de arriba del trípode, atorníllala a la fotocelda o debajo del reflector, y vuelve a montarla insertando primero el frente y luego el respaldo hasta que haga clic.</span></li>
+    <li><b>Ajusta la altura.</b><span>Extiende las patas hasta que el haz quede a la altura del pecho del atleta.</span></li>
+    <li><b>Enciende las fotoceldas y alinéalas.</b><span>Botón ON un segundo. Mueve el reflector hasta que el pitido se calle.</span></li>
+    <li><b>Coloca el timer.</b><span>A 50 cm del suelo como mínimo, lejos de superficies metálicas.</span></li>
+    <li><b>Entra a Test y luego a Test Base.</b><span>Arriba a la izquierda aparecen el número de dorsal y el número de intento.</span></li>
+    <li><b>Que corra el atleta.</b><span>Al cruzar la primera fotocelda arranca el cronómetro; al cruzar la segunda se detiene y se genera un renglón en la tabla.</span></li>
+    <li><b>Presiona F1 (NEW) para el siguiente.</b><span>Te propone el dorsal siguiente. Si es otro, tecléalo y confirma con OK.</span></li>
+    <li><b>Al terminar, apaga todo.</b><span>Primero el timer, luego las fotoceldas.</span></li>
+  </ol>
+  <div class="warn"><b>El cronómetro sigue corriendo y es normal</b><p>Tres segundos después de detenerse, el tiempo vuelve a correr. No es una falla: por defecto todas las fotoceldas están configuradas como start y no reciben impulso de stop. No afecta la prueba.</p></div>
+  <a class="top" href="#top">↑ Inicio</a>
+</section>
+
+<section id="teclas">
+  <div class="sec-head"><span class="sec-num">04</span><h2>Las teclas del timer</h2></div>
+  <div class="bd">
+    <div class="tbl">
+      <div class="r"><div class="k">Microgate</div><div class="v">Enciende. Mantenida 5 segundos apaga. Mantenida 10 segundos resetea. En cualquier pantalla funciona como Atrás o Escape.</div></div>
+      <div class="r"><div class="k">F1 a F4</div><div class="v">Hacen lo que diga la etiqueta que aparece abajo en la pantalla, dentro de la franja amarilla. Como regla, <b>F1 es Confirmar, Guardar o Sí, y F4 es Cancelar, Atrás o No</b>.</div></div>
+      <div class="r"><div class="k">Flechas y OK</div><div class="v">Las cuatro flechas recorren los menús; el ícono seleccionado se marca en amarillo. La tecla del centro confirma. En tablas, izquierda y derecha avanzan de página completa.</div></div>
+      <div class="r"><div class="k">Teclado numérico</div><div class="v">Para dorsales, distancias y fechas. <b>No hay tecla de borrar</b>: si te equivocas, vuelve a teclear el número y el nuevo sobrescribe al anterior.</div></div>
+      <div class="r"><div class="k">STA y STO</div><div class="v">Simulan a mano los impulsos de las fotoceldas. Sirven para arrancar una prueba manualmente, para marcar una vuelta, para terminar una prueba si el atleta no cortó el haz, y para practicar sin montar nada.</div></div>
+      <div class="r"><div class="k">LCK</div><div class="v">Bloquea la recepción de las fotoceldas sin apagar el teclado. Si un juez o un alumno cruza la meta sin querer, presiónala para que ese paso no cuente. Aparece un candado arriba; se quita presionándola de nuevo.</div></div>
+    </div>
+  </div>
+  <a class="top" href="#top">↑ Inicio</a>
+</section>
+
+<section id="modo">
+  <div class="sec-head"><span class="sec-num">05</span><h2>Normal o Strong</h2></div>
+  <p class="lede">El modo de la fotocelda decide a qué distancia funciona, y también a qué distancia deja de funcionar.</p>
+  <div class="bd">
+    <div class="tbl">
+      <div class="r"><div class="k">Modo Normal</div><div class="v">Máximo 7 m entre fotocelda y reflector. Mínimo 15 cm. Es el modo para casi todo lo que se hace en el laboratorio.</div></div>
+      <div class="r"><div class="k">Modo Strong</div><div class="v">Máximo 12 m, para cubrir un carril ancho o una pista completa. Pero <b>deja de registrar si el atleta pasa a menos de 50 cm de la fotocelda</b>.</div></div>
+    </div>
+    <div class="warn"><b>El error silencioso</b><p>Si el sistema está en Strong y el atleta pasa pegado a la fotocelda, ese paso simplemente no se cuenta. No hay mensaje de error: el tiempo sale mal y nadie se entera. Por eso, si tu montaje cabe en 7 metros, déjalo en Normal.</p></div>
+    <p>El modo se cambia desde el timer, y no basta con elegirlo en pantalla: hay que poner las fotoceldas en <b>modo configuración</b>. Con la fotocelda apagada, mantén el botón ON cinco segundos hasta que el LED parpadee en rojo. Entonces eliges el modo en el timer y confirmas. Un doble bip en las fotoceldas confirma que recibieron el cambio.</p>
+    <p>El <b>canal de radio</b>, del 1 al 8, se cambia con el mismo procedimiento. Sirve para que dos kits Witty trabajando en la misma cancha no se interfieran.</p>
+  </div>
+  <a class="top" href="#top">↑ Inicio</a>
+</section>
+
+<section id="errores">
+  <div class="sec-head"><span class="sec-num">06</span><h2>Errores típicos</h2></div>
+  <div class="bd">
+    <div class="tbl">
+      <div class="r"><div class="k">El timer no recibe nada</div><div class="v">Lo más probable es que el timer y las fotoceldas estén en canales distintos. Entra a Ajustes → Radio → Verificar señal e interrumpe cada fotocelda con la mano: debe aparecer su número de serie y la calidad de señal. Si no aparece nada, revisa el canal.</div></div>
+      <div class="r"><div class="k">Borrar el evento equivocado</div><div class="v">Al presionar F2 (Borrar evento) <b>se elimina siempre el último impulso recibido, no el que está seleccionado en azul en la tabla</b>. El manual lo marca como advertencia y es el error que más datos arruina.</div></div>
+      <div class="r"><div class="k">Se perdió un tiempo intermedio</div><div class="v">Cada impulso se transmite durante 1.2 segundos. Si dos pasos ocurren muy seguidos, uno puede quedar tapado por el otro. Se resuelve bajando la potencia de radio a Short, que reduce ese tiempo a 0.4 s, pero solo conviene con el timer cerca de las fotoceldas.</div></div>
+      <div class="r"><div class="k">Fotoceldas pareadas al revés</div><div class="v">Cuando se usan dos fotoceldas juntas, <b>la maestra es la del número de serie más alto y va siempre montada arriba</b>, porque es la que transmite al timer. Se distingue porque parpadea más lento que la esclava.</div></div>
+      <div class="r"><div class="k">Se borró una prueba</div><div class="v">Si los resultados no se pasaron a la computadora con Witty Manager, borrar una prueba es definitivo y no se puede recuperar.</div></div>
+    </div>
+  </div>
+  <a class="top" href="#top">↑ Inicio</a>
+</section>
+
+<section id="limites">
+  <div class="sec-head"><span class="sec-num">07</span><h2>Límites</h2></div>
+  <div class="bd"><div class="tbl">
+    <div class="r"><div class="k">Resolución de medición</div><div class="v">4 × 10⁻⁵ s, o sea 1/25 000 de segundo</div></div>
+    <div class="r"><div class="k">Precisión en pantalla</div><div class="v">Segundos, décimas, centésimas o milésimas. Solo afecta lo que se muestra: internamente siempre mide a la máxima resolución</div></div>
+    <div class="r"><div class="k">Alcance de radio</div><div class="v">Aproximadamente 150 m</div></div>
+    <div class="r"><div class="k">Alcance óptico</div><div class="v">12 m</div></div>
+    <div class="r"><div class="k">Canales</div><div class="v">8, en 433 a 434 MHz</div></div>
+    <div class="r"><div class="k">Batería</div><div class="v">Más de 10 horas, tanto en el timer como en las fotoceldas</div></div>
+    <div class="r"><div class="k">Temperatura de uso</div><div class="v">0 a 45 °C</div></div>
+    <div class="r"><div class="k">Peso</div><div class="v">Timer 337 g · fotocelda 169 g, con batería</div></div>
+    <div class="r"><div class="k">Unidades</div><div class="v">Metros o pies · velocidad en m/s, km/h, mph o nudos</div></div>
+  </div></div>
+  <a class="top" href="#top">↑ Inicio</a>
+</section>
+
+<section id="cuidado">
+  <div class="sec-head"><span class="sec-num">08</span><h2>Carga y cuidado</h2></div>
+  <div class="bd">
+    <ul>
+      <li>Se pueden cargar <b>hasta 4 dispositivos a la vez</b> con el cargador de pared y los cables USB del kit.</li>
+      <li>En las fotoceldas apagadas, el LED naranja parpadeando significa que están cargando; verde fijo significa que ya terminaron.</li>
+      <li>También se pueden cargar conectándolos a una computadora, pero tarda bastante más.</li>
+      <li><b>Al cargarse, la batería se calienta mucho.</b> Si la sientes caliente, desconéctala y espera a que enfríe antes de guardarla.</li>
+      <li>Guarda todo en la mochila del kit, con los trípodes plegados. Los reflectores se rayan y un reflector rayado alinea peor.</li>
+      <li>Antes de devolver el kit, revisa la lista de contenido de esta guía.</li>
+    </ul>
+  </div>
+</section>
+
+<footer>
+  <p>Guía del sistema de fotoceldas Microgate Witty, resumida del manual de usuario oficial versión 1.3.1.<br>
+  El manual completo viene en la memoria USB del kit.<br>
+  El manual oficial y el encargado del laboratorio mandan sobre esta guía.<br>
+  CFD-018 · Versión 1.0 · Septiembre de 2026.</p>
+</footer>
+
+</div>
+
+<div class="fs" id="fs" hidden>
+  <div class="fs-rot" id="fsRot">
+    <button class="fs-close" id="fsClose" type="button">Cerrar ✕</button>
+    <span class="fs-tip" id="fsTip">Toca cualquier elemento</span>
+    <div class="pop" id="pop" hidden></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var svg = document.getElementById('svgPanel');
+  var host= document.getElementById('panelHost');
+  var fs  = document.getElementById('fs');
+  var rot = document.getElementById('fsRot');
+  var pop = document.getElementById('pop');
+  var tip = document.getElementById('fsTip');
+  var rows = Array.prototype.slice.call(document.querySelectorAll('.row'));
+  var ctls = Array.prototype.slice.call(document.querySelectorAll('.ctl'));
+  var VB_FULL = {minx:0, miny:0, w:800, h:440};
+  var VB_CROP = {minx:46, miny:70, w:716, h:366};
+  var VB_MINX = VB_FULL.minx, VB_MINY = VB_FULL.miny, VB_W = VB_FULL.w, VB_H = VB_FULL.h;
+  var RATIO = VB_W / VB_H, activeG = null;
+
+  function setCrop(on){
+    var vb = on ? VB_CROP : VB_FULL;
+    VB_MINX = vb.minx; VB_MINY = vb.miny; VB_W = vb.w; VB_H = vb.h;
+    RATIO = VB_W / VB_H;
+    svg.setAttribute('viewBox', vb.minx+' '+vb.miny+' '+vb.w+' '+vb.h);
+  }
+  function viewportSize(){
+    var vv = window.visualViewport;
+    return {w:(vv&&vv.width)||window.innerWidth, h:(vv&&vv.height)||window.innerHeight};
+  }
+  function sizeFS(){
+    if(fs.hidden) return;
+    var v = viewportSize();
+    fs.style.width = v.w+'px'; fs.style.height = v.h+'px';
+    /* "contain": el esquema completo siempre cabe, sin recortar */
+    var w = (v.h >= v.w) ? Math.min(v.h, v.w*RATIO) : Math.min(v.w, v.h*RATIO);
+    rot.style.width = w+'px'; rot.style.height = 'auto';
+  }
+
+  var DATA = {};
+  rows.forEach(function(r){
+    var id = r.id.replace(/^c-/,'');
+    DATA[id] = { badge:r.querySelector('.badge').textContent,
+                 title:r.querySelector('.nm').textContent,
+                 short:r.getAttribute('data-short') || r.querySelector('.lcd p').textContent };
+  });
+  function highlight(id){ ctls.forEach(function(g){ g.classList.toggle('on', g.dataset.id===id); }); }
+
+  rows.forEach(function(r){
+    r.addEventListener('toggle', function(){
+      if(r.open) rows.forEach(function(o){ if(o!==r) o.open=false; });
+      var open=null; rows.forEach(function(o){ if(o.open) open=o.id.replace(/^c-/,''); });
+      if(fs.hidden) highlight(open);
+    });
+  });
+
+  function hidePop(){ pop.hidden=true; activeG=null; highlight(null); }
+  function placePop(g){
+    var b = g.getBBox();
+    var sc = svg.getBoundingClientRect().width / VB_W;
+    if(!sc) return;
+    var W = rot.clientWidth, H = rot.clientHeight;
+    var bx=(b.x-VB_MINX)*sc, by=(b.y-VB_MINY)*sc, bw=b.width*sc, bh=b.height*sc;
+    pop.style.fontSize = Math.max(9, Math.min(15, W*0.0185))+'px';
+    pop.style.maxWidth = Math.min(W*0.34, 300)+'px';
+    pop.style.left='0px'; pop.style.top='0px';
+    var pw=pop.offsetWidth, ph=pop.offsetHeight;
+    var gap=Math.max(8, W*0.012), left, top, cls;
+    if(bx+bw+gap+pw <= W-6){ left=bx+bw+gap; cls='pr'; }
+    else if(bx-gap-pw >= 6){ left=bx-gap-pw; cls='pl'; }
+    else { left=Math.min(Math.max(bx+bw/2-pw/2,6), Math.max(6,W-pw-6));
+           cls=(by+bh+gap+ph <= H-6)?'pb':'pt'; }
+    if(cls==='pr'||cls==='pl') top=by+bh/2-ph/2;
+    else if(cls==='pb') top=by+bh+gap; else top=by-gap-ph;
+    top=Math.min(Math.max(top,6), Math.max(6,H-ph-6));
+    pop.className='pop '+cls; pop.style.left=left+'px'; pop.style.top=top+'px';
+    pop.style.setProperty('--cy', Math.min(Math.max(by+bh/2-top,10), Math.max(10,ph-10))+'px');
+  }
+  function showPop(g){
+    var d = DATA[g.dataset.id]; if(!d) return;
+    if(activeG===g){ hidePop(); return; }
+    activeG=g;
+    pop.innerHTML='<h4><span class="num">'+d.badge+'</span>'+d.title+'</h4><p>'+d.short+'</p>';
+    pop.hidden=false; highlight(g.dataset.id); placePop(g);
+    tip.style.visibility='hidden';
+  }
+  ctls.forEach(function(g){
+    function go(e){
+      if(e) e.stopPropagation();
+      if(!fs.hidden){ showPop(g); return; }
+      var r=document.getElementById('c-'+g.dataset.id); if(!r) return;
+      r.open=true; r.scrollIntoView({block:'center', behavior:'smooth'});
+    }
+    g.addEventListener('click', go);
+    g.addEventListener('keydown', function(e){
+      if(e.key==='Enter'||e.key===' '){ e.preventDefault(); go(e); }
+    });
+  });
+
+  var zoom=document.getElementById('zoom');
+  function openFS(){
+    rot.insertBefore(svg, rot.firstChild);
+    fs.hidden=false; document.body.classList.add('lock');
+    tip.style.visibility='visible'; highlight(null);
+    setCrop(true); sizeFS();
+    try{
+      var p=document.documentElement.requestFullscreen && document.documentElement.requestFullscreen();
+      if(p&&p.then) p.then(function(){
+        if(screen.orientation&&screen.orientation.lock){
+          var q=screen.orientation.lock('landscape'); if(q&&q.catch) q.catch(function(){});
+        }
+      }).catch(function(){});
+    }catch(e){}
+  }
+  function closeFS(){
+    hidePop(); host.appendChild(svg); fs.hidden=true;
+    fs.style.width=''; fs.style.height=''; rot.style.width=''; rot.style.height='';
+    setCrop(false); document.body.classList.remove('lock');
+    try{
+      if(screen.orientation&&screen.orientation.unlock) screen.orientation.unlock();
+      if(document.fullscreenElement&&document.exitFullscreen) document.exitFullscreen();
+    }catch(e){}
+  }
+  zoom.addEventListener('click', openFS);
+  document.getElementById('fsClose').addEventListener('click', function(e){ e.stopPropagation(); closeFS(); });
+  fs.addEventListener('click', function(){ if(!pop.hidden) hidePop(); });
+  pop.addEventListener('click', function(e){ e.stopPropagation(); });
+  document.addEventListener('keydown', function(e){
+    if(e.key!=='Escape'||fs.hidden) return;
+    if(!pop.hidden) hidePop(); else closeFS();
+  });
+  function reflow(){ sizeFS(); if(!fs.hidden&&activeG) placePop(activeG); }
+  window.addEventListener('resize', reflow);
+  window.addEventListener('orientationchange', function(){ setTimeout(reflow,250); });
+  if(window.visualViewport) window.visualViewport.addEventListener('resize', reflow);
+  window.addEventListener('beforeprint', function(){
+    if(!fs.hidden) closeFS();
+    document.querySelectorAll('details').forEach(function(d){ d.open=true; });
+  });
+})();
+</script>
+</body>
+</html>
